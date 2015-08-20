@@ -4,7 +4,9 @@ module.exports ={
 	init: function()
 	{
 		if(Memory.factoryInit != undefined)
+		{
 			return;
+		}
 
 		Memory.factoryInit = true;
 		this.memory();
@@ -15,7 +17,8 @@ module.exports ={
 		this.spawnRequiredScreeps();
 	},
 
-	memory: function() {
+	memory: function() 
+	{
 		if(Memory.spawnQue == undefined)
 			Memory.spawnQue = [ ];
 
@@ -24,7 +27,8 @@ module.exports ={
 
 		if(Memory.requiredScreeps == undefined)
 		{
-			Memory.requiredScreeps = [
+			Memory.requiredScreeps = 
+			[
 				//Survival
 				'miner', //1
 				'archer', //1
@@ -52,13 +56,6 @@ module.exports ={
 				'archer', //10
 				'archer', //11
 				'healer' //4
-
-				//Tutorial
-//				'miner',
-//				'miner',
-//				'miner',
-//				'miner',
-//				'miner',
 			];
 		}
 	},
@@ -67,12 +64,14 @@ module.exports ={
 	{
 		var requiredScreeps = Memory.requiredScreeps;
 
-		var gatheredScreeps = { };
+		var gatheredScreeps = {};
 		for(var index in requiredScreeps)
 		{
 			var type = requiredScreeps[index];
 			if(gatheredScreeps[type] == undefined)
+			{
 				gatheredScreeps[type] = 0;
+			}
 
 			var neededToSkip = gatheredScreeps[type] + 1;
 
@@ -91,7 +90,8 @@ module.exports ={
 		for(var i in Game.spawns)
 		{
 			var spawn = Game.spawns[i];
-			if(!spawn.spawning && Memory.spawnQue.length == 0 && spawn.energy / spawn.energyCapacity >= .6) {
+			if(!spawn.spawning && Memory.spawnQue.length == 0 && spawn.energy / spawn.energyCapacity >= .6) 
+			{
 				var archers = countType('archer', true);
 				var healers = countType('healer', true);
 
