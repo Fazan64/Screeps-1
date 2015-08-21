@@ -114,12 +114,24 @@ var proto = {
 	onSpawnEnd: function() { },
 
 	beforeAge: function() { },
+	
+	getClosest: function (type)
+	{
+		// If an array of objects is given
+		if (type instanceof Array)
+		{
+			return this.creep.pos.findClosestByRange (type);
+		}
+		// Else
+		if (cache [type])
+		{
+			return cache [type];
+		}
+		cache [type] = this.creep.pos.findClosestByRange (type);
+		
+	},
 
-	/**
-	 * All credit goes to Djinni
-	 * @url https://bitbucket.org/Djinni/screeps/
-	 */
-	rest: function(civilian)
+	rest: function (civilian)
 	{
 		var creep = this.creep;
 
@@ -150,33 +162,20 @@ var proto = {
 		creep.moveTo (restTarget);
 	},
 
-	/**
-	 * All credit goes to Djinni
-	 * @url https://bitbucket.org/Djinni/screeps/
-	 */
 	rangedAttack: function(target)
 	{
 		var creep = this.creep;
 
 		if(!target)
 		{
-			if (!cache ['closestEnemy'])
-			{
-				target = creep.pos.findClosest (FIND_HOSTILE_CREEPS);
-				cache ['closestEnemy'];
-			}
-			else
-			{
-				target = cache ['closestEnemy'];
-			}
-			
+			target = this.getClosest (FIND_HOSTILE_CREEPS);
 		}
 
 		if(target) 
 		{
 			if (target.pos.inRangeTo (creep.pos, 3) )
 			{
-				creep.rangedAttack(target);
+				creep.rangedAttack (target);
 				return target;
 			}
 		}
@@ -187,17 +186,15 @@ var proto = {
 	{
 		var creep = this.creep;
 
-		var target = creep.pos.findClosest (Game.HOSTILE_CREEPS);
-		if(target !== null && target.pos.inRangeTo (creep.pos, 3))
+		var target = this.getClosest (FIND_HOSTILE_CREEPS);
+		if (target !== null && target.pos.inRangeTo (creep.pos, 3))
 		{
-			creep.moveTo(creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y );
+			creep.move (creep.pos.getDirectionTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y));
 		}
 	},
 
 	/**
 	 * Makes a creep keep a distance of 3 to the 'target'
-	 * All credit goes to Djinni
-	 * @url https://bitbucket.org/Djinni/screeps/
 	 */
 	kite: function(target) 
 	{
