@@ -181,6 +181,12 @@ var proto = {
 		}
 		return null;
 	},
+	
+	moveAwayFrom: function (target)
+	{
+		var creep = this.creep;
+		creep.move (creep.pos.getDirectionTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y));
+	},
 
 	keepAwayFromEnemies: function()
 	{
@@ -189,7 +195,7 @@ var proto = {
 		var target = this.getClosest (FIND_HOSTILE_CREEPS);
 		if (target !== null && target.pos.inRangeTo (creep.pos, 3))
 		{
-			creep.move (creep.pos.getDirectionTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y));
+			this.moveAwayFrom (target);
 		}
 	},
 
@@ -202,7 +208,7 @@ var proto = {
 
 		if (target.pos.inRangeTo (creep.pos, 2)) 
 		{
-			creep.moveTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y);
+			this.moveAwayFrom (target);
 			return true;
 		} 
 		else if (target.pos.inRangeTo (creep.pos, 3))
@@ -211,7 +217,7 @@ var proto = {
 		}
 		else
 		{
-			creep.moveTo(target);
+			creep.moveTo (target);
 			return true;
 		}
 
