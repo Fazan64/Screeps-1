@@ -5,13 +5,13 @@
  * we assign a miner to a source
  */
 
-var helper = {
-	parts: [
-		[Game.MOVE, Game.CARRY, Game.MOVE, Game.CARRY],
-		[Game.MOVE, Game.CARRY, Game.MOVE, Game.CARRY, Game.MOVE, Game.CARRY]
-	],
+var helper = 
+{
 
-	assignMiner: function () {
+	baseParts : [CARRY, MOVE],
+
+	assignMiner: function () 
+	{
 		var creep = this.creep;
 
 		var miner = creep.pos.findNearest(Game.MY_CREEPS, {

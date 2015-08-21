@@ -4,11 +4,10 @@
  */
 var proto = require('role_prototype');
 
-var healer = {
-	parts: [
-		[Game.MOVE, Game.MOVE, Game.HEAL, Game.HEAL],
-		[Game.MOVE, Game.MOVE, Game.MOVE, Game.HEAL, Game.HEAL, Game.HEAL]
-	],
+var healer = 
+{
+	
+	baseParts : [HEAL, TOUGH],
 
 	action: function()
 	{

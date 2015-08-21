@@ -3,7 +3,8 @@ var extend = require ('extend');
 
 var rolesCache = {};
 
-module.exports = {
+module.exports = 
+{
 	roleExists: function (role)
 	{
 		if (!rolesCache [role])
@@ -17,7 +18,7 @@ module.exports = {
 				rolesCache [role] = false;
 			}
 		}
-		return rolesCache [role];
+		return rolesCache [role] !== undefined;
 	},
 
 	getRole: function (role)

@@ -1,12 +1,7 @@
-var proto = require('role_prototype');
+var archer =
+{
 
-var archer = {
-	parts: [
-		[Game.RANGED_ATTACK, Game.RANGED_ATTACK, Game.MOVE, Game.MOVE],
-		[Game.RANGED_ATTACK, Game.RANGED_ATTACK, Game.RANGED_ATTACK, Game.MOVE, Game.MOVE, Game.MOVE],
-		[Game.RANGED_ATTACK, Game.RANGED_ATTACK, Game.RANGED_ATTACK, Game.RANGED_ATTACK, Game.MOVE, Game.MOVE, Game.MOVE, Game.MOVE],
-		[Game.RANGED_ATTACK, Game.RANGED_ATTACK, Game.RANGED_ATTACK, Game.RANGED_ATTACK, Game.RANGED_ATTACK, Game.MOVE, Game.MOVE, Game.MOVE, Game.MOVE, Game.MOVE],
-	],
+	baseParts : [RANGED_ATTACK, TOUGH],
 
 	/**
 	 * Here we want Archer to automatically scale to however many extensions we have

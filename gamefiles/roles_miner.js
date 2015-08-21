@@ -4,11 +4,10 @@
  * @TODO: See if we can't implement preffered spawn spots close to their source
  * @param creep
  */
-var miner = {
-	parts: [
-		[Game.MOVE, Game.WORK, Game.WORK, Game.WORK, Game.WORK],
-		[Game.MOVE, Game.WORK, Game.WORK, Game.WORK, Game.WORK, Game.WORK]
-	],
+var miner = 
+{
+	
+	baseParts : [WORK, WORK],
 
 	getOpenSource: function()
 	{

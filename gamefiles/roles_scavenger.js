@@ -1,7 +1,6 @@
-var scavenger = {
-	parts: [
-		[Game.CARRY, Game.CARRY, Game.MOVE, Game.MOVE]
-	],
+var scavenger = 
+{
+	baseParts : [CARRY, MOVE],
 
 	action: function()
 	{

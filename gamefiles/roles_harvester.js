@@ -2,10 +2,10 @@
  * These are simple creatures, they just find an active source and harvest it
  * @param creep
  */
-var harvester = {
-	parts: [
-		[Game.MOVE, Game.MOVE, Game.CARRY, Game.WORK]
-	],
+var harvester = 
+{
+	
+	baseParts : [WORK, CARRY],
 
 	action: function () {
 		var creep = this.creep;

@@ -30,8 +30,10 @@ module.exports =
 			}
 		});
 
-		if(!spawns.length) 
+		if (!spawns.length) 
+		{
 			return;
+		}
 
 		var role = Memory.spawnQue[0];
 

@@ -1,7 +1,6 @@
 var transporter = {
-	parts: [
-		[Game.CARRY, Game.CARRY, Game.MOVE, Game.MOVE]
-	],
+	
+	baseParts : [CARRY, MOVE],
 
 	action: function()
 	{

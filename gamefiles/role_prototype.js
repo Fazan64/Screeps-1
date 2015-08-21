@@ -1,3 +1,6 @@
+var calculateCost = require ('calculateCost');
+var MAX_PARTS = 30;
+
 var proto = {
 	/**
 	 * The creep for this role
@@ -19,7 +22,8 @@ var proto = {
 
 	run: function()
 	{
-		if(this.creep.memory.onSpawned == undefined) {
+		if(this.creep.memory.onSpawned == undefined) 
+		{
 			this.onSpawn();
 			this.creep.memory.onSpawned = true;
 		}
@@ -27,45 +31,76 @@ var proto = {
 		this.action(this.creep);
 
 		if(this.creep.ticksToLive == 1)
+		{
 			this.beforeAge();
+		}
 	},
 
 	handleEvents: function()
 	{
-		if(this.creep.memory.onSpawned == undefined) {
+		if(this.creep.memory.onSpawned == undefined) 
+		{
 			this.onSpawnStart();
 			this.onSpawn();
 			this.creep.memory.onSpawned = true;
 		}
 
-		if(this.creep.memory.onSpawnEnd == undefined && !this.creep.spawning) {
+		if(this.creep.memory.onSpawnEnd == undefined && !this.creep.spawning) 
+		{
 			this.onSpawnEnd();
 			this.creep.memory.onSpawnEnd = true;
 		}
 	},
 
-	getParts: function() {
-		var _ = require('lodash');
-
-		var extensions = Game.getRoom('1-1').find(Game.MY_STRUCTURES, {
-			filter: function(structure)
-			{
-				return (structure.structureType == Game.STRUCTURE_EXTENSION && structure.energy >= 200);
-			}
-		}).length;
-
-		var parts = _.cloneDeep(this.parts);
-		if(typeof parts[0] != "object")
-			return this.parts;
-
-		parts.reverse();
-
-		for(var i in parts)
+	/**
+	 * Generates a biggest creep bneedsody made from 'baseParts'
+ 	 * affordable for 'maxEnergy' 
+	 * 
+	 * @param maxEnergy : {Number}
+	 */
+	getParts: function (maxEnergy)
+	{
+		
+		if (maxEnergy === undefined)
 		{
-			if((parts[i].length - 5) <= extensions) {
-				return parts[i];
-			}
+			maxEnergy = 300;
 		}
+		
+		var baseBody = [];
+		baseBody = baseBody.concat (this.baseParts);
+    
+		// Add enough MOVE parts to let it move at half the max speed
+		for (var i = 0; i < this.baseParts.length / 2; i++) 
+		{
+			baseBody.push(MOVE);
+		}
+    
+		// How many baseBodys we can produce with maxEnergy
+		var times = Math.floor (maxEnergy / calculateCost(baseBody));
+    
+		// If there are more parts than maximum, lower the 'times' accordingly
+		if (times * baseBody.length > MAX_PARTS)
+		{
+			times = Math.floor(MAX_PARTS / baseBody.length);
+		}
+		else if (times == 0)
+		{
+			return [];
+		}
+    
+		// Construct a finalBody out of 'times' baseBodys, which is the biggest body affordable for the maxEnergy
+		var finalBody = [];
+		for (var i = 0; i < times; i++)
+		{
+			finalBody = finalBody.concat(baseBody);
+		}
+    
+		//console.log ('---------------');
+		//console.log ('baseBody cost: '  + calculateCost(baseBody));
+		//console.log ('maximum energy: ' + maxEnergy);
+		//console.log ('finalBody: '      + finalBody);
+		//console.log ('---------------');
+		return finalBody;
 	},
 
 	action: function() { },
