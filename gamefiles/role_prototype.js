@@ -1,6 +1,8 @@
 var calculateCost = require ('calculateCost');
 var MAX_PARTS = 30;
 
+var cache = {}
+
 var proto = {
 	/**
 	 * The creep for this role
@@ -158,7 +160,16 @@ var proto = {
 
 		if(!target)
 		{
-			target = creep.pos.findClosest (FIND_HOSTILE_CREEPS);
+			if (!cache ['closestEnemy'])
+			{
+				target = creep.pos.findClosest (FIND_HOSTILE_CREEPS);
+				cache ['closestEnemy'];
+			}
+			else
+			{
+				target = cache ['closestEnemy'];
+			}
+			
 		}
 
 		if(target) 
@@ -176,7 +187,7 @@ var proto = {
 	{
 		var creep = this.creep;
 
-		var target = creep.pos.findNearest (Game.HOSTILE_CREEPS);
+		var target = creep.pos.findClosest (Game.HOSTILE_CREEPS);
 		if(target !== null && target.pos.inRangeTo (creep.pos, 3))
 		{
 			creep.moveTo(creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y );
