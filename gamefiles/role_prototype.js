@@ -227,6 +227,8 @@ var proto = {
 	getRangedTarget: function()
 	{
 		var creep = this.creep;
+		
+		//var hostiles = creep.room.find (FIND_HOSTILE_CREEPS);
 
 		var closeArchers = creep.pos.findNearest(Game.HOSTILE_CREEPS, {
 			filter: function(enemy)
