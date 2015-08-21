@@ -3,7 +3,7 @@ module.exports =
 	initSpawnQue: function()
 	{
 		if(Memory.spawnQue == undefined)
-			Memory.spawnQue = [ ];
+			Memory.spawnQue = [];
 	},
 
 	addToQue: function(creep, unshift)
