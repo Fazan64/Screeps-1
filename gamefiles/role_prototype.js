@@ -122,36 +122,30 @@ var proto = {
 		var creep = this.creep;
 
 		var distance = 4;
-		var restTarget = creep.pos.findNearest(Game.MY_SPAWNS);
-
-		if(!civilian) {
+		var restTarget = creep.pos;
+		
+		if (civilian)
+		{
+			restTarget = creep.pos.findClosestByRange (Game.spawns);
+		}
+		else
+		{
 			var flags = Game.flags;
-			for (var i in flags) {
+			for (var i in flags)
+			{
 				var flag = flags[i];
-				if (creep.pos.inRangeTo(flag, distance) || creep.pos.findPathTo(flag).length > 0) {
+				// If the flag is red & its position is free
+				if (flag.color == COLOR_RED &&
+				    (creep.pos.inRangeTo(flag, distance) || creep.pos.getRangeTo(flag) > 0)
+				) 
+				{
 					restTarget = flag;
 					break;
 				}
 			}
 		}
 
-//		var flag = Game.flags['Flag1'];
-//		if(flag !== undefined && civilian !== true)
-//			restTarget = flag;
-//
-//		var flag2 = Game.flags['Flag2'];
-//		if(flag !== undefined && civilian !== true && !creep.pos.inRangeTo(flag, distance) && !creep.pos.findPathTo(flag).length)
-//			restTarget = flag2;
-
-		if (creep.getActiveBodyparts(Game.HEAL)) {
-//			distance = distance - 1;
-		}
-		else if (creep.getActiveBodyparts(Game.RANGED_ATTACK)) {
-//			distance = distance - 1;
-		}
-		if (creep.pos.findPathTo(restTarget).length > distance) {
-			creep.moveTo(restTarget);
-		}
+		creep.moveTo (restTarget);
 	},
 
 	/**
