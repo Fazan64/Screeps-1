@@ -158,7 +158,7 @@ var proto = {
 
 		if(!target)
 		{
-			target = creep.pos.findNearest(Game.HOSTILE_CREEPS);
+			target = creep.pos.findClosest (FIND_HOSTILE_CREEPS);
 		}
 
 		if(target) 
