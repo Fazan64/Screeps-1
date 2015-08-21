@@ -105,27 +105,28 @@ var builder =
 			}
 
 			//If no repairs are needed, we're just going to go find some structures to build
-			var targets = creep.pos.findNearest(Game.CONSTRUCTION_SITES);
-			if(targets) 
+			var targets = creep.room.find (FIND_CONSTRUCTION_SITES);
+			var target = creep.pos.findClosestByRange (targets);
+			
+			if(target) 
 			{
 
-				if(!creep.pos.isNearTo(targets))
-					creep.moveTo(targets);
+				if(!creep.pos.isNearTo(target))
+				{
+					creep.moveTo(target);
+				}
 
-				if(creep.pos.inRangeTo(targets, 0))
-					creep.suicide();
-
-				creep.build(targets);
+				creep.build(target);
 				return;
 			}
 
-			var target = this.rangedAttack();
+			var target = this.rangedAttack ();
 			if(target)
 			{
-				this.kite(target);
+				this.kite (target);
 			}
 
-			this.rest(true);
+			this.rest (true);
 		}
 	}
 }

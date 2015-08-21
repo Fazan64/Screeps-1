@@ -158,14 +158,19 @@ var proto = {
 	 * All credit goes to Djinni
 	 * @url https://bitbucket.org/Djinni/screeps/
 	 */
-	rangedAttack: function(target) {
+	rangedAttack: function(target)
+	{
 		var creep = this.creep;
 
 		if(!target)
+		{
 			target = creep.pos.findNearest(Game.HOSTILE_CREEPS);
+		}
 
-		if(target) {
-			if (target.pos.inRangeTo(creep.pos, 3) ) {
+		if(target) 
+		{
+			if (target.pos.inRangeTo (creep.pos, 3) )
+			{
 				creep.rangedAttack(target);
 				return target;
 			}
@@ -177,25 +182,33 @@ var proto = {
 	{
 		var creep = this.creep;
 
-		var target = creep.pos.findNearest(Game.HOSTILE_CREEPS);
-		if(target !== null && target.pos.inRangeTo(creep.pos, 3))
+		var target = creep.pos.findNearest (Game.HOSTILE_CREEPS);
+		if(target !== null && target.pos.inRangeTo (creep.pos, 3))
+		{
 			creep.moveTo(creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y );
+		}
 	},
 
 	/**
+	 * Makes a creep keep a distance of 3 to the 'target'
 	 * All credit goes to Djinni
 	 * @url https://bitbucket.org/Djinni/screeps/
 	 */
-	kite: function(target) {
+	kite: function(target) 
+	{
 		var creep = this.creep;
 
-		if (target.pos.inRangeTo(creep.pos, 2)) {
-			creep.moveTo(creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y );
+		if (target.pos.inRangeTo (creep.pos, 2)) 
+		{
+			creep.moveTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y);
 			return true;
-		} else if (target.pos.inRangeTo(creep.pos, 3)) {
+		} 
+		else if (target.pos.inRangeTo (creep.pos, 3))
+		{
 			return true;
 		}
-		else {
+		else
+		{
 			creep.moveTo(target);
 			return true;
 		}
@@ -240,7 +253,9 @@ var proto = {
 		});
 
 		if(closeHealer != null)
+		{
 			return closeHealer;
+		}
 
 		return creep.pos.findNearest(Game.HOSTILE_CREEPS);
 	}
