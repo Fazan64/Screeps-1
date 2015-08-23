@@ -147,20 +147,24 @@ var proto =
 	/**
 	 * A version of pos.findClosestByRange that uses caching
 	 */
-	getClosest: function (type, filter)
+	getClosest: function (type, opts)
 	{
-		// If an array of objects is given
-		if (type instanceof Array)
+		// If options are given, or we should get closest from 
+		// an array of objects then calculate without caching
+		// since I see no way to include a custom object or 
+		// an array in cahing index
+		if (opts !== undefined || type instanceof Array)
 		{
-			return this.creep.pos.findClosestByRange (type, filter);
+			return this.creep.pos.findClosestByRange (type, opts);
 		}
-		// Else (a search spec, FIND_MY_CREEPS for example)
+		
+		// Else (a search spec, FIND_MY_CREEPS for example), use caching
 		if (this._cache [type])
 		{
 			return this._cache [type];
 		}
 		
-		this._cache [type] = this.creep.pos.findClosestByRange (type, filter);
+		this._cache [type] = this.creep.pos.findClosestByRange (type);
 		
 	},
 

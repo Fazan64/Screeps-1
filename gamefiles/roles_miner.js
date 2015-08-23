@@ -13,14 +13,18 @@ var miner =
 	{
 		var creep = this.creep;
 
-		var source = creep.pos.findNearest(Game.SOURCES, {
+		var source = this.getClosest (FIND_SOURCES_ACTIVE, {
 			filter: function(source)
 			{
-				if(Memory.sources[source.id] == undefined || Memory.sources[source.id].miner == undefined || Memory.sources[source.id].miner == creep.id)
+				if (Memory.sources[source.id] == undefined || Memory.sources[source.id].miner == undefined || Memory.sources[source.id].miner == creep.id)
+				{
 					return true;
+				}
 
-				if(Game.getObjectById(Memory.sources[source.id].miner) == null)
+				if (Game.getObjectById (Memory.sources[source.id].miner) == null)
+				{
 					return true;
+				}
 
 				return false;
 			}
