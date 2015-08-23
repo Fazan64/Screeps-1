@@ -228,46 +228,47 @@ var proto = {
 	{
 		var creep = this.creep;
 		
-		//var hostiles = creep.room.find (FIND_HOSTILE_CREEPS);
-
-		var closeArchers = creep.pos.findNearest(Game.HOSTILE_CREEPS, {
-			filter: function(enemy)
-			{
-				return enemy.getActiveBodyparts(Game.RANGED_ATTACK) > 0
-					&& creep.pos.inRangeTo(enemy, 3);
-			}
+		var hostiles = creep.room.find (FIND_HOSTILE_CREEPS);
+		
+		var closeEnemies = hostiles.filter (function (enemy) { 
+			return creep.pos.inRangeTo (enemy, 3); 
 		});
-
-		if(closeArchers != null)
-			return closeArchers;
-
-		var closeMobileMelee = creep.pos.findNearest(Game.HOSTILE_CREEPS, {
-			filter: function(enemy)
-			{
-				return enemy.getActiveBodyparts(Game.ATTACK) > 0
-					&& enemy.getActiveBodyparts(Game.MOVE) > 0
-					&& creep.pos.inRangeTo(enemy, 3);
-			}
-		});
-
-		if(closeMobileMelee != null)
-			return closeMobileMelee;
-
-		var closeHealer = creep.pos.findNearest(Game.HOSTILE_CREEPS, {
-			filter: function(enemy)
-			{
-				return enemy.getActiveBodyparts(Game.HEAL) > 0
-					&& enemy.getActiveBodyparts(Game.MOVE) > 0
-					&& creep.pos.inRangeTo(enemy, 3);
-			}
-		});
-
-		if(closeHealer != null)
+		
+		if (closeEnemies)
 		{
-			return closeHealer;
+			var closeArchers = closeEnemies.filter (function (enemy) {
+				return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
+			});
+	
+			if (closeArchers !== null)
+			{
+				return closeArchers [0];
+			}
+			
+			var closeMobileMelee = closeEnemies.filter (function (enemy) {
+				return enemy.getActiveBodyparts(ATTACK) > 0
+					&& enemy.getActiveBodyparts(MOVE) > 0;
+			});
+	
+			if (closeMobileMelee !== null)
+			{
+				return closeMobileMelee [0];
+			}
+			
+			var closeMobileHealers = closeEnemies.filter (function (enemy) {
+				return enemy.getActiveBodyparts(HEAL) > 0
+					&& enemy.getActiveBodyparts(MOVE) > 0;
+			});
+	
+			if (closeMobileHealers !== null)
+			{
+				return closeMobileHealers [0];
+			}
+	
+			return closeEnemies [0];
 		}
-
-		return creep.pos.findNearest(Game.HOSTILE_CREEPS);
+		
+		return null;
 	}
 };
 
