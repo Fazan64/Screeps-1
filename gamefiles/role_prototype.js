@@ -144,6 +144,9 @@ var proto =
 		
 	},
 	
+	/**
+	 * A version of pos.findClosestByRange that uses caching
+	 */
 	getClosest: function (type)
 	{
 		// If an array of objects is given
@@ -151,11 +154,12 @@ var proto =
 		{
 			return this.creep.pos.findClosestByRange (type);
 		}
-		// Else
+		// Else (a search spec, FIND_MY_CREEPS for example)
 		if (this._cache [type])
 		{
 			return this._cache [type];
 		}
+		
 		this._cache [type] = this.creep.pos.findClosestByRange (type);
 		
 	},
