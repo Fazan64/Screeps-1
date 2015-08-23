@@ -7,33 +7,6 @@ var builder =
 	
 	baseParts : [WORK, CARRY],
 
-//	getParts: function()
-//	{
-//		var _= require('lodash');
-//
-//		var partsAllowed = Game.getRoom('1-1').find(Game.MY_STRUCTURES, {
-//			filter: function(structure)
-//			{
-//				return (structure.structureType == Game.STRUCTURE_EXTENSION && structure.energy >= 200);
-//			}
-//		}).length;
-//
-//		var parts = [ Game.WORK, Game.WORK, Game.WORK, Game.CARRY, Game.MOVE ];
-//		var modulo = partsAllowed % 2;
-//		partsAllowed -= modulo;
-//		partsAllowed /= 2;
-//
-//		if(partsAllowed > 5)
-//			partsAllowed = 5;
-//
-//		for(var i = 0; i < partsAllowed; i++)
-//			parts.push(Game.MOVE, Game.CARRY);
-//
-//		return parts;
-//
-//		return this.prototype.getParts.call(this);
-//	},
-
 	action: function()
 	{
 		var creep = this.creep;
@@ -87,7 +60,7 @@ var builder =
 			// Next we're going to look for general buildings that have less than 50% health, and we'll go to repair those.
 			// We set it at 50%, because we don't want builders abandoning their duty every time a road gets walked on
 			var toRepair = [];
-			for(var index in structures)
+			for (var index in structures)
 			{
 				if((structures[index].hits / structures[index].hitsMax) < 0.5)
 				{
@@ -95,7 +68,7 @@ var builder =
 				}
 			}
 
-			if(toRepair.length)
+			if (toRepair.length)
 			{
 				var structure = toRepair[0];
 				creep.moveTo (structure);
@@ -108,25 +81,28 @@ var builder =
 			var targets = creep.room.find (FIND_CONSTRUCTION_SITES);
 			var target = creep.pos.findClosestByRange (targets);
 			
-			if(target) 
+			if (target) 
 			{
 
-				if(!creep.pos.isNearTo(target))
+				if (!creep.pos.isNearTo(target))
 				{
-					creep.moveTo(target);
+					creep.moveTo (target);
 				}
 
-				creep.build(target);
+				creep.build (target);
 				return;
 			}
-
-			var target = this.rangedAttack ();
-			if(target)
+			else
 			{
-				this.kite (target);
+				target = this.rangedAttack ();
+				
+				if (target)
+				{
+					this.kite (target);
+				}
+	
+				this.rest (true);
 			}
-
-			this.rest (true);
 		}
 	}
 }

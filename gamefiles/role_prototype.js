@@ -1,9 +1,13 @@
 var calculateCost = require ('calculateCost');
 var MAX_PARTS = 30;
 
-var cache = {}
-
 var proto = {
+	
+	/**
+	 * For optimization
+	 */
+	_cache : {},
+	
 	/**
 	 * The creep for this role
 	 *
@@ -123,11 +127,11 @@ var proto = {
 			return this.creep.pos.findClosestByRange (type);
 		}
 		// Else
-		if (cache [type])
+		if (this._cache [type])
 		{
-			return cache [type];
+			return this._cache [type];
 		}
-		cache [type] = this.creep.pos.findClosestByRange (type);
+		this._cache [type] = this.creep.pos.findClosestByRange (type);
 		
 	},
 
