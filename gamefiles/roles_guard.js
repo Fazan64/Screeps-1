@@ -14,14 +14,7 @@ var guard =
 		
 		if (target)
 		{
-			if (!creep.pos.isNearTo(target))
-			{
-				creep.moveTo (target);
-			}
-			else
-			{
-				creep.attack (target);
-			}
+			this.moveAndPerform (target, creep.attack);
 		}
 		else
 		{

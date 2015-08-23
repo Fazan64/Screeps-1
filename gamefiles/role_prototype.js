@@ -1,7 +1,8 @@
 var calculateCost = require ('calculateCost');
 var MAX_PARTS = 30;
 
-var proto = {
+var proto =
+{
 	
 	/**
 	 * For optimization
@@ -118,6 +119,30 @@ var proto = {
 	onSpawnEnd: function() { },
 
 	beforeAge: function() { },
+	
+	/**
+	 * Either performs an action 'action' to a target 'target', 
+	 * or moves to 'target' until nearTo it.
+	 * For example: "moveAndPerform (target, creep.attack)"
+	 */
+	moveAndPerform (target, action)
+	{
+		if (!(action instanceof Function))
+		{
+			throw new Error ("role_prototype.moveAndPerform: 'action' is not a function!");
+		}
+		
+		var creep = this.creep;
+		if (!creep.pos.isNearTo (target))
+		{
+			creep.moveTo (target);
+		}
+		else 
+		{
+			action.call (creep, target);
+		}
+		
+	},
 	
 	getClosest: function (type)
 	{
