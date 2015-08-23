@@ -7,19 +7,25 @@ var harvester =
 	
 	baseParts : [WORK, CARRY],
 
-	action: function () {
+	action: function () 
+	{
 		var creep = this.creep;
 
-		if(creep.energy < creep.energyCapacity) {
-			var sources = creep.pos.findNearest(Game.SOURCES);
-			creep.moveTo(sources);
-			creep.harvest(sources);
+		if (creep.energy < creep.energyCapacity)
+		{
+			var source = this.getClosest (FIND_SOURCES_ACTIVE);
+			if (source)
+			{
+				this.moveAndPerform (source, creep.harvest);
+			}
 		}
-		else {
-			var target = creep.pos.findNearest(Game.MY_SPAWNS);
-
-			creep.moveTo(target);
-			creep.transferEnergy(target);
+		else 
+		{
+			var target = this.getNearest (FIND_MY_SPAWNS);
+			if (target)
+			{
+				this.moveAndPerform (target, creep.transferEnergy);
+			}
 		}
 	}
 };

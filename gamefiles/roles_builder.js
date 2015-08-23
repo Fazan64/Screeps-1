@@ -83,13 +83,7 @@ var builder =
 			
 			if (target) 
 			{
-
-				if (!creep.pos.isNearTo(target))
-				{
-					creep.moveTo (target);
-				}
-
-				creep.build (target);
+				this.moveAndPerform (target, creep.build);
 				return;
 			}
 			else
