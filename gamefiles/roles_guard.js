@@ -1,6 +1,4 @@
 /**
- * The Guard hasn't been improved in a while, I've mostly just moved on to archers for now. I'll come back and
- * work on this one later
  * @param creep
  */
 var guard = 
@@ -12,13 +10,22 @@ var guard =
 	{
 		var creep = this.creep;
 
-		var targets = creep.room.find (Game.HOSTILE_CREEPS);
-		if (targets.length) {
-			creep.moveTo(targets[0]);
-			creep.attack(targets[0]);
+		var target = this.getClosest (FIND_HOSTILE_CREEPS);
+		
+		if (target)
+		{
+			if (!creep.pos.isNearTo(target))
+			{
+				creep.moveTo (target);
+			}
+			else
+			{
+				creep.attack (target);
+			}
 		}
-		else {
-			this.rest();
+		else
+		{
+			this.rest ();
 		}
 	}
 };
