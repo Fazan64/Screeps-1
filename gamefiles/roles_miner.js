@@ -37,26 +37,37 @@ var miner =
 	{
 		var creep = this.creep;
 
-		if(!source)
+		if (!source)
+		{
 			return;
+		}
 
-		if(Memory.sources[source.id] == undefined)
-			Memory.sources[source.id] = { id: source.id };
+		if(Memory.sources [source.id] == undefined)
+		{
+			Memory.sources [source.id] = { id: source.id };
+		}
 
-		Memory.sources[source.id].miner = creep.id;
+		Memory.sources [source.id].miner = creep.id;
 		creep.memory.source = source.id;
 
-		var helperSpawn = source.pos.findNearest(Game.MY_SPAWNS);
-		var steps = helperSpawn.pos.findPathTo(source).length * 2;
+		var helperSpawn = source.pos.findClosestByRange (Game.spawns);
+		var steps = helperSpawn.pos.getRangeTo(source).length * 3;
 		var creepsNeeded = Math.round((steps * 8) / 100);
 
 		if(creepsNeeded > 5)
 			creepsNeeded = 5;
 
 		for(var i = 0; i < creepsNeeded; i++)
-			Memory.spawnQue.unshift({ type: 'miner_helper', memory: {
-				miner: creep.id
-			}});
+		{
+			source.room.memory.needs.creeps.unshift (
+			{ 
+				type: 'miner_helper', 
+				memory: 
+				{
+					miner: creep.id
+				}
+			});
+		}
 
 		creep.memory.helpersNeeded = creepsNeeded;
 	},
@@ -69,7 +80,7 @@ var miner =
 		creep.memory.helpers = [];
 
 		var source = this.getOpenSource();
-		this.setSourceToMine(source);
+		this.setSourceToMine (source);
 
 		creep.memory.onCreated = true;
 	},
@@ -81,9 +92,10 @@ var miner =
 		//Basically, each miner can empty a whole source by themselves. Also, since they're slow, we don't have them
 		//moving away from the source when it's empty, it'd regenerate before they got to another one.
 		//For this, we assign one miner to one source, and they stay with it
-		var source = Game.getObjectById(creep.memory.source);
+		var source = Game.getObjectById (creep.memory.source);
 
-		if(source == null) {
+		if (source == null) 
+		{
 			var source = this.getOpenSource();
 
 			if(!source)

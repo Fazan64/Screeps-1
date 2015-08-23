@@ -149,6 +149,10 @@ var proto =
 	 */
 	getClosest: function (type, opts)
 	{
+		// TODO: make it use caching even with filter:
+		// cache only search by type, and filter the 
+		// cached result if needed
+		
 		// If options are given, or we should get closest from 
 		// an array of objects then calculate without caching
 		// since I see no way to include a custom object or 
