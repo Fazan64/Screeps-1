@@ -40,11 +40,11 @@ module.exports =
 			return false;
 		}
 
-		var role = this.getRole(role);
+		var role = this.getRole (role);
 
 		if (role.getParts !== undefined)
 		{
-			return role.getParts.call(role);
+			return role.getParts.call (role);
 		}
 		else
 		{
