@@ -24,14 +24,29 @@ var harvester =
 			var target = this.getClosest (FIND_MY_SPAWNS);
 			if (target)
 			{
-				
-				var toDo = creep.transferEnergy;
-				if (target.energy == target.energyCapacity)
+				if (creep.pos.isNearTo (target))
 				{
-					toDo = creep.dropEnergy;
+					if (target.energy < target.energyCapacity)
+					{
+						creep.transferEnergy (target);
+					}
+					else
+					{
+						creep.dropEnergy ();
+					}
+				}
+				else
+				{
+					creep.moveTo (target);
 				}
 				
-				this.moveAndPerform (target, toDo);
+				//var toDo = creep.transferEnergy;
+				//if (target.energy == target.energyCapacity)
+				//{
+				//	toDo = creep.dropEnergy;
+				//}
+				
+				//this.moveAndPerform (target, toDo);
 				
 			}
 		}
