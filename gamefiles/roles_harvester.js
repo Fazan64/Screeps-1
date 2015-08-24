@@ -21,7 +21,7 @@ var harvester =
 		}
 		else 
 		{
-			var target = this.getClosest (Game.spawns);
+			var target = this.getClosest (FIND_MY_SPAWNS);
 			if (target)
 			{
 				this.moveAndPerform (target, creep.transferEnergy);
