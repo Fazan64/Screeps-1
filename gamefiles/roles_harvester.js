@@ -11,7 +11,7 @@ var harvester =
 	{
 		var creep = this.creep;
 
-		if (creep.energy < creep.energyCapacity)
+		if (creep.carry.energy < creep.carryCapacity)
 		{
 			var source = this.getClosest (FIND_SOURCES_ACTIVE);
 			if (source)
