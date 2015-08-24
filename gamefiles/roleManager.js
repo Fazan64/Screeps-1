@@ -26,7 +26,7 @@ module.exports =
 		}
 
 		var roleObject = rolesCache [role];
-        roleObject = extend (roleObject, protoRole);
+        roleObject = extend (roleObject.prototype, protoRole);
 		return roleObject;
 	},
 
