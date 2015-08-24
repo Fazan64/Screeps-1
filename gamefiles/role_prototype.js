@@ -31,15 +31,16 @@ var proto =
 	{
 		if (this.creep.memory.onSpawned == undefined) 
 		{
-			this.onSpawn();
+			this.onSpawn ();
 			this.creep.memory.onSpawned = true;
 		}
 
-		this.action.call (this.creep);
+		//this.action.call (this.creep);
+		this.action ();
 
 		if (this.creep.ticksToLive == 1)
 		{
-			this.beforeAge();
+			this.beforeAge ();
 		}
 	},
 
@@ -47,8 +48,8 @@ var proto =
 	{
 		if(this.creep.memory.onSpawned == undefined) 
 		{
-			this.onSpawnStart();
-			this.onSpawn();
+			this.onSpawnStart ();
+			this.onSpawn ();
 			this.creep.memory.onSpawned = true;
 		}
 
