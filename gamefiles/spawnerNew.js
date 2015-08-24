@@ -61,6 +61,7 @@ function spawnCreep (role, memory, spawn)
     var body = manager.getRoleBodyParts (getTotalEnergy (spawn));
     if (!body.length)
     {
+        console.log ("Not enough energy to spawn a creep of role " + role + ". Aborting...");
         return;
     }
     
@@ -89,7 +90,7 @@ function spawnNeededCreep (spawn)
     // Creation process started successfully
     if (spawnCreep (needed [0].role, needed [0].memory, spawn))
     {
-        console.log ("  Spawn successful! ");
+        console.log ("  Spawn successful!");
         needed.shift ();
     }
 }
