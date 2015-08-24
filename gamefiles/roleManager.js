@@ -41,11 +41,11 @@ module.exports =
 
 		if (roleObject.getParts !== undefined)
 		{
-			return roleObject.getParts.apply (roleObject, maxEnergy);
+			return roleObject.getParts.call (roleObject, maxEnergy);
 		}
 		else
 		{
-			return roleObject.prototype.getParts.apply (roleObject, maxEnergy);
+			return roleObject.prototype.getParts.call (roleObject, maxEnergy);
 		}
 	}
 };
