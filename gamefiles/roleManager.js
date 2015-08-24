@@ -11,11 +11,11 @@ module.exports =
 		{
 			try
 			{
-				rolesCache [role] = require("roles_" + role);
+				rolesCache [role] = require ("roles_" + role);
 			}
 			catch(e)
 			{
-				rolesCache [role] = false;
+				
 			}
 		}
 		return rolesCache [role] !== undefined;
@@ -23,7 +23,7 @@ module.exports =
 
 	getRole: function (role)
 	{
-		if(!this.roleExists(role))
+		if (!this.roleExists(role))
 		{
 			return false;
 		}
