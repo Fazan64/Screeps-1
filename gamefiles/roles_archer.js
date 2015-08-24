@@ -23,11 +23,12 @@ var archer =
 		partsAllowed -= modulo;
 		partsAllowed /= 2;
 
-		if(partsAllowed > 5)
+		if (partsAllowed > 5)
 			partsAllowed = 5;
 
 		var parts = [ ];
-		for(var i = 0; i < partsAllowed; i++) {
+		for(var i = 0; i < partsAllowed; i++) 
+		{
 			parts.unshift(Game.RANGED_ATTACK);
 			parts.push(Game.MOVE);
 		}
@@ -42,17 +43,25 @@ var archer =
 	{
 		var creep = this.creep;
 
-		var target = this.getRangedTarget();
-		if(target !== null)
-
-			creep.rangedAttack(target);
-
-		//If there's not a target near by, let's go search for a target if need be
-		if(target === null)
-			return this.rest();
-
-		this.kite(target);
-		creep.rangedAttack(target);
+		var target = this.getRangedTarget ();
+		if (target !== null)
+		{
+			this.rangedAttack (target);
+		}
+		else
+		{
+			target = this.getClosest (FIND_HOSTILE_CREEPS);
+		}
+		
+		if (target !== null)
+		{
+			this.kite (target);
+		}
+		else
+		{
+			this.rest ();
+		}
+		
 	}
 };
 

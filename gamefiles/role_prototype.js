@@ -203,16 +203,16 @@ var proto =
 		creep.moveTo (restTarget);
 	},
 
-	rangedAttack: function(target)
+	rangedAttack: function (target)
 	{
 		var creep = this.creep;
 
-		if(!target)
+		if (!target)
 		{
-			target = this.getClosest (FIND_HOSTILE_CREEPS);
+			target = this.getRangedTarget ();
 		}
 
-		if(target) 
+		if (target) 
 		{
 			if (target.pos.inRangeTo (creep.pos, 3) )
 			{
@@ -265,7 +265,7 @@ var proto =
 		return false;
 	},
 
-	getRangedTarget: function()
+	getRangedTarget: function ()
 	{
 		var creep = this.creep;
 		
@@ -275,7 +275,7 @@ var proto =
 			return creep.pos.inRangeTo (enemy, 3); 
 		});
 		
-		if (closeEnemies)
+		if (closeEnemies && closeEnemies.length)
 		{
 			var closeArchers = closeEnemies.filter (function (enemy) {
 				return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
