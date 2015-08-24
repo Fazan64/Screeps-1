@@ -156,7 +156,7 @@ var proto =
 		// If options are given, or we should get closest from 
 		// an array of objects then calculate without caching
 		// since I see no way to include a custom object or 
-		// an array in cahing index
+		// an array in caching index
 		if (opts !== undefined || type instanceof Array)
 		{
 			return this.creep.pos.findClosestByRange (type, opts);
