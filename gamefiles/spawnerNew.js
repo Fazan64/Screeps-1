@@ -77,5 +77,5 @@ function spawnNeededCreep (spawn)
 
 module.exports = function (spawn)
 {
-	spawnNeededCreep ();
+	spawnNeededCreep (spawn);
 }
