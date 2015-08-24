@@ -21,7 +21,6 @@ module.exports = function(creeps)
 		try 
 		{ 
 			roleObject.run ();
-			console.log ("Performing role behaviour for creep " + creep.name + "..."); 
 		} 
 		catch(e) 
 		{ 
