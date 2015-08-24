@@ -40,14 +40,6 @@ var harvester =
 					creep.moveTo (target);
 				}
 				
-				//var toDo = creep.transferEnergy;
-				//if (target.energy == target.energyCapacity)
-				//{
-				//	toDo = creep.dropEnergy;
-				//}
-				
-				//this.moveAndPerform (target, toDo);
-				
 			}
 		}
 	}
