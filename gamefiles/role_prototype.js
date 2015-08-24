@@ -29,7 +29,7 @@ var proto =
 
 	run: function()
 	{
-		console.log ("Performing role behaviour for creep " + creep.name + "..."); 
+		console.log ("Performing role behaviour for creep " + this.creep.name + "..."); 
 		if (this.creep.memory.onSpawned == undefined) 
 		{
 			this.onSpawn ();
