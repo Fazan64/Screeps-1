@@ -170,7 +170,7 @@ var proto =
 		}
 		
 		this._cache [type] = this.creep.pos.findClosestByRange (type);
-		return this _cache [type];
+		return this._cache [type];
 		
 	},
 
