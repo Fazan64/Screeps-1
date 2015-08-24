@@ -12,10 +12,10 @@ module.exports = function (destination, source) {
 			destination[k] = source[k];
 		}
 	}
-	console.log ("destination has:");
-	for (var k in destination) 
-	{
-		console.log ("	" + k);
-	}
+	//console.log ("destination has:");
+	//for (var k in destination) 
+	//{
+	//	console.log ("	" + k);
+	//}
 	return destination;
 };
