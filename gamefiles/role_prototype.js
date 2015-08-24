@@ -29,15 +29,15 @@ var proto =
 
 	run: function()
 	{
-		if(this.creep.memory.onSpawned == undefined) 
+		if (this.creep.memory.onSpawned == undefined) 
 		{
 			this.onSpawn();
 			this.creep.memory.onSpawned = true;
 		}
 
-		this.action(this.creep);
+		this.action.call (this.creep);
 
-		if(this.creep.ticksToLive == 1)
+		if (this.creep.ticksToLive == 1)
 		{
 			this.beforeAge();
 		}
