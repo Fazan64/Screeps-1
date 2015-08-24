@@ -2,22 +2,16 @@
  * Returns an object {name, index} having a generated name and an index
  * for a Creep with memory.role 'role' which is to be spawned by Spawn 'spawn'
  */
-function getNameByRole(spawn, role)
+function getNameByRole (spawn, role)
 {
     var creepIndex = 0;
-    var creeps = Game.creeps;
     
-    while (creeps [spawn.room.name + ' ' + role + ' ' + creepIndex]) 
+    while (Game.creeps [spawn.room.name + ' ' + role + ' ' + creepIndex] !== undefined) 
     {
         creepIndex++;
     }
     
-    var answer =  
-    {
-        name : spawn.room.name + ' ' + role + ' ' + creepIndex,
-        index : creepIndex
-    };
-    return answer;
+    return spawn.room.name + ' ' + role + ' ' + creepIndex;
 }
 
 

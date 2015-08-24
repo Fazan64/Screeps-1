@@ -1,6 +1,5 @@
 var performRoles = require('performRoles');
 var spawner = require('spawnerNew');
-var countType = require('countType');
 //var factory = require('factory');
 var room = require ('room');
 
