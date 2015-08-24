@@ -20,13 +20,30 @@ function getNameByRole(spawn, role)
     return answer;
 }
 
-var manager = require('roleManager');
-function spawnCreep (role, memory, spawnPoint)
+
+/**
+ * Returns the total energy available to Spawn 'spawn'
+ * i.e in itself and extensions
+ */
+function getTotalEnergy (spawn)
 {
-	if (!spawnPoint)
-	{
-		spawnPoint = Game.spawns.Spawn1;
-	}
+    var totalEnergy = spawn.energy;
+
+    var extensions = spawn.room.find (FIND_MY_STRUCTURES, {
+        filter: { structureType: STRUCTURE_EXTENSION }
+    });
+    
+    for (var extension in extensions)
+    {
+        totalEnergy += extension.energy;
+    }
+    
+    return totalEnergy;
+}
+
+var manager = require('roleManager');
+function spawnCreep (role, memory, spawn)
+{
 
 	if (!manager.roleExists(role))
 	{
@@ -40,16 +57,16 @@ function spawnCreep (role, memory, spawnPoint)
 
 	memory ['role'] = role;
 
-    var body = manager.getRoleBodyParts (energy);
+    var body = manager.getRoleBodyParts (getTotalEnergy (spawn));
     if (!body.length)
     {
         return;
     }
     
-	var name = getNameByRole (spawnPoint, role);
+	var name = getNameByRole (spawn, role);
 
 	console.log('Trying to spawn ' + role + '...');
-	return spawnPoint.createCreep (body, name, memory) == name;
+	return spawn.createCreep (body, name, memory) == name;
 }
 
 function spawnNeededCreep (spawn) 
