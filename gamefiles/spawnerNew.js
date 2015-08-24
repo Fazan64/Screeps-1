@@ -59,7 +59,7 @@ function spawnCreep (role, memory, spawn)
 	memory ['role'] = role;
 
     var totalEnergy = getTotalEnergy (spawn)
-    var body = manager.getRoleBodyParts (totalEnergy);
+    var body = manager.getRoleBodyParts (role, totalEnergy);
     if (!body.length)
     {
         console.log ("Not enough energy (currently " + totalEnergy + ") to spawn a creep of role " + role + ". Aborting...");

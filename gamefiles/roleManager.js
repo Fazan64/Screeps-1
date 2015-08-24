@@ -30,22 +30,22 @@ module.exports =
 		return roleObject;
 	},
 
-	getRoleBodyParts: function (role)
+	getRoleBodyParts: function (role, maxEnergy)
 	{
 		if (!this.roleExists(role))
 		{
 			return false;
 		}
 
-		var role = this.getRole (role);
+		var roleObject = this.getRole (role);
 
-		if (role.getParts !== undefined)
+		if (roleObject.getParts !== undefined)
 		{
-			return role.getParts.call (role);
+			return roleObject.getParts.apply (roleObject, maxEnergy);
 		}
 		else
 		{
-			return role.prototype.getParts.call (role);
+			return roleObject.prototype.getParts.apply (roleObject, maxEnergy);
 		}
 	}
 };
