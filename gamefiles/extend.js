@@ -7,7 +7,8 @@
  */
 module.exports = function (destination, source) {
 	for (var k in source) {
-		if (!destination.hasOwnProperty(k)) {
+		if (!destination.hasOwnProperty (k)) {
+			console.log ("mixing in: " + k);
 			destination[k] = source[k];
 		}
 	}
