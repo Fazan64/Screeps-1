@@ -14,55 +14,77 @@ var helper =
 	{
 		var creep = this.creep;
 
-		var miner = creep.pos.findNearest(Game.MY_CREEPS, {
-			filter: function (miner) {
-				if (miner.memory.role == 'miner' && miner.memory.helpers.length < miner.memory.helpersNeeded)
-					return true;
-
-				return false;
+		var miner = this.getClosest (Game.creeps, {
+			filter: function (miner) 
+			{
+				return miner.memory.role == 'miner' && miner.memory.helpers.length < miner.memory.helpersNeeded;
 			}
 		});
 
-		if (miner == undefined)
+		if (miner === undefined)
+		{
 			return;
+		}
 
 		creep.memory.miner = miner.id;
-		miner.memory.helpers.push(creep.id);
+		miner.memory.helpers.push (creep.id);
 	},
 
 	/**
 	 * @TODO: Make helpers smarter about avoiding miners, instead of just waiting till they're 5 tiles away
 	 * @TODO: When spawns are at .25, and extensions have >= 200, help builders before filling shit up
 	 */
-	action: function () {
+	action: function ()
+	{
 		var creep = this.creep;
 
-		if (creep.memory.courier !== undefined && creep.memory.courier == true) {
-			creep.memory.courier = false;
+		// The idea behind the courier stuff is that miner_helpers 
+		// can pass energy between each other to make energy transition
+		// [theoretically] faster, and, which is more important, 
+		// reduce pathfinding costs, since a creep will only have
+		// to find a path to its closest colleague instead of performing
+		// a multiple-room pathfinding process.
+		
+		if (creep.memory.courierTarget) 
+		{
+			creep.moveTo (Game.getObjectById (creep.memory.courierTarget));
+			creep.memory.courierTarget = null;
 			return;
 		}
 
-		//If this helper isn't assigned to a miner, find one and assign him to it. If it is assigned to a miner,
-		//then find that miner by his id
+		// If this helper isn't assigned to a miner, find one and assign him to it. If it is assigned to a miner,
+		// then find that miner by his id
 		if (creep.memory.miner == undefined)
+		{
 			this.assignMiner();
+		}
 
-		var miner = Game.getObjectById(creep.memory.miner);
+		var miner = Game.getObjectById (creep.memory.miner);
 
-		if (miner == null) {
-			creep.suicide();
+		if (miner == null) 
+		{
+			creep.say ("I see no miners to help, and thus I die");
+			creep.suicide ();
 			return;
 		}
 
-		//If we can still pick up energy, let's do that
-		if (creep.energy < creep.energyCapacity) {
-			if (creep.pos.isNearTo(miner)) {
-				var energy = creep.pos.findInRange(Game.DROPPED_ENERGY, 1)[0];
-				creep.pickup(energy);
+		// If we can still pick up energy, let's do that
+		if (creep.energy < creep.energyCapacity) 
+		{
+			if (creep.pos.isNearTo(miner)) 
+			{
+				var energyOrbs = miner.pos.lookFor ('energy');
+				if (energyOrbs !== null && energyOrbs.length)
+				{
+					creep.pickup (energyOrbs [0]);
+				}
 			}
-			else {
+			else
+			{
 				if (miner.memory.isNearSource)
+				{
 					creep.moveTo(miner);
+				}
 			}
 
 			return;
@@ -71,66 +93,61 @@ var helper =
 		var target = null;
 
 		//Okay, everything below is for dropping energy off
+		var spawn = this.getClosest (Game.spawns);
 
-		if (!target) {
-			var spawn = creep.pos.findNearest(Game.MY_SPAWNS);
-
-			//If we found it, set it as our target
-			if (spawn)
-				target = spawn;
+		//If we found it, set it as our target
+		if (spawn)
+		{
+			target = spawn;
 		}
+		
+		// Get the direction away from target
+		// It's a lot less precise without pathfinding but 
+		// doing a complete path search is just not worth it
+		//var directionAway = creep.pos.getDirectionTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y);
 
-		//Let's get the direction we want to go in
-		var targetDirection = creep.pos.findPathTo(target, { ignoreCreeps: true })[0].direction;
-
-		//Let's look for a courier in that direction. We'll check on making sure they're the right
-		//role, if they can hold any energy, if they're in range and if they're in the same direction
-		var leftDir = targetDirection - 1;
-		var rightDir = targetDirection + 1;
-
-		if (leftDir < 1)
-			leftDir += 8;
-		if (leftDir > 8)
-			leftDir -= 8;
-
-		if (rightDir < 1)
-			rightDir += 8;
-		if (rightDir > 8)
-			rightDir -= 8;
+		// Let's look for a courier in that direction. We'll check on making sure 
+		// they're the same role,
+		// if they can hold any energy, 
+		// if they're in range and 
+		// [EXPERIMENTAL] if going to them doesn't mean going away from target
 
 		var courier = creep.pos.findNearest(Game.MY_CREEPS, {
-			filter: function (possibleTarget) {
-				return (
+			filter: function (possibleTarget)
+			{
+				return 
+				(
 					possibleTarget.memory.role == creep.memory.role
-//					&& possibleTarget.memory.miner == creep.memory.miner
 					&& possibleTarget.energy < possibleTarget.energyCapacity
-					&& creep.pos.inRangeTo(possibleTarget, 1)
-					&& (
-					creep.pos.getDirectionTo(possibleTarget) == targetDirection
-					|| creep.pos.getDirectionTo(possibleTarget) == leftDir
-					|| creep.pos.getDirectionTo(possibleTarget) == rightDir
-					)
-					);
+					&& creep.pos.inRangeTo (possibleTarget, 1)
+					//&& creep.pos.getDirectionTo (possibleTarget) != directionAway
+				);
 			}
 		});
 
 		//If we found a courier, make that courier our new target
-		if (courier !== null && !creep.pos.isNearTo(target)) {
+		if (courier !== null && !creep.pos.isNearTo (target)) 
+		{
 			target = courier;
-			target.memory.courier = true;
+			target.memory.courierTarget = creep.id;
 		}
 
 		//If we're near to the target, either give it our energy or drop it
-		if (creep.pos.isNearTo(target)) {
-			if (target.energy < target.energyCapacity) {
-				creep.transferEnergy(target);
+		if (creep.pos.isNearTo (target)) 
+		{
+			if (target.energy < target.energyCapacity)
+			{
+				creep.transferEnergy (target);
 			}
 			else
-				creep.dropEnergy();
+			{
+				creep.dropEnergy ();
+			}
 		}
 		//Let's do the moving
-		else {
-			creep.moveTo(target);
+		else 
+		{
+			creep.moveTo (target);
 		}
 	}
 };
