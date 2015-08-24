@@ -79,7 +79,7 @@ var proto =
 		// Add enough MOVE parts to let it move at half the max speed
 		for (var i = 0; i < this.baseParts.length / 2; i++) 
 		{
-			baseBody.push(MOVE);
+			baseBody.push (MOVE);
 		}
     
 		// How many baseBodys we can produce with maxEnergy
@@ -88,7 +88,7 @@ var proto =
 		// If there are more parts than maximum, lower the 'times' accordingly
 		if (times * baseBody.length > MAX_PARTS)
 		{
-			times = Math.floor(MAX_PARTS / baseBody.length);
+			times = Math.floor (MAX_PARTS / baseBody.length);
 		}
 		else if (times == 0)
 		{
@@ -102,11 +102,11 @@ var proto =
 			finalBody = finalBody.concat(baseBody);
 		}
     
-		//console.log ('---------------');
-		//console.log ('baseBody cost: '  + calculateCost(baseBody));
-		//console.log ('maximum energy: ' + maxEnergy);
-		//console.log ('finalBody: '      + finalBody);
-		//console.log ('---------------');
+		console.log ('	---------------');
+		console.log ('	baseBody cost: '  + calculateCost(baseBody));
+		console.log ('	maximum energy: ' + maxEnergy);
+		console.log ('	finalBody: '      + finalBody);
+		console.log ('	---------------');
 		return finalBody;
 	},
 

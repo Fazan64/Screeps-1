@@ -13,10 +13,7 @@ module.exports =
 			{
 				rolesCache [role] = require ("roles_" + role);
 			}
-			catch(e)
-			{
-				
-			}
+			catch(e) {}
 		}
 		return rolesCache [role] !== undefined;
 	},
@@ -35,7 +32,7 @@ module.exports =
 
 	getRoleBodyParts: function (role)
 	{
-		if(!this.roleExists(role))
+		if (!this.roleExists(role))
 		{
 			return false;
 		}
@@ -48,7 +45,7 @@ module.exports =
 		}
 		else
 		{
-			return role.prototype.getParts.call(role);
+			return role.prototype.getParts.call (role);
 		}
 	}
 };
