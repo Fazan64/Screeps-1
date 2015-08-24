@@ -6,36 +6,40 @@ var scavenger =
 	{
 		var creep = this.creep;
 
-		var droppedEnergy = creep.pos.findNearest(Game.DROPPED_ENERGY, {
-			filter: function(en) {
-				var pickup = true;
-				var tile = creep.room.lookAt(en);
-				for(var i in tile)
+		var droppedEnergy = this.getClosest (FIND_DROPPED_ENERGY, {
+			filter: function (en) 
+			{
+				var creeps = creep.room.lookForAt ('creep');
+				for (var i in creeps)
 				{
-					if(tile[i].type == "creep" && tile[i].creep.memory && tile[i].creep.memory.role == "miner")
-						pickup = false;
+					// Make scavengers pickup only the energy which wasn't 
+					// dropped by miners since that is miner_helpers job
+					if (creeps [i].memory && creeps [i].memory.role == "miner")
+					{
+						return false;
+					}
 				}
-
-				return pickup;
+				return true;
 			}
 		});
 
-		if(droppedEnergy == null || creep.energy == creep.energyCapacity)
+		if (droppedEnergy == null || creep.energy == creep.energyCapacity)
 		{
-			var nearestSpawn = creep.pos.findNearest(Game.MY_SPAWNS, {
-				filter: function(spawn)
+			var nearestSpawn = creep.pos.findNearest(Game.spawns, {
+				filter: function (spawn)
 				{
 					return spawn.energy < spawn.energyCapacity;
 				}
 			});
-
-			creep.moveTo(nearestSpawn);
-			creep.transferEnergy(nearestSpawn);
+			
+			if (nearestSpawn)
+			{
+				this.moveAndPerform (nearestSpawn, creep.transferEnergy);
+			}
 		}
 		else
 		{
-			creep.moveTo(droppedEnergy);
-			creep.pickup(droppedEnergy);
+			this.moveAndPerform (droppedEnergy, creep.pickup);
 		}
 	}
 };
