@@ -19,3 +19,5 @@ for (var i in Game.spawns)
 //factory.buildArmyWhileIdle();
 
 performRoles (Game.creeps);
+
+console.log ("Used cpu: " + Game.getUsedCpu () + " / " + Game.cpuLimit);
