@@ -16,5 +16,5 @@ function initMemory (room)
 
 module.exports = function (room)
 {
-	initMemory ();
+	initMemory (room);
 }
