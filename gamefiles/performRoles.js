@@ -11,12 +11,13 @@ module.exports = function(creeps)
 
 		var role = creep.memory.role;
 
+		var roleObject = null;
 		if (roleManager.roleExists (role))
 		{
-			role = roleManager.getRole (role);
+			roleObject = roleManager.getRole (role);
 		}
 
-		var roleObject = Object.create (role);
+		roleObject = Object.create (roleObject);
 		roleObject.setCreep (creep);
 		try 
 		{ 
