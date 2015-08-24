@@ -35,8 +35,8 @@ var proto =
 			this.creep.memory.onSpawned = true;
 		}
 
-		//this.action.call (this.creep);
-		this.action ();
+		this.action.call (this);
+		//this.action ();
 
 		if (this.creep.ticksToLive == 1)
 		{
