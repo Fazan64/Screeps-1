@@ -47,6 +47,7 @@ function spawnCreep (role, memory, spawn)
 
 	if (!manager.roleExists(role))
 	{
+        console.log ("There is no such role as " + role + ". Aborting...");
 		return;
 	}
 
@@ -81,6 +82,7 @@ function spawnNeededCreep (spawn)
     // Nothing to create, queue's empty
     if (!needed || !needed.length) 
 	{
+        console.log ("Room's needs queue is empty! Idling...");
         return;
 	}
 	
