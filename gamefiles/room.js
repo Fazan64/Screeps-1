@@ -4,6 +4,13 @@ function initMemory (room)
 	{
 		var needs = room.memory.needs = {};
 		needs.creeps = [];
+		// temp
+		needs.creeps.push (
+			{
+				role : 'harvester',
+				memory : {}
+			}
+		);
 	}
 }
 
