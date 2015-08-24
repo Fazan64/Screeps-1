@@ -7,7 +7,7 @@ var proto =
 	/**
 	 * For optimization
 	 */
-	cache : {},
+	_cache : {},
 	
 	/**
 	 * The creep for this role
