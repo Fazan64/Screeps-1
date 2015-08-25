@@ -33,7 +33,7 @@ var helper =
 		var spawn = Game.getObjectById (creep.memory.spawn);
 		spawn.room.memory.suppliers [creep.id] = 
 		{ 
-			supplyPerTick: miner.minedPerTick
+			supplyPerTick: miner.memory.minedPerTick
 		}
 	},
 	
