@@ -21,3 +21,4 @@ for (var i in Game.spawns)
 performRoles (Game.creeps);
 
 console.log ("Used cpu: " + Game.getUsedCpu () + " / " + Game.cpuLimit);
+console.log ("-------------------------------------------------------");
