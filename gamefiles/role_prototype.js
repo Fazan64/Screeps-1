@@ -126,7 +126,7 @@ var proto =
 	 * doesn't exist anymore, so this.creep == null,
 	 * but the memory of the deceased is still there.
 	 */
-	deathHandler: function (memory)
+	onDeath: function (memory)
 	{
 		console.log ("Handling creep death...");
 		// Erase memory of the deceased

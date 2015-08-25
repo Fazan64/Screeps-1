@@ -56,12 +56,16 @@ var helper =
 		// then find that miner by his id
 		if (creep.memory.miner == undefined)
 		{
-			this.assignMiner();
+			this.assignMiner ();
+		}
+		var miner = Game.getObjectById (creep.memory.miner);
+		// If stored id was an id of a dead creep
+		if (miner === null)
+		{
+			this.assignMiner ();
 		}
 
-		var miner = Game.getObjectById (creep.memory.miner);
-
-		if (miner == null) 
+		if (miner === null) 
 		{
 			creep.say ("I see no miners to help, and thus I die");
 			creep.suicide ();

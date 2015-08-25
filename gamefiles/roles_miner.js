@@ -9,14 +9,14 @@ var miner =
 	
 	baseParts : [WORK, WORK],
 
-	getOpenSource: function()
+	getOpenSource: function ()
 	{
 		var creep = this.creep;
 
 		var source = this.getClosest (FIND_SOURCES_ACTIVE, {
 			filter: function(source)
 			{
-				if (Memory.sources[source.id] == undefined || Memory.sources[source.id].miner == undefined || Memory.sources[source.id].miner == creep.id)
+				if (Memory.sources [source.id] == undefined || Memory.sources [source.id].miner == undefined || Memory.sources[source.id].miner == creep.id)
 				{
 					return true;
 				}
@@ -33,7 +33,7 @@ var miner =
 		return source;
 	},
 
-	setSourceToMine: function(source)
+	setSourceToMine: function (source)
 	{
 		var creep = this.creep;
 
@@ -42,7 +42,7 @@ var miner =
 			return;
 		}
 
-		if(Memory.sources [source.id] == undefined)
+		if (Memory.sources [source.id] == undefined)
 		{
 			Memory.sources [source.id] = { id: source.id };
 		}
@@ -74,7 +74,7 @@ var miner =
 		creep.memory.helpersNeeded = creepsNeeded;
 	},
 
-	onSpawn: function()
+	onSpawn: function ()
 	{
 		var creep = this.creep;
 
@@ -86,6 +86,20 @@ var miner =
 		this.setSourceToMine (source);
 
 		creep.memory.onCreated = true;
+	},
+	
+	onDeath: function (memory)
+	{
+		if (memory.source !== undefined)
+		{
+			var source = Game.getObjectById (memory.source);
+			if (source)
+			{
+				source.memory.miner = null;
+			}
+		}
+		
+		memory = undefined;
 	},
 
 	action: function()
@@ -100,7 +114,7 @@ var miner =
 		if (source == null) 
 		{
 			creep.say ("I have no source assigned, searching...");
-			var source = this.getOpenSource();
+			var source = this.getOpenSource ();
 
 			if (!source)
 			{
@@ -113,12 +127,6 @@ var miner =
 		}
 
 		creep.memory.isNearSource = creep.pos.inRangeTo (source, 5);
-
-		if (Memory.sources [source.id] == undefined)
-		{
-			Memory.sources [source.id] = { id: source.id };
-		}
-		Memory.sources[source.id].miner = creep.id;
 
 		this.moveAndPerform (source, creep.harvest);
 	}
