@@ -40,7 +40,7 @@ var helper =
 	onStart: function ()
 	{
 		var creep = this.creep;
-		creep.memory.spawn = this.getClosest (Game.spawns).id;
+		creep.memory.spawn = this.getClosest (FIND_MY_SPAWNS).id;
 		creep.memory.id = creep.id;
 	},
 	
