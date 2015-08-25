@@ -131,7 +131,7 @@ var helper =
 
 			return;
 		}
-		//Okay, everything below is for dropping energy off
+		// Okay, everything below is for dropping energy off
 		else
 		{
 			var target = null;
