@@ -84,7 +84,7 @@ var miner =
 
 	},
 
-	onSpawn: function ()
+	onStart: function ()
 	{
 		var creep = this.creep;
 
