@@ -93,7 +93,7 @@ var miner =
 		
 		creep.minedPerTick = creep.getActiveBodyparts (WORK) * WORK_EFFICIENCY;
 
-		var source = this.getOpenSource();
+		var source = this.getOpenSource ();
 		if (source)
 		{
 			creep.say ("Source found!");
