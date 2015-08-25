@@ -1,6 +1,6 @@
-var roleManager = require('roleManager');
+var roleManager = require ('roleManager');
 
-module.exports = function(creeps)
+module.exports = function (creeps)
 {
 	//For each creep, check if they have a role. If they do, load and run it
 	for (var name in creeps)
@@ -14,10 +14,9 @@ module.exports = function(creeps)
 		var roleObject = null;
 		if (roleManager.roleExists (role))
 		{
-			roleObject = roleManager.getRole (role);
+			roleObject = roleManager.getRoleObject (role);
 		}
 
-		roleObject = Object.create (roleObject);
 		roleObject.setCreep (creep);
 		try 
 		{ 
@@ -25,7 +24,31 @@ module.exports = function(creeps)
 		} 
 		catch(e) 
 		{ 
+			console.log ("Error while executing role behaviour: " + role + " " + creep.name);
 			console.log (e)	
 		};
+		
+		
+		creep.memory.lastAliveTime = Game.time;
+		
+	}
+	
+	// Now we check if any creeps have died
+	for (var i in Memory.creeps) 
+	{
+		var creepMemory = Memory.creeps [i];
+		
+		// If so, get an appropriate roleObject and execute it's deathHandler
+		if (!Game.creeps [i] && creepMemory.lastAliveTime == Game.time - 1) 
+		{
+			console.log (i + " have died :(");
+			
+			roleObject = null;
+			if (roleManager.roleExists (creepMemory.role)) 
+			{
+				roleObject = roleManager.getRoleObject (creepMemory.role);
+				roleObject.deathHandler (creepMemory);
+			}
+		}
 	}
 };

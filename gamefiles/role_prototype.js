@@ -61,7 +61,7 @@ var proto =
 	},
 
 	/**
-	 * Generates a biggest creep bneedsody made from 'baseParts'
+	 * Generates a biggest creep made from 'baseParts'
  	 * affordable for 'maxEnergy' 
 	 * 
 	 * @param maxEnergy : {Number}
@@ -111,15 +111,22 @@ var proto =
 		return finalBody;
 	},
 
-	action: function() { },
+	action: function () { },
 
-	onSpawn: function() { },
+	onSpawn: function () { },
 
-	onSpawnStart: function() { },
+	onSpawnStart: function () { },
 
-	onSpawnEnd: function() { },
+	onSpawnEnd: function () { },
 
-	beforeAge: function() { },
+	beforeAge: function () { },
+	
+	deathHandler: function (memory)
+	{
+		console.log ("Handling creep death...");
+		// Erase memory of the deceased
+		memory = undefined;
+	},
 	
 	/**
 	 * Either performs an action 'action' to a target 'target', 

@@ -18,7 +18,7 @@ module.exports =
 		return rolesCache [role] !== undefined;
 	},
 
-	getRole: function (role)
+	getRoleObject: function (role)
 	{
 		if (!this.roleExists(role))
 		{
@@ -27,7 +27,7 @@ module.exports =
 
 		var roleObject = rolesCache [role];
         roleObject = extend (roleObject, protoRole);
-		return roleObject;
+		return Object.create (roleObject);
 	},
 
 	getRoleBodyParts: function (role, maxEnergy)
