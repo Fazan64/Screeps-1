@@ -14,6 +14,12 @@ var miner =
 	getOpenSource: function ()
 	{
 		var creep = this.creep;
+		
+		// This init should be in a different place
+		if (Memory.sources === undefined)
+		{
+			Memory.sources = {};
+		}
 
 		var source = this.getClosest (FIND_SOURCES_ACTIVE, {
 			filter: function(source)
