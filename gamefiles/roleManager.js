@@ -37,7 +37,7 @@ module.exports =
 			return false;
 		}
 
-		var roleObject = this.getRole (role);
+		var roleObject = this.getRoleObject (role);
 
 		if (roleObject.getParts !== undefined)
 		{
