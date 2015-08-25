@@ -30,13 +30,23 @@ var proto =
 	run: function()
 	{
 		console.log ("Performing role behaviour for creep " + this.creep.name + "..."); 
-		if (this.creep.memory.onSpawned == undefined) 
+		
+		if (this.creep.memory.onStarted == undefined)
+		{
+			this.onStart ();
+			this.creep.memory.onStarted = true;
+		}
+		
+		if (this.creep.memory.onSpawned == undefined && !this.creep.spawning) 
 		{
 			this.onSpawn ();
 			this.creep.memory.onSpawned = true;
 		}
 	
-		this.action ();
+		if (!this.creep.spawning)
+		{
+			this.action ();
+		}
 
 		if (this.creep.ticksToLive == 1)
 		{
@@ -44,24 +54,8 @@ var proto =
 		}
 	},
 
-	handleEvents: function()
-	{
-		if(this.creep.memory.onSpawned == undefined) 
-		{
-			this.onSpawnStart ();
-			this.onSpawn ();
-			this.creep.memory.onSpawned = true;
-		}
-
-		if(this.creep.memory.onSpawnEnd == undefined && !this.creep.spawning) 
-		{
-			this.onSpawnEnd();
-			this.creep.memory.onSpawnEnd = true;
-		}
-	},
-
 	/**
-	 * Generates a biggest creep made from 'baseParts'
+	 * Generates a biggest creep body made from 'baseParts'
  	 * affordable for 'maxEnergy' 
 	 * 
 	 * @param maxEnergy : {Number}
@@ -111,15 +105,13 @@ var proto =
 		return finalBody;
 	},
 
-	action: function () { },
+	action: function () {},
+	
+	onStart: function () {},
 
-	onSpawn: function () { },
+	onSpawn: function () {},
 
-	onSpawnStart: function () { },
-
-	onSpawnEnd: function () { },
-
-	beforeAge: function () { },
+	beforeAge: function () {},
 	
 	/** 
 	 * Note: when this is called, the creep itself
