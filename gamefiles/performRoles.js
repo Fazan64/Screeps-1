@@ -1,3 +1,4 @@
+var SAFEMODE = false;
 var roleManager = require ('roleManager');
 
 module.exports = function (creeps)
@@ -18,16 +19,22 @@ module.exports = function (creeps)
 		}
 
 		roleObject.setCreep (creep);
-		try 
-		{ 
+		if (SAFEMODE)
+		{
+			try 
+			{ 
+				roleObject.run ();
+			} 
+			catch(e) 
+			{ 
+				console.log ("Error while executing role behaviour: " + role + " " + creep.name);
+				console.log (e)	
+			};
+		}
+		else
+		{
 			roleObject.run ();
-		} 
-		catch(e) 
-		{ 
-			console.log ("Error while executing role behaviour: " + role + " " + creep.name);
-			console.log (e)	
-		};
-		
+		}
 		
 		creep.memory.lastAliveTime = Game.time;
 		
