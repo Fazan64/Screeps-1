@@ -131,75 +131,77 @@ var helper =
 
 			return;
 		}
-
-		var target = null;
-
 		//Okay, everything below is for dropping energy off
-		var spawn = Game.getObjectById (creep.memory.spawn);
-		if (!spawn)
+		else
 		{
-			spawn = this.getClosest (Game.spawns);
+			var target = null;
+	
+			var spawn = Game.getObjectById (creep.memory.spawn);
+			if (!spawn)
+			{
+				spawn = this.getClosest (Game.spawns);
+				if (spawn)
+				{
+					creep.memory.spawn = spawn.id;
+				}
+			}
+	
+			//If we found it, set it as our target
 			if (spawn)
 			{
-				creep.memory.spawn = spawn.id;
+				target = spawn;
 			}
-		}
-
-		//If we found it, set it as our target
-		if (spawn)
-		{
-			target = spawn;
-		}
-		
-		// Get the direction away from target
-		// It's a lot less precise without pathfinding but 
-		// doing a complete path search is just not worth it
-		//var directionAway = creep.pos.getDirectionTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y);
-
-		// Let's look for a courier in that direction. We'll check on making sure 
-		// they're the same role,
-		// if they can hold any energy, 
-		// if they're in range and 
-		// [EXPERIMENTAL] if going to them doesn't mean going away from target
-
-		var courier = this.getClosest (Game.creeps, {
-			filter: function (possibleTarget)
-			{
-				return 
-				(
-					possibleTarget.memory.role == creep.memory.role
-					&& possibleTarget.energy < possibleTarget.energyCapacity
-					&& creep.pos.inRangeTo (possibleTarget, 1)
-					//&& creep.pos.getDirectionTo (possibleTarget) != directionAway
-				);
-			}
-		});
-
-		//If we found a courier, make that courier our new target
-		if (courier !== null && !creep.pos.isNearTo (target)) 
-		{
-			target = courier;
-			target.memory.courierTarget = creep.id;
-		}
-
-		if (target)
-		{
-			//If we're near to the target, either give it our energy or drop it
-			if (creep.pos.isNearTo (target)) 
-			{
-				if (target.energy < target.energyCapacity)
+			
+			// Get the direction away from target
+			// It's a lot less precise without pathfinding but 
+			// doing a complete path search is just not worth it
+			//var directionAway = creep.pos.getDirectionTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y);
+	
+			// Let's look for a courier in that direction. We'll check on making sure 
+			// they're the same role,
+			// if they can hold any energy, 
+			// if they're in range and 
+			// [EXPERIMENTAL] if going to them doesn't mean going away from target
+	
+			var courier = this.getClosest (Game.creeps, {
+				filter: function (possibleTarget)
 				{
-					creep.transferEnergy (target);
+					return 
+					(
+						possibleTarget.memory.role == creep.memory.role
+						&& possibleTarget.energy < possibleTarget.energyCapacity
+						&& creep.pos.inRangeTo (possibleTarget, 1)
+						//&& creep.pos.getDirectionTo (possibleTarget) != directionAway
+					);
 				}
-				else
-				{
-					creep.dropEnergy ();
-				}
-			}
-			//Let's do the moving
-			else 
+			});
+	
+			//If we found a courier, make that courier our new target
+			if (courier !== null && !creep.pos.isNearTo (target)) 
 			{
-				creep.moveTo (target);
+				target = courier;
+				target.memory.courierTarget = creep.id;
+			}
+	
+			if (target)
+			{
+				//If we're near to the target, either give it our energy or drop it
+				if (creep.pos.isNearTo (target)) 
+				{
+					if (target.energy < target.energyCapacity)
+					{
+						creep.transferEnergy (target);
+					}
+					else
+					{
+						creep.dropEnergy ();
+					}
+				}
+				//Let's do the moving
+				else 
+				{
+					creep.moveTo (target);
+				}
 			}
 		}
 	}
