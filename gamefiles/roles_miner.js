@@ -87,6 +87,7 @@ var miner =
 	onStart: function ()
 	{
 		var creep = this.creep;
+		console.log ("executing onStart...");
 
 		creep.memory.isNearSource = false;
 		creep.memory.helpers = [];
