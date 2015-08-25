@@ -22,6 +22,12 @@ function initMemory (room)
 			// temp
 			needs.creeps.push (
 				{
+					role : 'harvester',
+					memory : {}
+				}
+			);
+			needs.creeps.push (
+				{
 					role : 'miner',
 					memory : {}
 				}
