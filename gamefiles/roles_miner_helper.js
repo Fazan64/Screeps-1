@@ -28,6 +28,44 @@ var helper =
 
 		creep.memory.miner = miner.id;
 		miner.memory.helpers.push (creep.id);
+		
+		// Tell the room that we now supply it with energy
+		var spawn = Game.getObjectById (creep.memory.spawn);
+		spawn.room.memory.suppliers [creep.id] = 
+		{ 
+			supplyPerTick: miner.minedPerTick
+		}
+	},
+	
+	onSpawn: function ()
+	{
+		var creep = this.creep;
+		creep.memory.spawn = this.getClosest (Game.spawns).id;
+		creep.memory.id = creep.id;
+	},
+	
+	onDeath: function (memory)
+	{
+		// We no longer supply the room with energy
+		var spawn = Game.getObjectById (memory.spawn);
+		spawn.room.memory.suppliers [memory.id] = undefined;
+		
+		if (memory.miner)
+		{
+			var miner = Game.getObjectByName (memory.miner);
+			if (miner)
+			{
+				// Remove itself from miner helpers
+				for (var i in miner.memory.helpers)
+				{
+					if (miner.memory.helpers [i] == memory.id)
+					{
+						miner.memory.helpers.splice (i, 1);
+						break;
+					}
+				}
+			}
+		}
 	},
 
 	/**
@@ -97,7 +135,15 @@ var helper =
 		var target = null;
 
 		//Okay, everything below is for dropping energy off
-		var spawn = this.getClosest (Game.spawns);
+		var spawn = Game.getObjectById (creep.memory.spawn);
+		if (!spawn)
+		{
+			spawn = this.getClosest (Game.spawns);
+			if (spawn)
+			{
+				creep.memory.spawn = spawn.id;
+			}
+		}
 
 		//If we found it, set it as our target
 		if (spawn)
@@ -136,22 +182,25 @@ var helper =
 			target.memory.courierTarget = creep.id;
 		}
 
-		//If we're near to the target, either give it our energy or drop it
-		if (creep.pos.isNearTo (target)) 
+		if (target)
 		{
-			if (target.energy < target.energyCapacity)
+			//If we're near to the target, either give it our energy or drop it
+			if (creep.pos.isNearTo (target)) 
 			{
-				creep.transferEnergy (target);
+				if (target.energy < target.energyCapacity)
+				{
+					creep.transferEnergy (target);
+				}
+				else
+				{
+					creep.dropEnergy ();
+				}
 			}
-			else
+			//Let's do the moving
+			else 
 			{
-				creep.dropEnergy ();
+				creep.moveTo (target);
 			}
-		}
-		//Let's do the moving
-		else 
-		{
-			creep.moveTo (target);
 		}
 	}
 };

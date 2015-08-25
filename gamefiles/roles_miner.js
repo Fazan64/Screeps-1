@@ -1,3 +1,5 @@
+var WORK_EFFICIENCY = 2;
+
 /**
  * This guy just finds a source, and stays near it. His job is just to mine away and let the energy fall on the ground
  *
@@ -16,12 +18,12 @@ var miner =
 		var source = this.getClosest (FIND_SOURCES_ACTIVE, {
 			filter: function(source)
 			{
-				if (Memory.sources [source.id] == undefined || Memory.sources [source.id].miner == undefined || Memory.sources[source.id].miner == creep.id)
+				if (Memory.sources [source.id] == undefined || Memory.sources [source.id].miner == undefined || Memory.sources [source.id].miner == creep.id)
 				{
 					return true;
 				}
 
-				if (Game.getObjectById (Memory.sources[source.id].miner) == null)
+				if (Game.getObjectById (Memory.sources [source.id].miner) == null)
 				{
 					return true;
 				}
@@ -51,10 +53,11 @@ var miner =
 		creep.memory.source = source.id;
 
 		var helperSpawn = source.pos.findClosestByRange (Game.spawns);
+		// A heuristic?
 		var steps = helperSpawn.pos.getRangeTo(source).length * 3;
 		var creepsNeeded = Math.round((steps * 8) / 100);
 
-		if(creepsNeeded > 5)
+		if (creepsNeeded > 5)
 		{
 			creepsNeeded = 5;
 		}
@@ -72,6 +75,7 @@ var miner =
 		}
 
 		creep.memory.helpersNeeded = creepsNeeded;
+
 	},
 
 	onSpawn: function ()
@@ -80,12 +84,19 @@ var miner =
 
 		creep.memory.isNearSource = false;
 		creep.memory.helpers = [];
+		
+		creep.minedPerTick = creep.carry.getActiveBodyparts (WORK) * WORK_EFFICIENCY;
 
 		var source = this.getOpenSource();
-		creep.say ("Source found!");
-		this.setSourceToMine (source);
-
-		creep.memory.onCreated = true;
+		if (source)
+		{
+			creep.say ("Source found!");
+			this.setSourceToMine (source);
+		}	
+		else
+		{
+			creep.say ("No open sources!");
+		}
 	},
 	
 	onDeath: function (memory)
