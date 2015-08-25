@@ -162,7 +162,7 @@ var helper =
 		// if they're in range and 
 		// [EXPERIMENTAL] if going to them doesn't mean going away from target
 
-		var courier = creep.pos.getClosest (Game.creeps, {
+		var courier = this.getClosest (Game.creeps, {
 			filter: function (possibleTarget)
 			{
 				return 
