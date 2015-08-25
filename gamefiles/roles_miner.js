@@ -72,7 +72,7 @@ var miner =
 		{
 			source.room.memory.needs.creeps.unshift (
 			{ 
-				type: 'miner_helper', 
+				role: 'miner_helper', 
 				memory: 
 				{
 					miner: creep.id
