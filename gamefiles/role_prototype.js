@@ -121,6 +121,11 @@ var proto =
 
 	beforeAge: function () { },
 	
+	/** 
+	 * Note: when this is called, the creep itself
+	 * doesn't exist anymore, so this.creep == null,
+	 * but the memory of the deceased is still there.
+	 */
 	deathHandler: function (memory)
 	{
 		console.log ("Handling creep death...");
