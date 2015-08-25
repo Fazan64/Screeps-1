@@ -85,7 +85,7 @@ var miner =
 		creep.memory.isNearSource = false;
 		creep.memory.helpers = [];
 		
-		creep.minedPerTick = creep.carry.getActiveBodyparts (WORK) * WORK_EFFICIENCY;
+		creep.minedPerTick = creep.getActiveBodyparts (WORK) * WORK_EFFICIENCY;
 
 		var source = this.getOpenSource();
 		if (source)
