@@ -98,5 +98,5 @@ module.exports = function (room)
 {
 	initMemory (room);
 	
-	updateNeeds ();
+	updateNeeds (room);
 }
