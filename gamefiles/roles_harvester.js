@@ -19,6 +19,11 @@ var harvester =
 		creep.memory.source = source.id;
 		creep.memory.spawn = spawn.id;
 		
+		spawn.room.suppliers [creep.id] = 
+		{
+			supplyPerTick = creep.getActiveBodyParts (MOVE) * 2;
+		}
+		
 	},
 	
 	onDeath: function (memory)
