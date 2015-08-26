@@ -78,7 +78,7 @@ function updateNeeds (room)
 	for (var i in miners)
 	{
 		var miner = miners [i];
-		var helpersToAdd = miner.memory.helpersNeeded - miner.memory.heplers.length; 
+		var helpersToAdd = miner.memory.helpersNeeded - miner.memory.helpers.length; 
 
 		// Won't execute if helpersToAdd <= 0
 		for (var i = 0; i < helpersToAdd; i++) 
