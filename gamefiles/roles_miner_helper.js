@@ -52,7 +52,7 @@ var helper =
 		
 		if (memory.miner)
 		{
-			var miner = Game.getObjectByName (memory.miner);
+			var miner = Game.getObjectById (memory.miner);
 			if (miner)
 			{
 				// Remove itself from miner helpers
