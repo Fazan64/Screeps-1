@@ -22,7 +22,7 @@ var archer =
 		
 		if (target)
 		{
-			this.kite (target);
+			//this.kite (target);
 		}
 		else
 		{
