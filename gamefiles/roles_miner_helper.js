@@ -190,7 +190,8 @@ var helper =
 				//If we're near to the target, either give it our energy or drop it
 				if (creep.pos.isNearTo (target)) 
 				{
-					if (target.energy < target.energyCapacity)
+					var notFull = target.energy !== undefined ? target.energy < target.energyCapacity : target.carry < target.carryCapacity;
+					if (notFull)
 					{
 						creep.transferEnergy (target);
 					}
