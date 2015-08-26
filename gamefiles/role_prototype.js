@@ -251,6 +251,7 @@ var proto =
 	{
 		var creep = this.creep;
 
+		creep.say ("Kite");
 		if (target.pos.inRangeTo (creep.pos, 2)) 
 		{
 			this.moveAwayFrom (target);
