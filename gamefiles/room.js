@@ -75,8 +75,9 @@ function updateNeeds (room)
 		}
 	});
 	
-	for (var miner in miners)
+	for (var i in miners)
 	{
+		var miner = miners [i];
 		var helpersToAdd = miner.memory.helpersNeeded - miner.memory.heplers.length; 
 
 		// Won't execute if helpersToAdd <= 0
