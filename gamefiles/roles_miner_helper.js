@@ -42,6 +42,7 @@ var helper =
 		var creep = this.creep;
 		creep.memory.spawn = this.getClosest (FIND_MY_SPAWNS).id;
 		creep.memory.id = creep.id;
+		this.assighMiner ();
 	},
 	
 	onDeath: function (memory)
