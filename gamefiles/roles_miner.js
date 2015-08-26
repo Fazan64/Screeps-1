@@ -97,12 +97,12 @@ var miner =
 		var source = this.getOpenSource ();
 		if (source)
 		{
-			creep.say ("Source found!");
+			console.log ("Source found!");
 			this.setSourceToMine (source);
 		}	
 		else
 		{
-			creep.say ("No open sources!");
+			console.log ("No open sources!");
 		}
 	},
 	
