@@ -139,7 +139,7 @@ var helper =
 			var spawn = Game.getObjectById (creep.memory.spawn);
 			if (!spawn)
 			{
-				spawn = this.getClosest (Game.spawns);
+				spawn = this.getClosest (FIND_MY_SPAWNS);
 				if (spawn)
 				{
 					creep.memory.spawn = spawn.id;
@@ -163,7 +163,7 @@ var helper =
 			// if they're in range and 
 			// [EXPERIMENTAL] if going to them doesn't mean going away from target
 	
-			var courier = this.getClosest (Game.creeps, {
+			var courier = this.getClosest (FIND_MY_CREEPS, {
 				filter: function (possibleTarget)
 				{
 					return 
