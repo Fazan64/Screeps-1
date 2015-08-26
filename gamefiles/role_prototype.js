@@ -176,6 +176,8 @@ var proto =
 	rest: function (civilian)
 	{
 		var creep = this.creep;
+		
+		creep.say ("Resting");
 
 		var distance = 4;
 		var restTarget = creep.pos;
