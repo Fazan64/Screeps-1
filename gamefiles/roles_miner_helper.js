@@ -179,6 +179,8 @@ var helper =
 			//If we found a courier, make that courier our new target
 			if (courier !== null && !creep.pos.isNearTo (target)) 
 			{
+				creep.say ("Found a courier");
+				courier.say ("Will be a courier");
 				target = courier;
 				target.memory.courierTarget = creep.id;
 			}
