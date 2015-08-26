@@ -52,23 +52,6 @@ function updateNeeds (room)
 		creeps : []
 	};
 	
-	var energySupply = getEnergySupply (room);
-	var neededRole = 'miner';
-	if (energySupply == 0)
-	{
-		var neededRole = 'harvester';
-	}
-	
-	if (energySupply < neededSupply)
-	{
-		newNeeds.creeps.push (
-			{
-				role: neededRole,
-				memory: {}
-			}
-		)
-	}
-	
 	var miners = room.find (FIND_MY_CREEPS, { 
 		filter : function (creep) {
 			return creep.memory.role == "miner";
@@ -90,6 +73,23 @@ function updateNeeds (room)
 				}
 			)
 		}
+	}
+	
+	var energySupply = getEnergySupply (room);
+	var neededRole = 'miner';
+	if (energySupply == 0)
+	{
+		var neededRole = 'harvester';
+	}
+	
+	if (energySupply < neededSupply)
+	{
+		newNeeds.creeps.push (
+			{
+				role: neededRole,
+				memory: {}
+			}
+		)
 	}
 	
 	room.memory.needs = newNeeds;
