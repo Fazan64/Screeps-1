@@ -30,7 +30,7 @@ var harvester =
 	{
 		// We no longer supply the room with energy
 		var spawn = Game.getObjectById (memory.spawn);
-		spawn.room.memory.suppliers [memory.id] = undefined;
+		delete spawn.room.memory.suppliers [memory.id];
 	},
 
 	action: function () 
