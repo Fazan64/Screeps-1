@@ -14,7 +14,7 @@ var harvester =
 		creep.memory.id = creep.id;
 		
 		var source = this.getClosest (FIND_SOURCES_ACTIVE);
-		var spawn = source.pos.getClosestByRange (FIND_MY_SPAWNS);
+		var spawn = source.pos.findClosestByRange (FIND_MY_SPAWNS);
 		
 		creep.memory.source = source.id;
 		creep.memory.spawn = spawn.id;
