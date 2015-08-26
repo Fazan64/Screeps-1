@@ -217,6 +217,7 @@ var proto =
 		{
 			if (target.pos.inRangeTo (creep.pos, 3) )
 			{
+				creep.say ("Ranged attack");
 				creep.rangedAttack (target);
 				return target;
 			}
