@@ -111,7 +111,7 @@ var helper =
 		}
 
 		// If we can still pick up energy, let's do that
-		if (creep.energy < creep.energyCapacity) 
+		if (creep.carry.energy < creep.carryCapacity) 
 		{
 			if (creep.pos.isNearTo (miner)) 
 			{
@@ -125,7 +125,6 @@ var helper =
 			{
 				if (miner.memory.isNearSource)
 				{
-					creep.say ("Moving to miner...");
 					creep.moveTo (miner);
 				}
 			}
