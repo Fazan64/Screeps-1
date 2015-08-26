@@ -44,7 +44,7 @@ function initMemory (room)
 	}
 }
 
-var neededSupply = 9999;
+var neededSupply = 15;
 function updateNeeds (room)
 {
 	var newNeeds = 
