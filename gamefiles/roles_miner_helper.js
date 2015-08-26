@@ -4,7 +4,6 @@
  * miner, all the helpers will only go for the first miner. To counter this, we assign them to a miner the same way
  * we assign a miner to a source
  */
-
 var helper = 
 {
 
@@ -14,14 +13,14 @@ var helper =
 	{
 		var creep = this.creep;
 
-		var miner = this.getClosest (Game.creeps, {
+		var miner = this.getClosest (FIND_MY_CREEPS, {
 			filter: function (miner) 
 			{
 				return miner.memory.role == 'miner' && miner.memory.helpers.length < miner.memory.helpersNeeded;
 			}
 		});
 
-		if (miner === undefined)
+		if (!miner)
 		{
 			return;
 		}
