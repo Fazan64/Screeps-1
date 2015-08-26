@@ -16,7 +16,7 @@ var miner =
 		var creep = this.creep;
 		
 		// This init should be in a different place
-		if (Memory.sources === undefined)
+		if (!Memory.sources)
 		{
 			Memory.sources = {};
 		}
