@@ -169,7 +169,7 @@ var helper =
 					return 
 					(
 						possibleTarget.memory.role == creep.memory.role
-						&& possibleTarget.energy < possibleTarget.energyCapacity
+						&& possibleTarget.carry.energy < possibleTarget.carryCapacity
 						&& creep.pos.inRangeTo (possibleTarget, 1)
 						//&& creep.pos.getDirectionTo (possibleTarget) != directionAway
 					);
