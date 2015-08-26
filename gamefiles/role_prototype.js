@@ -33,7 +33,6 @@ var proto =
 		
 		if (this.creep.memory.onStarted == undefined)
 		{
-			this.creep.memory.id = this.creep.id;
 			this.onStart ();
 			this.creep.memory.onStarted = true;
 		}
