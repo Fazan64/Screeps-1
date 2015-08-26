@@ -21,7 +21,7 @@ var harvester =
 		
 		spawn.room.suppliers [creep.id] = 
 		{
-			supplyPerTick = creep.getActiveBodyParts (MOVE) * 2;
+			supplyPerTick : creep.getActiveBodyParts (MOVE) * 2
 		}
 		
 	},
