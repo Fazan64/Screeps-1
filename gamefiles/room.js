@@ -8,7 +8,7 @@ function getEnergySupply (room)
 	//}
 	
 	//return total;
-	return room.memory.suppliers.length;
+	return room.memory.suppliers.length
 }
 
 function initMemory (room)
@@ -45,27 +45,58 @@ function initMemory (room)
 }
 
 var neededSupply = 9999;
-module.exports = function (room)
+function updateNeeds (room)
 {
-	initMemory (room);
-	
-	
-	var neededRole = 'miner';
+	var newNeeds = 
+	{
+		creeps : []
+	};
 	
 	var energySupply = getEnergySupply (room);
+	var neededRole = 'miner';
 	if (energySupply == 0)
 	{
-		neededRole = 'harvester';
+		var neededRole = 'harvester';
 	}
 	
 	if (energySupply < neededSupply)
 	{
-		room.memory.needs.creeps.push (
+		newNeeds.creeps.push (
 			{
-				role : neededRole,
-				memory : {}
+				role: neededRole,
+				memory: {}
 			}
-		);
-	} 
+		)
+	}
 	
+	var miners = room.find (FIND_MY_CREEPS, { 
+		filter : function (creep) {
+			return creep.memory.role == "miner";
+		}
+	});
+	
+	for (var miner in miners)
+	{
+		var helpersToAdd = miner.memory.helpersNeeded - miner.memory.heplers.length; 
+
+		// Won't execute if helpersToAdd <= 0
+		for (var i = 0; i < helpersToAdd; i++) 
+		{
+			newNeeds.creeps.push (
+				{
+					role : "miner_helper",
+					memory : {miner : miner.id}
+				}
+			)
+		}
+	}
+	
+	room.memory.needs = newNeeds;
+}
+
+module.exports = function (room)
+{
+	initMemory (room);
+	
+	updateNeeds ();
 }

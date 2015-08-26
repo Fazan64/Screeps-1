@@ -68,6 +68,7 @@ var miner =
 			creepsNeeded = 5;
 		}
 
+		/*
 		for (var i = 0; i < creepsNeeded; i++)
 		{
 			source.room.memory.needs.creeps.unshift (
@@ -79,6 +80,7 @@ var miner =
 				}
 			});
 		}
+		*/
 
 		creep.memory.helpersNeeded = creepsNeeded;
 
