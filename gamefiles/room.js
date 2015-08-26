@@ -43,7 +43,28 @@ function initMemory (room)
 	}
 }
 
+var neededSupply = 9999;
 module.exports = function (room)
 {
 	initMemory (room);
+	
+	
+	var neededRole = 'miner';
+	
+	var energySupply = getEnergySupply (room);
+	if (energySupply == 0)
+	{
+		neededRole = 'harvester';
+	}
+	
+	if (energySupply < neededSupply)
+	{
+		needs.creeps.push (
+			{
+				role : neededRole,
+				memory : {}
+			}
+		);
+	} 
+	
 }
