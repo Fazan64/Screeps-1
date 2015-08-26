@@ -11,7 +11,7 @@ var archer =
 		var creep = this.creep;
 
 		var target = this.getRangedTarget ();
-		if (target !== null)
+		if (target)
 		{
 			this.rangedAttack (target);
 		}
@@ -20,7 +20,7 @@ var archer =
 			target = this.getClosest (FIND_HOSTILE_CREEPS);
 		}
 		
-		if (target !== null)
+		if (target)
 		{
 			this.kite (target);
 		}

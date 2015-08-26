@@ -244,7 +244,7 @@ var proto =
 	/**
 	 * Makes a creep keep a distance of 3 to the 'target'
 	 */
-	kite: function(target) 
+	kite: function (target) 
 	{
 		var creep = this.creep;
 
