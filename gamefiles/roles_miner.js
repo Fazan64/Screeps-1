@@ -59,8 +59,7 @@ var miner =
 		creep.memory.source = source.id;
 
 		var helperSpawn = source.pos.findClosestByRange (FIND_MY_SPAWNS);
-		// A heuristic?
-		var steps = helperSpawn.pos.getRangeTo (source) * 3;
+		var steps = helperSpawn.pos.findPathTo (source) * 2;
 		var creepsNeeded = Math.round((steps * 8) / 100);
 
 		if (creepsNeeded > 5)
