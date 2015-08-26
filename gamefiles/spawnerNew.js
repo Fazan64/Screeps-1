@@ -27,9 +27,9 @@ function getTotalEnergy (spawn)
         filter: { structureType: STRUCTURE_EXTENSION }
     });
     
-    for (var extension in extensions)
+    for (var i in extensions)
     {
-        totalEnergy += extension.energy;
+        totalEnergy += extensions [i].energy;
     }
     
     return totalEnergy;
