@@ -59,7 +59,7 @@ module.exports = function (room)
 	
 	if (energySupply < neededSupply)
 	{
-		needs.creeps.push (
+		room.memory.needs.creeps.push (
 			{
 				role : neededRole,
 				memory : {}
