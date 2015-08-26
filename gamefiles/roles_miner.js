@@ -59,27 +59,13 @@ var miner =
 		creep.memory.source = source.id;
 
 		var helperSpawn = source.pos.findClosestByRange (FIND_MY_SPAWNS);
-		var steps = helperSpawn.pos.findPathTo (source) * 2;
+		var steps = helperSpawn.pos.findPathTo (source).length * 2;
 		var creepsNeeded = Math.round((steps * 8) / 100);
 
 		if (creepsNeeded > 5)
 		{
 			creepsNeeded = 5;
 		}
-
-		/*
-		for (var i = 0; i < creepsNeeded; i++)
-		{
-			source.room.memory.needs.creeps.unshift (
-			{ 
-				role: 'miner_helper', 
-				memory: 
-				{
-					miner: creep.id
-				}
-			});
-		}
-		*/
 
 		creep.memory.helpersNeeded = creepsNeeded;
 
