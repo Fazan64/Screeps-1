@@ -6,6 +6,27 @@ var harvester =
 {
 	
 	baseParts : [WORK, CARRY],
+	
+	onStart: function ()
+	{
+		var creep = this.creep;
+		
+		creep.memory.id = creep.id;
+		
+		var source = this.getClosest (FIND_SOURCES_ACTIVE);
+		var spawn = source.pos.getClosestByRange (FIND_MY_SPAWNS);
+		
+		creep.memory.source = source.id;
+		creep.memory.spawn = spawn.id;
+		
+	},
+	
+	onDeath: function (memory)
+	{
+		// We no longer supply the room with energy
+		var spawn = Game.getObjectById (memory.spawn);
+		spawn.room.memory.suppliers [memory.id] = undefined;
+	},
 
 	action: function () 
 	{
@@ -39,7 +60,6 @@ var harvester =
 				{
 					creep.moveTo (target);
 				}
-				
 			}
 		}
 	}

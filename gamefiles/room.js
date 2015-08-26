@@ -1,13 +1,14 @@
 function getEnergySupply (room)
 {
-	var total = 0;
+	//var total = 0;
 	
-	for (var i in room.memory.suppliers)
-	{
-		total += room.memory.suppliers [i].supplyPerTick;
-	}
+	//for (var i in room.memory.suppliers)
+	//{
+		//total += room.memory.suppliers [i].supplyPerTick;
+	//}
 	
-	return total;
+	//return total;
+	return room.memory.suppliers.length;
 }
 
 function initMemory (room)

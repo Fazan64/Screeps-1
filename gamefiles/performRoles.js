@@ -55,6 +55,7 @@ module.exports = function (creeps)
 			{
 				roleObject = roleManager.getRoleObject (creepMemory.role);
 				roleObject.onDeath (creepMemory);
+				delete Memory.creeps [i].memory;
 			}
 		}
 	}

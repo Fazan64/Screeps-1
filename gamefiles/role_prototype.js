@@ -33,6 +33,7 @@ var proto =
 		
 		if (this.creep.memory.onStarted == undefined)
 		{
+			this.creep.memory.id = this.creep.id;
 			this.onStart ();
 			this.creep.memory.onStarted = true;
 		}
@@ -118,12 +119,7 @@ var proto =
 	 * doesn't exist anymore, so this.creep == null,
 	 * but the memory of the deceased is still there.
 	 */
-	onDeath: function (memory)
-	{
-		console.log ("Handling creep death...");
-		// Erase memory of the deceased
-		memory = undefined;
-	},
+	onDeath: function (memory) {},
 	
 	/**
 	 * Either performs an action 'action' to a target 'target', 
