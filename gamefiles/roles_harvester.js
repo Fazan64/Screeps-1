@@ -31,7 +31,7 @@ Harvester.prototype.onStart = function ()
 	
 }
 
-Harvester.prototype.onDeath ()
+Harvester.prototype.onDeath (memory)
 {
 	// We no longer supply the room with energy
 	var spawn = Game.getObjectById (memory.spawn);
