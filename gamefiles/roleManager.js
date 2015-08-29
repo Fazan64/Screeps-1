@@ -8,7 +8,9 @@ module.exports =
 		{
 			try
 			{
+				debugger;
 				rolesCache [role] = require ("roles_" + role);
+				debugger;
 			}
 			catch(e) {}
 		}
