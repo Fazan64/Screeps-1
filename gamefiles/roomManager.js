@@ -28,6 +28,7 @@ RoomManager.prototype.initMemory = function ()
 		needs.energy = 0;
 		
 		room.memory.suppliers = {};
+		room.memory.upgraders = {};
 		
 		room.memory.initialized = true;
 	}
