@@ -40,6 +40,15 @@ Object.defineProperties (Room.prototype,
 			this._spawns = this._spawns || this.find (FIND_MY_SPAWNS);
 			return this._spawns;
 		}
+	},
+	
+	constructionSites :
+	{
+		get : function ()
+		{
+			this._constructionSites = this._constructionSites || this.find (FIND_CONSTRUCTION_SITES);
+			return this._constructionSites;
+		}
 	}	
 });
 

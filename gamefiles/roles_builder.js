@@ -78,7 +78,7 @@ var builder =
 			}
 
 			//If no repairs are needed, we're just going to go find some structures to build
-			var targets = creep.room.find (FIND_CONSTRUCTION_SITES);
+			var targets = creep.room.constructionSites;
 			var target = creep.pos.findClosestByRange (targets);
 			
 			if (target) 
