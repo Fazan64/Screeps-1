@@ -83,7 +83,7 @@ Builder.prototype.action = function()
 
 		//If no repairs are needed, we're just going to go find some structures to build
 		var targets = creep.room.constructionSites;
-		var target = creep.pos.findClosestByRange (targets);
+		var target = this.getClosest (targets);
 		
 		if (target) 
 		{
