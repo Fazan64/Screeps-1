@@ -1,3 +1,5 @@
+var DEFENDERS_PER_HEALER = 3;
+
 function getEnergySupply (room)
 {
 	var total = 0;
@@ -48,24 +50,41 @@ function updateNeeds (room)
 			// If has offensive bodyparts && has an appropriate role
 			return (creep.memory.role == "archer"
 				||  creep.memory.role == "guard")
-				&& (creep.getActiveBodyparts (RANGED_ATTACK)
-				||  creep.getActiveBodyparts (ATTACK))
+				&& (creep.getActiveBodyparts (RANGED_ATTACK) > 0
+				||  creep.getActiveBodyparts (ATTACK) > 0)
 						
 		});
 		
 		// Add required amount of defenders to the needs array
-		if (defenders.length < hostiles.length + 1)
+		var neededDefenders = hostiles.length - defenders.length + 1;
+		// Won't execute if neededDefenders <= 0
+		for (var i = 0; i < neededDefenders; i++)
 		{
-			var neededDefenders = hostiles.length - defenders.length + 1;
-			for (var i = 0; i < neededDefenders; i++)
-			{
-				newNeeds.creeps.push (
-					{
-						role : "archer",
-						memory : {}
-					}
-				)
-			}
+			newNeeds.creeps.push (
+				{
+					role : "archer",
+					memory : {}
+				}
+			)
+		}
+		
+		var healers = creeps.filter (function (creep)
+		{
+			return creep.memory.role == "healer"
+				&& creep.getActiveBodyparts (HEAL) > 0	
+		})
+		
+		// The idea is to have a single healer per [DEFENDERS_PER_HEALER] defenders
+		var needeedHealers = Math.floor (defenders.length / DEFENDERS_PER_HEALER) - healers.length;
+		// Won't execute if needeedHealers <= 0
+		for (var i = 0; i < needeedHealers; i++)
+		{
+			newNeeds.creeps.push (
+				{
+					role : "healer",
+					memory : {}
+				}
+			)
 		}
 		
 	}
