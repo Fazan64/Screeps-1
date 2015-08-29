@@ -1,3 +1,6 @@
+/**
+ * DEPRECATED DON'T USE
+ */
 module.exports = function(type, includeQueued)
 {
 	if (includeQueued == undefined)
@@ -7,12 +10,10 @@ module.exports = function(type, includeQueued)
 
 	//Get the current room, then find all creeps in that room by their role
 	var room = Game.getRoom('1-1');
-
-	var count = room.find (FIND_MY_CREEPS, {
-		filter: function (creep)
-		{
-			return creep.memory.role == type
-		}
+	
+	var count = room.myCreeps.filter (function (creep)
+	{
+		return creep.memory.role == type
 	}).length;
 
 	if (includeQueued)

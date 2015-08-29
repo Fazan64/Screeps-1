@@ -12,6 +12,7 @@ Object.defineProperties (Room.prototype,
 			return this._creeps;
 		}
 	},
+	
 	myCreeps :
 	{
 		get : function ()
@@ -21,6 +22,7 @@ Object.defineProperties (Room.prototype,
 			return this._myCreeps;
 		}
 	},
+	
 	hostileCreeps :
 	{
 		get : function ()
@@ -59,6 +61,7 @@ Object.defineProperties (RoomManager.prototype,
 			return this._defenders;
 		}
 	},
+	
 	energySupply :
 	{
 		get : function ()

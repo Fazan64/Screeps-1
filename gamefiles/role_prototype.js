@@ -210,11 +210,9 @@ var proto =
 	{
 		var creep = this.creep;
 		
-		var hostiles = creep.room.find (FIND_HOSTILE_CREEPS, {
-			filter : function (enemy)
-			{
-				return enemy.owner.username !== "Source Keeper";
-			}
+		var hostiles = creep.room.hostileCreeps.filter (function (enemy)
+		{
+			return enemy.owner.username !== "Source Keeper";
 		});
 		
 		if (hostiles && hostiles.length)
