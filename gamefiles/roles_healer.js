@@ -17,7 +17,7 @@ var healer =
 		// Find my creeps that are hurt. If they're hurt, heal them.
 		// If there aren't any hurt, we're going to try and get the healers
 		// to tick near the guards, so that they're close by when the battle starts
-		var target = this.getClosest (Game.creeps, { 
+		var target = this.getClosest (FIND_MY_CREEPS, { 
 			filter: function (t) 
 			{ 
 				return t.hits < t.hitsMax 
