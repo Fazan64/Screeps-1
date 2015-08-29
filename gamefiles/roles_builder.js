@@ -16,12 +16,12 @@ Builder.prototype.action = function()
 	var creep = this.creep;
 
 	//If out of energy, go to spawn and recharge
-	if (creep.energy == 0) 
+	if (creep.carry.energy == 0) 
 	{
 		var closestSpawn = this.getClosest (creep.room.mySpawns, {
 			filter: function (spawn)
 			{
-				return spawn.energy > 0 && creep.pos.inRangeTo (spawn, 5);
+				return spawn.energy > 0;
 			}
 		});
 
