@@ -24,7 +24,7 @@ var upgrader =
 		
 		creep.room.memory.upgraders [creep.id] = 
 		{
-			upgradePerTick : creep.getActiveBodyparts (WORK) * 2;
+			upgradePerTick : creep.getActiveBodyparts (WORK) * 2
 		}
 	},
 	
