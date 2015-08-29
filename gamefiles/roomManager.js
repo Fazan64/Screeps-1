@@ -46,7 +46,7 @@ RoomManager.prototype.updateNeeds = function ()
 	
 	var creeps = room.find (FIND_MY_CREEPS);
 	
-	var energySupply = getEnergySupply (room);
+	var energySupply = this.getEnergySupply ();
 	// Minimum reached, now we need non-suppliers
 	if (energySupply >= MIN_SUPPLY)
 	{
