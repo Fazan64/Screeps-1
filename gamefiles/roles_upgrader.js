@@ -14,11 +14,11 @@ var upgrader =
 		}
 		
 		// Since this is called when the creep is still being spawned so there is definitely a spawn at this creeps position
-		var spawn = room.lookForAt ('structure', creep.pos).filter (function (structure) { return structure.type == STRUCTURE_SPAWN }) [0];
+		var spawn = creep.room.lookForAt ('structure', creep.pos).filter (function (structure) { return structure.type == STRUCTURE_SPAWN }) [0];
 		// If something goes terribly wrong
 		if (!spawn)
 		{
-			spawn = room.find (FIND_MY_SPAWNS) [0];
+			spawn = creep.room.find (FIND_MY_SPAWNS) [0];
 		}
 		creep.memory.spawn = spawn.id;
 		
