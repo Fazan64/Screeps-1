@@ -49,6 +49,7 @@ var upgrader =
 		{
 			var spawn = Game.getObjectById (creep.memory.spawn);
 			creep.moveTo (spawn);
+			spawn.transferEnergy (creep);
 		}
 	}
 };
