@@ -35,7 +35,7 @@ Upgrader.prototype.onStart = function ()
 		upgradePerTick : creep.getActiveBodyparts (WORK) * 2
 	}
 	
-	creep.room.memory.consumer [creep.id] = 
+	creep.room.memory.consumers [creep.id] = 
 	{
 		consumptionPerTick : creep.getActiveBodyparts (WORK) * 2
 	}
