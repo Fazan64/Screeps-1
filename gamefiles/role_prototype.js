@@ -223,6 +223,17 @@ var proto =
 		
 		if (closeEnemies && closeEnemies.length)
 		{
+			
+			var closeMobileHealers = closeEnemies.filter (function (enemy) {
+				return enemy.getActiveBodyparts (HEAL) > 0
+					&& enemy.getActiveBodyparts (MOVE) > 0;
+			});
+	
+			if (closeMobileHealers.length)
+			{
+				return closeMobileHealers [0];
+			}
+			
 			var closeArchers = closeEnemies.filter (function (enemy) {
 				return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
 			});
@@ -240,16 +251,6 @@ var proto =
 			if (closeMobileMelee.length)
 			{
 				return closeMobileMelee [0];
-			}
-			
-			var closeMobileHealers = closeEnemies.filter (function (enemy) {
-				return enemy.getActiveBodyparts (HEAL) > 0
-					&& enemy.getActiveBodyparts (MOVE) > 0;
-			});
-	
-			if (closeMobileHealers.length)
-			{
-				return closeMobileHealers [0];
 			}
 	
 			return closeEnemies [0];
