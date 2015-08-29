@@ -110,6 +110,11 @@ Object.defineProperties (RoomManager.prototype,
 				{
 					this._energySupply += this.room.memory.suppliers [i].supplyPerTick;
 				}
+				
+				for (var i in this.room.memory.consumers)
+				{
+					this._energySupply -= this.room.memory.consumers [i].consumptionPerTick;
+				}
 			}
 			return this._energySupply;
 		}
@@ -127,6 +132,7 @@ RoomManager.prototype.initMemory = function ()
 		needs.energy = 0;
 		
 		room.memory.suppliers = {};
+		room.memory.consumers = {};
 		room.memory.upgraders = {};
 		
 		room.memory.initialized = true;

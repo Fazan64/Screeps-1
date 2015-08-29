@@ -34,13 +34,20 @@ Upgrader.prototype.onStart = function ()
 	{
 		upgradePerTick : creep.getActiveBodyparts (WORK) * 2
 	}
+	
+	creep.room.memory.consumer [creep.id] = 
+	{
+		consumptionPerTick : creep.getActiveBodyparts (WORK) * 2
+	}
 }
 
 Upgrader.prototype.onDeath = function (memory)
 {
-	// We no longer supply the room with energy
 	var spawn = Game.getObjectById (memory.spawn);
+	// We no longer upgrade a controller
 	delete spawn.room.memory.upgraders [memory.id];
+	// We no longer consume energy;
+	delete spawn.room.memory.consumers [memory.id];
 }
 
 Upgrader.prototype.action = function ()
