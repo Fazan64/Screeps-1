@@ -1,4 +1,5 @@
 var DEFENDERS_PER_HEALER = 3;
+var UPGRADERS_REQUIRED = 3;
 
 function RoomManager (room)
 {
@@ -54,6 +55,7 @@ RoomManager.prototype.updateNeeds = function ()
 		
 		var hostiles = room.find (FIND_HOSTILE_CREEPS);
 		
+		//------------------------------------------------
 		var defenders = creeps.filter (function (creep)
 		{
 			// If has offensive bodyparts && has an appropriate role
@@ -76,7 +78,8 @@ RoomManager.prototype.updateNeeds = function ()
 				}
 			)
 		}
-		
+		//--------------------------------------------------
+		//--------------------------------------------------
 		var healers = creeps.filter (function (creep)
 		{
 			return creep.memory.role == "healer"
@@ -91,6 +94,20 @@ RoomManager.prototype.updateNeeds = function ()
 			newNeeds.creeps.push (
 				{
 					role : "healer",
+					memory : {}
+				}
+			)
+		}
+		//--------------------------------------------------
+		//--------------------------------------------------
+		
+		// Keep the upgrader count in the room constant
+		var neededUpgraders = UPGRADERS_REQUIRED - room.memory.upgraders.keys ().length;
+		for (var i = 0; i < neededUpgraders; i++)
+		{
+			newNeeds.creeps.push (
+				{
+					role : "upgrader",
 					memory : {}
 				}
 			)
