@@ -19,8 +19,8 @@ Builder.prototype.action = function()
 	//If out of energy, go to spawn and recharge
 	if(creep.energy == 0) 
 	{
-		var closestSpawn = creep.pos.findClosestByRange(Game.spawns, {
-			filter: function(spawn)
+		var closestSpawn = this.getClosest (creep.room.mySpawns, {
+			filter: function (spawn)
 			{
 				return spawn.energy > 0 && creep.pos.inRangeTo(spawn, 3);
 			}
