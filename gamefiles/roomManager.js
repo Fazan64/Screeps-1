@@ -1,5 +1,7 @@
 var DEFENDERS_PER_HEALER = 3;
 var CIVILIANS_PER_HEALER = 5;
+
+var CONSTRUCTION_SITES_PER_BUILDER = 5;
 var UPGRADERS_REQUIRED = 2;
 
 Object.defineProperties (Room.prototype,
@@ -254,6 +256,21 @@ RoomManager.prototype.updateNeedsUpgraders = function ()
 		this.needs.creeps.push (
 			{
 				role : "upgrader",
+				memory : {}
+			}
+		)
+	}
+}
+
+RoomManager.prototype.updateNeedsBuilders = function ()
+{
+	var constrSites = this.room.constructionSites.length;
+	var neededBuilders = Math.ceil (constrSites / CONSTRUCTION_SITES_PER_BUILDER);
+	for (var i = 0; i < neededBuilders; i++)
+	{
+		this.needs.creeps.push (
+			{
+				role : "builder",
 				memory : {}
 			}
 		)
