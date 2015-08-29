@@ -1,38 +1,39 @@
+var ProtoRole = require ("role_prototype");
+
 /**
- * @param creep
+ * @class
+ * @constructor
  */
-var proto = require('role_prototype');
+function Healer () { ProtoRole.apply (this, arguments) }
 
-var healer = 
+Healer.prototype = Object.create (ProtoRole.prototype);
+
+Healer.prototype.baseParts = [HEAL];
+
+Healer.prototype.action = function ()
 {
-	
-	baseParts : [HEAL],
+	var creep = this.creep;
 
-	action: function()
+	this.keepAwayFromEnemies();
+
+	// Find my creeps that are hurt. If they're hurt, heal them.
+	// If there aren't any hurt, we're going to try and get the healers
+	// to tick near the guards, so that they're close by when the battle starts
+	var target = this.getClosest (FIND_MY_CREEPS, { 
+		filter: function (t) 
+		{ 
+			return t.hits < t.hitsMax 
+		} 
+	});
+
+	if (target)
 	{
-		var creep = this.creep;
-
-		this.keepAwayFromEnemies();
-
-		// Find my creeps that are hurt. If they're hurt, heal them.
-		// If there aren't any hurt, we're going to try and get the healers
-		// to tick near the guards, so that they're close by when the battle starts
-		var target = this.getClosest (FIND_MY_CREEPS, { 
-			filter: function (t) 
-			{ 
-				return t.hits < t.hitsMax 
-			} 
-		});
-
-		if (target)
-		{
-			this.moveAndPerform (target, creep.heal);
-		}
-		else 
-		{
-			this.rest ();
-		}
+		this.moveAndPerform (target, creep.heal);
 	}
-};
+	else 
+	{
+		this.rest ();
+	}
+}
 
-module.exports = healer;
+module.exports = Healer;

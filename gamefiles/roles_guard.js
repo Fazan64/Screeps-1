@@ -1,31 +1,34 @@
+var ProtoRole = require ("role_prototype");
+
 /**
- * @param creep
+ * @class
+ * @constructor
  */
-var guard = 
+function Guard () { ProtoRole.apply (this, arguments) }
+
+Guard.prototype = Object.create (ProtoRole.prototype);
+
+Guard.prototype.baseParts = [ATTACK, TOUGH];
+
+Guard.prototype.action = function()
 {
+	var creep = this.creep;
+
+	var target = this.getClosest (FIND_HOSTILE_CREEPS, {
+		filter : function (enemy) 
+		{
+			return enemy.owner.username !== "Source Keeper"
+		}
+	});
 	
-	baseParts : [ATTACK, TOUGH],
-
-	action: function()
+	if (target)
 	{
-		var creep = this.creep;
-
-		var target = this.getClosest (FIND_HOSTILE_CREEPS, {
-			filter : function (enemy) 
-			{
-				return enemy.owner.username !== "Source Keeper"
-			}
-		});
-		
-		if (target)
-		{
-			this.moveAndPerform (target, creep.attack);
-		}
-		else
-		{
-			this.rest ();
-		}
+		this.moveAndPerform (target, creep.attack);
 	}
-};
+	else
+	{
+		this.rest ();
+	}
+}
 
-module.exports = guard;
+module.exports = Guard;

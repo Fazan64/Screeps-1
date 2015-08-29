@@ -1,6 +1,3 @@
-var protoRole = require ('role_prototype');
-var extend = require ('extend');
-
 var rolesCache = {};
 
 module.exports = 
@@ -25,9 +22,8 @@ module.exports =
 			return false;
 		}
 
-		var roleObject = rolesCache [role];
-        roleObject = extend (roleObject, protoRole);
-		return Object.create (roleObject);
+		var Role = rolesCache [role];
+		return new Role ();
 	},
 
 	getRoleBodyParts: function (role, maxEnergy)

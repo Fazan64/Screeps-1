@@ -1,73 +1,77 @@
+var ProtoRole = require ("role_prototype");
+
 /**
  * These are simple creatures, they just find an active source and harvest it
  * @param creep
+ * @class
+ * @constructor
  */
-var harvester = 
+function Harvester () { ProtoRole.apply (this, arguments) }
+
+Harvester.prototype = Object.create (ProtoRole.prototype);
+
+Harvester.prototype.baseParts = [WORK, CARRY];
+
+Harvester.prototype.onStart = function ()
 {
+	var creep = this.creep;
 	
-	baseParts : [WORK, CARRY],
+	creep.memory.id = creep.id;
 	
-	onStart: function ()
+	var source = this.getClosest (FIND_SOURCES_ACTIVE);
+	var spawn = source.pos.findClosestByRange (FIND_MY_SPAWNS);
+	
+	creep.memory.source = source.id;
+	creep.memory.spawn = spawn.id;
+	
+	spawn.room.memory.suppliers [creep.id] = 
 	{
-		var creep = this.creep;
-		
-		creep.memory.id = creep.id;
-		
+		supplyPerTick : creep.getActiveBodyparts (WORK) * 2
+	}
+	
+}
+
+Harvester.prototype.onDeath ()
+{
+	// We no longer supply the room with energy
+	var spawn = Game.getObjectById (memory.spawn);
+	delete spawn.room.memory.suppliers [memory.id];
+}
+
+Harvester.prototype.action = function()
+{
+	var creep = this.creep;
+
+	if (creep.carry.energy < creep.carryCapacity)
+	{
 		var source = this.getClosest (FIND_SOURCES_ACTIVE);
-		var spawn = source.pos.findClosestByRange (FIND_MY_SPAWNS);
-		
-		creep.memory.source = source.id;
-		creep.memory.spawn = spawn.id;
-		
-		spawn.room.memory.suppliers [creep.id] = 
+		if (source)
 		{
-			supplyPerTick : creep.getActiveBodyparts (WORK) * 2
+			this.moveAndPerform (source, creep.harvest);
 		}
-		
-	},
-	
-	onDeath: function (memory)
+	}
+	else 
 	{
-		// We no longer supply the room with energy
-		var spawn = Game.getObjectById (memory.spawn);
-		delete spawn.room.memory.suppliers [memory.id];
-	},
-
-	action: function () 
-	{
-		var creep = this.creep;
-
-		if (creep.carry.energy < creep.carryCapacity)
+		var target = this.getClosest (FIND_MY_SPAWNS);
+		if (target)
 		{
-			var source = this.getClosest (FIND_SOURCES_ACTIVE);
-			if (source)
+			if (creep.pos.isNearTo (target))
 			{
-				this.moveAndPerform (source, creep.harvest);
-			}
-		}
-		else 
-		{
-			var target = this.getClosest (FIND_MY_SPAWNS);
-			if (target)
-			{
-				if (creep.pos.isNearTo (target))
+				if (target.energy < target.energyCapacity)
 				{
-					if (target.energy < target.energyCapacity)
-					{
-						creep.transferEnergy (target);
-					}
-					else
-					{
-						creep.dropEnergy ();
-					}
+					creep.transferEnergy (target);
 				}
 				else
 				{
-					creep.moveTo (target);
+					creep.dropEnergy ();
 				}
+			}
+			else
+			{
+				creep.moveTo (target);
 			}
 		}
 	}
-};
+}
 
-module.exports = harvester;
+module.exports = Harvester;
