@@ -97,11 +97,11 @@ var proto =
 			finalBody = finalBody.concat(baseBody);
 		}
     
-		console.log ('	---------------');
-		console.log ('	baseBody cost: '  + calculateCost(baseBody));
-		console.log ('	maximum energy: ' + maxEnergy);
-		console.log ('	finalBody: '      + finalBody);
-		console.log ('	---------------');
+		console.log ('    ---------------');
+		console.log ('    baseBody cost: '  + calculateCost(baseBody));
+		console.log ('    maximum energy: ' + maxEnergy);
+		console.log ('    finalBody: '      + finalBody);
+		console.log ('    ---------------');
 		return finalBody;
 	},
 
@@ -177,7 +177,7 @@ var proto =
 	{
 		var creep = this.creep;
 		
-		creep.say ("Resting");
+		console.log ("    Resting...");
 
 		var distance = 4;
 		var restTarget = creep.pos;
@@ -283,7 +283,7 @@ var proto =
 		{
 			if (target.pos.inRangeTo (creep.pos, 3) )
 			{
-				creep.say ("Ranged attack");
+				console.log ("    Performing ranged attack....");
 				creep.rangedAttack (target);
 				return target;
 			}
@@ -315,7 +315,7 @@ var proto =
 	{
 		var creep = this.creep;
 
-		creep.say ("Kite");
+		console.log ("    Kiting...");
 		if (target.pos.inRangeTo (creep.pos, 2)) 
 		{
 			this.moveAwayFrom (target);
