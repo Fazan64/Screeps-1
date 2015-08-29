@@ -17,7 +17,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._myCreeps = this._myCreeps || this.find (FIND_MY_CREEPS);
+			this._myCreeps = this._myCreeps || this.creeps.filter (function (creep) { return creep.my });
 			return this._myCreeps;
 		}
 	},
@@ -26,7 +26,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._hostileCreeps = this._hostileCreeps || this.find (FIND_HOSTILE_CREEPS);
+			this._hostileCreeps = this._hostileCreeps || this.creeps.filter (function (creep) { return !creep.my });
 			return this._hostileCreeps;
 		}
 	},
