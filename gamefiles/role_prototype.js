@@ -212,7 +212,7 @@ var proto =
 		
 		var hostiles = creep.room.find (FIND_HOSTILE_CREEPS);
 		
-		if (hostiles)
+		if (hostiles && hostiles.length)
 		{
 			hostiles.sort (function (a, b)
 			{
