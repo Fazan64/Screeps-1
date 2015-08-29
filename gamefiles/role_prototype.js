@@ -277,7 +277,8 @@ var proto =
 		var hostiles = creep.room.find (FIND_HOSTILE_CREEPS);
 		
 		var closeEnemies = hostiles.filter (function (enemy) { 
-			return creep.pos.inRangeTo (enemy, 3); 
+			return enemy.owner.username !== "Source Keeper"
+				&& enemy.pos.inRangeTo (creep, 3); 
 		});
 		
 		if (closeEnemies && closeEnemies.length)

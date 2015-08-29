@@ -14,14 +14,6 @@ var archer =
 		if (target)
 		{
 			this.rangedAttack (target);
-		}
-		else
-		{
-			target = this.getClosest (FIND_HOSTILE_CREEPS);
-		}
-		
-		if (target)
-		{
 			this.kite (target);
 		}
 		else
