@@ -30,6 +30,15 @@ Object.defineProperties (Room.prototype,
 		}
 	},
 	
+	myDamagedCreeps :
+	{
+		get : function ()
+		{
+			this._myDamagedCreeps = this._myDamagedCreeps || this.myCreeps.filter (function (creep) { creep.hits < creep.hitsMax })
+			return this._myDamagedCreeps;
+		}	
+	},
+	
 	mySpawns :
 	{
 		get : function ()
