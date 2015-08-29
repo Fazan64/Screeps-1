@@ -16,11 +16,9 @@ function initMemory (room)
 	{
 		var needs = room.memory.needs = {};
 		needs.creeps = [];
+		needs.energy = 0;
 		
-		if (room.memory.suppliers === undefined)
-		{
-			room.memory.suppliers = {};
-		}
+		room.memory.suppliers = {};
 		
 		room.memory.initialized = true;
 	}
@@ -31,7 +29,8 @@ function updateNeeds (room)
 {
 	var newNeeds = 
 	{
-		creeps : []
+		creeps : [],
+		energy : 0
 	};
 	
 	var miners = room.find (FIND_MY_CREEPS, { 
@@ -66,6 +65,7 @@ function updateNeeds (room)
 	
 	if (energySupply < neededSupply)
 	{
+		newNeeds.energy = neededSupply - energySupply;
 		newNeeds.creeps.push (
 			{
 				role: neededRole,
