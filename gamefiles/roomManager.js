@@ -1,5 +1,6 @@
 var DEFENDERS_PER_HEALER = 3;
-var UPGRADERS_REQUIRED = 3;
+var CIVILIANS_PER_HEALER = 5;
+var UPGRADERS_REQUIRED = 2;
 
 Object.defineProperties (Room.prototype,
 {
@@ -226,6 +227,12 @@ RoomManager.prototype.updateNeedsHealers = function ()
 	
 	// The idea is to have a single healer per [DEFENDERS_PER_HEALER] defenders
 	var needeedHealers = Math.floor (this.defenders.length / DEFENDERS_PER_HEALER) - healers.length;
+	
+	if (neededHealers <= 0)
+	{
+		needeedHealers = Math.ceil (room.myDamagedCreeps.length / CIVILIANS_PER_HEALER) - healers.length;
+	}
+	
 	// Won't execute if needeedHealers <= 0
 	for (var i = 0; i < needeedHealers; i++)
 	{
