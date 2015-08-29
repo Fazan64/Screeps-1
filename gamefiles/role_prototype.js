@@ -205,6 +205,53 @@ var proto =
 
 		creep.moveTo (restTarget);
 	},
+	
+	getRangedTarget: function ()
+	{
+		var creep = this.creep;
+		
+		var hostiles = creep.room.find (FIND_HOSTILE_CREEPS);
+		
+		var closeEnemies = hostiles.filter (function (enemy) { 
+			return enemy.owner.username !== "Source Keeper"
+		});
+		
+		if (closeEnemies && closeEnemies.length)
+		{
+			var closeArchers = closeEnemies.filter (function (enemy) {
+				return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
+			});
+	
+			if (closeArchers.length)
+			{
+				return closeArchers [0];
+			}
+			
+			var closeMobileMelee = closeEnemies.filter (function (enemy) {
+				return enemy.getActiveBodyparts (ATTACK) > 0
+					&& enemy.getActiveBodyparts (MOVE) > 0;
+			});
+	
+			if (closeMobileMelee.length)
+			{
+				return closeMobileMelee [0];
+			}
+			
+			var closeMobileHealers = closeEnemies.filter (function (enemy) {
+				return enemy.getActiveBodyparts (HEAL) > 0
+					&& enemy.getActiveBodyparts (MOVE) > 0;
+			});
+	
+			if (closeMobileHealers.length)
+			{
+				return closeMobileHealers [0];
+			}
+	
+			return closeEnemies [0];
+		}
+		
+		return null;
+	},
 
 	rangedAttack: function (target)
 	{
@@ -268,54 +315,8 @@ var proto =
 		}
 
 		return false;
-	},
-
-	getRangedTarget: function ()
-	{
-		var creep = this.creep;
-		
-		var hostiles = creep.room.find (FIND_HOSTILE_CREEPS);
-		
-		var closeEnemies = hostiles.filter (function (enemy) { 
-			return enemy.owner.username !== "Source Keeper"
-		});
-		
-		if (closeEnemies && closeEnemies.length)
-		{
-			var closeArchers = closeEnemies.filter (function (enemy) {
-				return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
-			});
-	
-			if (closeArchers.length)
-			{
-				return closeArchers [0];
-			}
-			
-			var closeMobileMelee = closeEnemies.filter (function (enemy) {
-				return enemy.getActiveBodyparts (ATTACK) > 0
-					&& enemy.getActiveBodyparts (MOVE) > 0;
-			});
-	
-			if (closeMobileMelee.length)
-			{
-				return closeMobileMelee [0];
-			}
-			
-			var closeMobileHealers = closeEnemies.filter (function (enemy) {
-				return enemy.getActiveBodyparts (HEAL) > 0
-					&& enemy.getActiveBodyparts (MOVE) > 0;
-			});
-	
-			if (closeMobileHealers.length)
-			{
-				return closeMobileHealers [0];
-			}
-	
-			return closeEnemies [0];
-		}
-		
-		return null;
 	}
+	
 };
 
 module.exports = proto;
