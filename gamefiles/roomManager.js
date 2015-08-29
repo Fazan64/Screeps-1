@@ -157,6 +157,8 @@ RoomManager.prototype.updateNeeds = function ()
 		
 		this.updateNeedsHealers ();
 		
+		this.updateNeedsBuilders ();
+		
 		this.updateNeedsUpgraders ();
 	}
 	
