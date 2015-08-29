@@ -31,14 +31,14 @@ Harvester.prototype.onStart = function ()
 	
 }
 
-Harvester.prototype.onDeath (memory)
+Harvester.prototype.onDeath = function (memory)
 {
 	// We no longer supply the room with energy
 	var spawn = Game.getObjectById (memory.spawn);
 	delete spawn.room.memory.suppliers [memory.id];
 }
 
-Harvester.prototype.action = function()
+Harvester.prototype.action = function ()
 {
 	var creep = this.creep;
 
