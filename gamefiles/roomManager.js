@@ -281,8 +281,17 @@ RoomManager.prototype.updateNeedsUpgraders = function ()
 
 RoomManager.prototype.updateNeedsBuilders = function ()
 {
-	var constrSites = this.room.constructionSites.length;
-	var neededBuilders = Math.ceil (constrSites / CONSTRUCTION_SITES_PER_BUILDER);
+	var room = this.room;
+	
+	var builders = room.myCreeps.filter (function (creep)
+	{
+		return creep.memory.role == "builder"
+			&& creep.getActiveBodyparts (WORK) > 0
+			&& creep.getActiveBodyparts (MOVE) > 0	
+	});
+	
+	var constrSites = room.constructionSites.length;
+	var neededBuilders = Math.ceil (constrSites / CONSTRUCTION_SITES_PER_BUILDER) - builders.length;
 	for (var i = 0; i < neededBuilders; i++)
 	{
 		this.needs.creeps.push (
