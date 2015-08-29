@@ -216,6 +216,11 @@ var proto =
 			return enemy.owner.username !== "Source Keeper"
 		});
 		
+		closeEnemies.sort (function (a, b)
+		{
+			return creep.pos.getRangeTo (a) - creep.pos.getRangeTo (b);	
+		})
+		
 		if (closeEnemies && closeEnemies.length)
 		{
 			var closeArchers = closeEnemies.filter (function (enemy) {
