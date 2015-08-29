@@ -286,7 +286,7 @@ var proto =
 				return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
 			});
 	
-			if (closeArchers !== null)
+			if (closeArchers.length)
 			{
 				return closeArchers [0];
 			}
@@ -296,7 +296,7 @@ var proto =
 					&& enemy.getActiveBodyparts (MOVE) > 0;
 			});
 	
-			if (closeMobileMelee !== null)
+			if (closeMobileMelee.length)
 			{
 				return closeMobileMelee [0];
 			}
@@ -306,7 +306,7 @@ var proto =
 					&& enemy.getActiveBodyparts (MOVE) > 0;
 			});
 	
-			if (closeMobileHealers !== null)
+			if (closeMobileHealers.length)
 			{
 				return closeMobileHealers [0];
 			}
