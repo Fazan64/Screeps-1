@@ -278,7 +278,6 @@ var proto =
 		
 		var closeEnemies = hostiles.filter (function (enemy) { 
 			return enemy.owner.username !== "Source Keeper"
-				&& enemy.pos.inRangeTo (creep, 3); 
 		});
 		
 		if (closeEnemies && closeEnemies.length)
