@@ -102,7 +102,7 @@ RoomManager.prototype.updateNeeds = function ()
 		//--------------------------------------------------
 		
 		// Keep the upgrader count in the room constant
-		var neededUpgraders = UPGRADERS_REQUIRED - room.memory.upgraders.keys ().length;
+		var neededUpgraders = UPGRADERS_REQUIRED - Object.keys (room.memory.upgraders).length;
 		for (var i = 0; i < neededUpgraders; i++)
 		{
 			newNeeds.creeps.push (
