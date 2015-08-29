@@ -292,8 +292,8 @@ var proto =
 			}
 			
 			var closeMobileMelee = closeEnemies.filter (function (enemy) {
-				return enemy.getActiveBodyparts(ATTACK) > 0
-					&& enemy.getActiveBodyparts(MOVE) > 0;
+				return enemy.getActiveBodyparts (ATTACK) > 0
+					&& enemy.getActiveBodyparts (MOVE) > 0;
 			});
 	
 			if (closeMobileMelee !== null)
@@ -302,8 +302,8 @@ var proto =
 			}
 			
 			var closeMobileHealers = closeEnemies.filter (function (enemy) {
-				return enemy.getActiveBodyparts(HEAL) > 0
-					&& enemy.getActiveBodyparts(MOVE) > 0;
+				return enemy.getActiveBodyparts (HEAL) > 0
+					&& enemy.getActiveBodyparts (MOVE) > 0;
 			});
 	
 			if (closeMobileHealers !== null)
