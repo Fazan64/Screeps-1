@@ -1,6 +1,6 @@
 var upgrader = 
 {
-	baseParts : [WORK, WORK],
+	baseParts : [WORK, CARRY],
 
 	onStart: function ()
 	{
