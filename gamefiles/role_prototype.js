@@ -194,7 +194,7 @@ var proto =
 				var flag = flags[i];
 				// If the flag is red & its position is free
 				if (flag.color == COLOR_RED &&
-				    (creep.pos.inRangeTo(flag, distance) || creep.pos.getRangeTo(flag) > 0)
+				   (creep.pos.inRangeTo (flag, distance) || creep.pos.getRangeTo (flag) > 0)
 				) 
 				{
 					restTarget = flag;
