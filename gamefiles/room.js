@@ -24,6 +24,7 @@ function initMemory (room)
 	}
 }
 
+var MIN_SUPPLY = 4;
 var neededSupply = 15;
 function updateNeeds (room)
 {
@@ -33,10 +34,46 @@ function updateNeeds (room)
 		energy : 0
 	};
 	
-	var miners = room.find (FIND_MY_CREEPS, { 
-		filter : function (creep) {
-			return creep.memory.role == "miner";
+	var creeps = room.find (FIND_MY_CREEPS);
+	
+	var energySupply = getEnergySupply (room);
+	// Minimum reached, now we need non-suppliers
+	if (energySupply >= MIN_SUPPLY)
+	{
+		
+		var hostiles = room.find (FIND_HOSTILE_CREEPS);
+		
+		var defenders = creeps.filter (function (creep)
+		{
+			// If has offensive bodyparts && has an appropriate role
+			return (creep.memory.role == "archer"
+				||  creep.memory.role == "guard")
+				&& (creep.getActiveBodyparts (RANGED_ATTACK)
+				||  creep.getActiveBodyparts (ATTACK))
+						
+		});
+		
+		// Add required amount of defenders to the needs array
+		if (defenders.length < hostiles.length + 1)
+		{
+			var neededDefenders = hostiles.length - defenders.length + 1;
+			for (var i = 0; i < neededDefenders; i++)
+			{
+				newNeeds.creeps.push (
+					{
+						role : "archer",
+						memory : {}
+					}
+				)
+			}
 		}
+		
+	}
+	
+	// Assign helpers for miners
+	var miners = creeps.filter (function (creep) 
+	{
+		return creep.memory.role == "miner";
 	});
 	
 	for (var i in miners)
@@ -56,7 +93,6 @@ function updateNeeds (room)
 		}
 	}
 	
-	var energySupply = getEnergySupply (room);
 	var neededRole = 'miner';
 	if (energySupply == 0)
 	{
@@ -73,6 +109,7 @@ function updateNeeds (room)
 			}
 		)
 	}
+	
 	
 	room.memory.needs = newNeeds;
 }
