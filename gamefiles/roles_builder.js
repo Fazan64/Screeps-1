@@ -2,7 +2,6 @@ var ProtoRole = require ("role_prototype");
 
 /**
 * @TODO: Make it more carry heavy, make it have helpers
-* @type {{parts: *[], getParts: getParts, action: action}}
 * @class
 * @constructor
 */
@@ -37,15 +36,15 @@ Builder.prototype.action = function()
 		// First, we're going to check for ramparts with hits < 10%. We're using ramparts as the first line of defense
 		// and we want them nicely maintained. This is especially important when under attack. The builder will
 		// repair the most damaged ramparts first
-		var structures = creep.room.find(FIND_MY_STRUCTURES);
+		var structures = creep.room.myStructures;
 		var damagedRamparts = [];
 
 		for(var index in structures)
 		{
-			var structure = structures[index];
+			var structure = structures [index];
 			if(structure.structureType == 'rampart' && structure.hits < (structure.hitsMax / 10))
 			{
-				damagedRamparts.push(structure);
+				damagedRamparts.push (structure);
 			}
 		}
 
@@ -56,8 +55,8 @@ Builder.prototype.action = function()
 
 		if (damagedRamparts.length)
 		{
-			creep.moveTo(damagedRamparts[0]);
-			creep.repair(damagedRamparts[0]);
+			creep.moveTo (damagedRamparts [0]);
+			creep.repair (damagedRamparts [0]);
 
 			return;
 		}
@@ -67,7 +66,7 @@ Builder.prototype.action = function()
 		var toRepair = [];
 		for (var index in structures)
 		{
-			if((structures[index].hits / structures[index].hitsMax) < 0.5)
+			if ((structures[index].hits / structures[index].hitsMax) < 0.5)
 			{
 				toRepair.push (structures[index]);
 			}

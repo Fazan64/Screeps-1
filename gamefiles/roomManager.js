@@ -42,6 +42,15 @@ Object.defineProperties (Room.prototype,
 		}	
 	},
 	
+	myStructures : 
+	{
+		get : function ()
+		{
+			this._myStructures = this._myStructures || this.find (FIND_MY_STRUCTURES);
+			return this._myStructures;
+		}	
+	},
+	
 	mySpawns :
 	{
 		get : function ()
