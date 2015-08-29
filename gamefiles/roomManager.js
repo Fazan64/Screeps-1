@@ -7,7 +7,6 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			debugger;
 			this._creeps = this._creeps || this.find (FIND_CREEPS);
 			return this._creeps;
 		}
@@ -17,7 +16,6 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			debugger;
 			this._myCreeps = this._myCreeps || this.find (FIND_MY_CREEPS);
 			return this._myCreeps;
 		}
@@ -27,7 +25,6 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			debugger;
 			this._hostileCreeps = this._hostileCreeps || this.find (FIND_HOSTILE_CREEPS);
 			return this._hostileCreeps;
 		}
