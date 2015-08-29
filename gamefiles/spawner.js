@@ -23,12 +23,10 @@ function getTotalEnergy (spawn)
 {
     var totalEnergy = spawn.room.energyAvailable;
     
-    var otherSpawns = spawn.room.find (FIND_MY_SPAWNS, {
-        filter : function (otherSpawn)
-        {
-            return otherSpawn !== spawn;
-        }
-    });
+    var otherSpawns = spawn.room.mySpawns.filter (function (otherSpawn)
+    {
+        return otherSpawn !== spawn;
+    })
     
     if (otherSpawns && otherSpawns.length)
     {

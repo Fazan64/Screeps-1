@@ -18,7 +18,7 @@ var upgrader =
 		// If something goes terribly wrong
 		if (!spawn)
 		{
-			spawn = creep.room.find (FIND_MY_SPAWNS) [0];
+			spawn = creep.room.mySpawns [0];
 		}
 		creep.memory.spawn = spawn.id;
 		

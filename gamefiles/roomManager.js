@@ -31,6 +31,14 @@ Object.defineProperties (Room.prototype,
 			this._hostileCreeps = this._hostileCreeps || this.find (FIND_HOSTILE_CREEPS);
 			return this._hostileCreeps;
 		}
+	},
+	
+	mySpawns :
+	{
+		get : function ()
+		{
+			this._spawns = this._spawns || this.find (FIND_MY_SPAWNS);
+		}
 	}	
 });
 
