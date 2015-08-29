@@ -6,7 +6,7 @@ var proto = require('role_prototype');
 var healer = 
 {
 	
-	baseParts : [HEAL, TOUGH],
+	baseParts : [HEAL],
 
 	action: function()
 	{
