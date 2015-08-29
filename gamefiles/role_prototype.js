@@ -314,7 +314,7 @@ var proto =
 		var creep = this.creep;
 
 		console.log ("    Kiting...");
-		if (target.pos.inRangeTo (creep.pos, 2)) 
+		if (target.pos.getRangeTo (creep.pos) <= 2) 
 		{
 			this.moveAwayFrom (target);
 			return true;
