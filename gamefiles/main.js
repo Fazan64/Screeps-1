@@ -1,5 +1,5 @@
 var performRoles = require('performRoles');
-var spawner = require('spawnerNew');
+var spawner = require('spawner');
 var room = require ('room');
 
 for (var i in Game.rooms)
