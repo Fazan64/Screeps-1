@@ -37,7 +37,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._myDamagedCreeps = this._myDamagedCreeps || this.myCreeps.filter (function (creep) { creep.hits < creep.hitsMax })
+			this._myDamagedCreeps = this._myDamagedCreeps || this.myCreeps.filter (function (creep) { return creep.hits < creep.hitsMax })
 			return this._myDamagedCreeps;
 		}	
 	},
