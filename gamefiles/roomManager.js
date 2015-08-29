@@ -38,6 +38,7 @@ Object.defineProperties (Room.prototype,
 		get : function ()
 		{
 			this._spawns = this._spawns || this.find (FIND_MY_SPAWNS);
+			return this._spawns;
 		}
 	}	
 });
