@@ -8,32 +8,14 @@ function getEnergySupply (room)
 	}
 	
 	return total;
-	//return room.memory.suppliers.length
 }
 
 function initMemory (room)
 {
 	if (!room.memory.initialized)
 	{
-
-		if (room.memory.needs === undefined)
-		{
-			var needs = room.memory.needs = {};
-			needs.creeps = [];
-			// temp
-			needs.creeps.push (
-				{
-					role : 'harvester',
-					memory : {}
-				}
-			);
-			needs.creeps.push (
-				{
-					role : 'miner',
-					memory : {}
-				}
-			);
-		}
+		var needs = room.memory.needs = {};
+		needs.creeps = [];
 		
 		if (room.memory.suppliers === undefined)
 		{
@@ -69,7 +51,7 @@ function updateNeeds (room)
 			newNeeds.creeps.push (
 				{
 					role : "miner_helper",
-					memory : {miner : miner.id}
+					memory : { miner : miner.id }
 				}
 			)
 		}
