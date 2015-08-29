@@ -1,7 +1,13 @@
 var DEFENDERS_PER_HEALER = 3;
 
-function getEnergySupply (room)
+function RoomManager (room)
 {
+	this.room = room;
+} 
+
+RoomManager.prototype.getEnergySupply = function ()
+{
+	var room = this.room;
 	var total = 0;
 	
 	for (var i in room.memory.suppliers)
@@ -12,8 +18,9 @@ function getEnergySupply (room)
 	return total;
 }
 
-function initMemory (room)
+RoomManager.prototype.initMemory = function ()
 {
+	var room = this.room;
 	if (!room.memory.initialized)
 	{
 		var needs = room.memory.needs = {};
@@ -28,8 +35,9 @@ function initMemory (room)
 
 var MIN_SUPPLY = 4;
 var neededSupply = 15;
-function updateNeeds (room)
+RoomManager.prototype.updateNeeds = function ()
 {
+	var room = this.room;
 	var newNeeds = 
 	{
 		creeps : [],
@@ -133,9 +141,4 @@ function updateNeeds (room)
 	room.memory.needs = newNeeds;
 }
 
-module.exports = function (room)
-{
-	initMemory (room);
-	
-	updateNeeds (room);
-}
+module.exports = RoomManager;

@@ -1,10 +1,13 @@
 var performRoles = require('performRoles');
 var spawner = require('spawner');
-var room = require ('room');
+var RoomManger = require ('roomManager');
 
 for (var i in Game.rooms)
 {
-	room (Game.rooms [i]);
+	//room (Game.rooms [i]);
+	var roomManager = new RoomManger (Game.rooms [i]);
+	roomManager.initMemory ();
+	roomManager.updateNeeds ();
 }
 
 for (var i in Game.spawns)
