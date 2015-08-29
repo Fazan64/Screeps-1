@@ -4,7 +4,6 @@ var RoomManger = require ('roomManager');
 
 for (var i in Game.rooms)
 {
-	//room (Game.rooms [i]);
 	var roomManager = new RoomManger (Game.rooms [i]);
 	roomManager.initMemory ();
 	roomManager.updateNeeds ();
