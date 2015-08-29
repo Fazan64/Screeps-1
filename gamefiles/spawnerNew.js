@@ -21,15 +21,21 @@ function getNameByRole (spawn, role)
  */
 function getTotalEnergy (spawn)
 {
-    var totalEnergy = spawn.energy;
-
-    var extensions = spawn.room.find (FIND_MY_STRUCTURES, {
-        filter: { structureType: STRUCTURE_EXTENSION }
+    var totalEnergy = spawn.room.energyAvailable;
+    
+    var otherSpawns = spawn.room.find (FIND_MY_SPAWNS, {
+        filter : function (otherSpawn)
+        {
+            return otherSpawn !== spawn;
+        }
     });
     
-    for (var i in extensions)
+    if (otherSpawns && otherSpawns.length)
     {
-        totalEnergy += extensions [i].energy;
+        for (var i in otherSpawns)
+        {
+            totalEnergy -= otherSpawns [i].energy;
+        }
     }
     
     return totalEnergy;
