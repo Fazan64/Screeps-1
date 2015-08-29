@@ -1,10 +1,6 @@
 var performRoles = require('performRoles');
 var spawner = require('spawnerNew');
-//var factory = require('factory');
 var room = require ('room');
-
-//factory.init();
-//factory.run();
 
 for (var i in Game.rooms)
 {
@@ -15,8 +11,6 @@ for (var i in Game.spawns)
 {
 	spawner (Game.spawns [i]);
 }
-
-//factory.buildArmyWhileIdle();
 
 performRoles (Game.creeps);
 
