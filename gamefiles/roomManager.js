@@ -48,7 +48,7 @@ Object.defineProperties (RoomManager.prototype,
 	{
 		get : function ()
 		{
-			this._defenders = this._defenders || this.rooms.myCreeps.filter (function (creep)
+			this._defenders = this._defenders || this.room.myCreeps.filter (function (creep)
 			{
 				// If has offensive bodyparts && has an appropriate role
 				return (creep.memory.role == "archer"
