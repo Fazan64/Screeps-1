@@ -48,7 +48,7 @@ module.exports = function (creeps)
 		// If so, get an appropriate roleObject and execute it's deathHandler
 		if (!Game.creeps [i] && creepMemory.lastAliveTime == Game.time - 1) 
 		{
-			console.log (i + " have died :( handling...");
+			console.log (i + " has died :( handling...");
 			
 			roleObject = null;
 			if (roleManager.roleExists (creepMemory.role)) 
