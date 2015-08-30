@@ -174,8 +174,9 @@ MinerHelper.prototype.action = function ()
 			return possibleTarget !== creep
 				&& possibleTarget.memory.role === creep.memory.role
 				&& possibleTarget.carry.energy < possibleTarget.carryCapacity
-				//&& creep.pos.inRangeTo (possibleTarget, 1)
-				&& creep.pos.getDirectionTo (possibleTarget) !== directionAway;
+				&& creep.pos.inRangeTo (possibleTarget, 10)
+				&& creep.pos.getDirectionTo (possibleTarget) !== directionAway
+				&& creep.pos.getRangeTo (possibleTarget) < creep.pos.getRangeTo (target);
 		}));
 
 		//If we found a courier, make that courier our new target
