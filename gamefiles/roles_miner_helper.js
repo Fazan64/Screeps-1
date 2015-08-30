@@ -163,6 +163,7 @@ MinerHelper.prototype.action = function ()
 		// Let's look for a courier in that direction. We'll check on making sure 
 		// they're not us,
 		// they're the same role,
+		// they work for the same miner,
 		// they are not already chosen as couriers by someone else
 		// they can hold any more energy, 
 //		// they're in range of 10, 
@@ -174,6 +175,7 @@ MinerHelper.prototype.action = function ()
 		{
 			return possibleTarget !== creep
 				&& possibleTarget.memory.role === creep.memory.role
+				&& possibleTarget.memory.miner === creep.memory.miner
 				&& !possibleTarget.memory.courierTarget
 				&& possibleTarget.carry.energy < possibleTarget.carryCapacity
 				//&& creep.pos.inRangeTo (possibleTarget, 10)
