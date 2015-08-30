@@ -193,7 +193,7 @@ MinerHelper.prototype.action = function ()
 			//If we're near to the target, either give it our energy or drop it
 			if (creep.pos.isNearTo (target)) 
 			{
-				var notFull = target.energy !== undefined ? target.energy < target.energyCapacity : target.carry < target.carryCapacity;
+				var notFull = target.energy !== undefined ? target.energy < target.energyCapacity : target.carry.energy < target.carryCapacity;
 				if (notFull)
 				{
 					creep.transferEnergy (target);
