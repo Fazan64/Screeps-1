@@ -181,6 +181,7 @@ MinerHelper.prototype.action = function ()
 				);
 			}
 		});
+		debugger;
 
 		//If we found a courier, make that courier our new target
 		if (courier !== null && !creep.pos.isNearTo (target)) 
