@@ -33,12 +33,10 @@ Scavenger.prototype.action = function ()
 
 	if (droppedEnergy == null || creep.energy == creep.energyCapacity)
 	{
-		var closestSpawn = this.getClosest (Game.spawns, {
-			filter: function (spawn)
-			{
-				return spawn.energy < spawn.energyCapacity;
-			}
-		});
+		var closestSpawn = this.getClosest (creep.room.mySpawns.filter (function (spawn)
+		{
+			return spawn.energy < spawn.energyCapacity;
+		}));
 		
 		if (closestSpawn)
 		{
