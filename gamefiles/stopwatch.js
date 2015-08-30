@@ -14,7 +14,7 @@ Object.defineProperties (Stopwatch.prototype, {
 	}
 });
 
-Stopwatch.prototype.start = function ()
+Stopwatch.prototype.restart = function ()
 {
 	this._usedOnStart = Game.getUsedCpu (); 
 } 
