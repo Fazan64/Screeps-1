@@ -163,20 +163,24 @@ MinerHelper.prototype.action = function ()
 		var directionAway = creep.pos.getDirectionTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y);
 
 		// Let's look for a courier in that direction. We'll check on making sure 
+		// they're not us,
 		// they're the same role,
-		// if they can hold any energy, 
-		// if they're in range and 
-		// [EXPERIMENTAL] if going to them doesn't mean going away from target
+		// they are not already chosen as couriers by someone else
+		// they can hold any more energy, 
+//		// they're in range of 10, 
+		// they're closer to target than we are, and
+		// going to them doesn't mean going away from target.
 
 		// Because usual way to to that seems to be broken
 		var courier = creep.pos.findClosestByRange (creep.room.myCreeps.filter (function (possibleTarget)
 		{
 			return possibleTarget !== creep
 				&& possibleTarget.memory.role === creep.memory.role
+				&& !possibleTarget.memory.courierTarget
 				&& possibleTarget.carry.energy < possibleTarget.carryCapacity
-				&& creep.pos.inRangeTo (possibleTarget, 10)
-				&& creep.pos.getDirectionTo (possibleTarget) !== directionAway
-				&& creep.pos.getRangeTo (possibleTarget) < creep.pos.getRangeTo (target);
+				//&& creep.pos.inRangeTo (possibleTarget, 10)
+				&& creep.pos.getRangeTo (possibleTarget) < creep.pos.getRangeTo (target)
+				&& creep.pos.getDirectionTo (possibleTarget) !== directionAway;
 		}));
 
 		//If we found a courier, make that courier our new target
