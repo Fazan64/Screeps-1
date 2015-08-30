@@ -24,22 +24,20 @@ Miner.prototype.getOpenSource = function ()
 		Memory.sources = {};
 	}
 
-	var source = this.getClosest (FIND_SOURCES_ACTIVE, {
-		filter: function(source)
+	var source = this.getClosest (creep.room.sourcesActive.filter (function(source)
+	{
+		if (Memory.sources [source.id] == undefined || Memory.sources [source.id].miner == undefined || Memory.sources [source.id].miner == creep.id)
 		{
-			if (Memory.sources [source.id] == undefined || Memory.sources [source.id].miner == undefined || Memory.sources [source.id].miner == creep.id)
-			{
-				return true;
-			}
-
-			if (Game.getObjectById (Memory.sources [source.id].miner) == null)
-			{
-				return true;
-			}
-
-			return false;
+			return true;
 		}
-	});
+
+		if (Game.getObjectById (Memory.sources [source.id].miner) == null)
+		{
+			return true;
+		}
+
+		return false;
+	}));
 
 	return source;
 }
