@@ -18,7 +18,7 @@ MinerHelper.prototype.assignMiner = function ()
 {
 	var creep = this.creep;
 
-	var miner = this.getClosest (FIND_MY_CREEPS, {
+	var miner = this.getClosest (creep.room.myCreeps, {
 		filter: function (miner) 
 		{
 			return miner.memory.role == 'miner' && miner.memory.helpers.length < miner.memory.helpersNeeded;
@@ -44,7 +44,7 @@ MinerHelper.prototype.assignMiner = function ()
 MinerHelper.prototype.onStart = function ()
 {
 	var creep = this.creep;
-	creep.memory.spawn = this.getClosest (FIND_MY_SPAWNS).id;
+	creep.memory.spawn = this.getClosest (creep.room.mySpawns).id;
 	creep.memory.id = creep.id;
 	this.assignMiner ();
 }
@@ -144,7 +144,7 @@ MinerHelper.prototype.action = function ()
 		var spawn = Game.getObjectById (creep.memory.spawn);
 		if (!spawn)
 		{
-			spawn = this.getClosest (FIND_MY_SPAWNS);
+			spawn = this.getClosest (creep.room.mySpawns);
 			if (spawn)
 			{
 				creep.memory.spawn = spawn.id;
