@@ -15,35 +15,34 @@ Scavenger.prototype.action = function ()
 {
 	var creep = this.creep;
 
-	var droppedEnergy = this.getClosest (FIND_DROPPED_ENERGY, {
-		filter: function (en) 
+	// Contains only those which weren't dropped by miners
+	var droppedEnergy = this.getClosest (creep.room.droppedEnergy.filter (function (energyOrb) 
+	{
+		var creeps = energyOrb.pos.lookFor ('creep');
+		for (var i in creeps)
 		{
-			var creeps = creep.room.lookForAt ('creep');
-			for (var i in creeps)
+			// Make scavengers pickup only the energy which wasn't 
+			// dropped by miners since that is miner_helpers job
+			if (creeps [i].memory && creeps [i].memory.role == "miner")
 			{
-				// Make scavengers pickup only the energy which wasn't 
-				// dropped by miners since that is miner_helpers job
-				if (creeps [i].memory && creeps [i].memory.role == "miner")
-				{
-					return false;
-				}
+				return false;
 			}
-			return true;
 		}
-	});
+		return true;
+	}));
 
 	if (droppedEnergy == null || creep.energy == creep.energyCapacity)
 	{
-		var nearestSpawn = creep.pos.findNearest(Game.spawns, {
+		var closestSpawn = this.getClosest (Game.spawns, {
 			filter: function (spawn)
 			{
 				return spawn.energy < spawn.energyCapacity;
 			}
 		});
 		
-		if (nearestSpawn)
+		if (closestSpawn)
 		{
-			this.moveAndPerform (nearestSpawn, creep.transferEnergy);
+			this.moveAndPerform (closestSpawn, creep.transferEnergy);
 		}
 	}
 	else
