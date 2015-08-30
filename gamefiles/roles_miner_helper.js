@@ -149,7 +149,7 @@ MinerHelper.prototype.action = function ()
 			}
 		}
 
-		//If we found it, set it as our target
+		// If we found it, set it as our target
 		if (spawn)
 		{
 			target = spawn;
@@ -169,7 +169,6 @@ MinerHelper.prototype.action = function ()
 		// they're closer to target than we are, and
 		// going to them doesn't mean going away from target.
 
-		
 		// Because usual way to to that seems to be broken
 		var courier = creep.pos.findClosestByRange (creep.room.myCreeps.filter (function (possibleTarget)
 		{
