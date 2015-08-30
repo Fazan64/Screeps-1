@@ -210,8 +210,7 @@ MinerHelper.prototype.action = function ()
 				debugger;
 				creep.say ("Will be a courier");
 				creepToHelp.say ("Will pass to helper");
-				target = creepToHelp;
-				target.memory.courier = creep.id;
+				creepToHelp.memory.courier = creep.id;
 				
 				creep.moveTo (creepToHelp);
 				creepToHelp.transferEnergy (creep);
