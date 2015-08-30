@@ -208,8 +208,8 @@ MinerHelper.prototype.action = function ()
 			if (creepToHelp)
 			{
 				debugger;
-				creep.say ("Will be a courier");
-				creepToHelp.say ("Will pass to helper");
+				creep.say ("Courier");
+				creepToHelp.say ("CreepToHelp");
 				creepToHelp.memory.courier = creep.id;
 				
 				creep.moveTo (creepToHelp);
