@@ -287,7 +287,7 @@ ProtoRole.prototype.keepAwayFromEnemies = function ()
 {
 	var creep = this.creep;
 
-	var target = this.getClosest (FIND_HOSTILE_CREEPS);
+	var target = this.getClosest (creep.room.hostileCreeps);
 	if (target !== null && target.pos.inRangeTo (creep.pos, 3))
 	{
 		this.moveAwayFrom (target);

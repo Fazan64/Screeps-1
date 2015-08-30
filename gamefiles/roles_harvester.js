@@ -19,7 +19,7 @@ Harvester.prototype.onStart = function ()
 	creep.memory.id = creep.id;
 	
 	var source = this.getClosest (FIND_SOURCES_ACTIVE);
-	var spawn = source.pos.findClosestByRange (FIND_MY_SPAWNS);
+	var spawn = source.pos.findClosestByRange (source.room.mySpawns);
 	
 	creep.memory.source = source.id;
 	creep.memory.spawn = spawn.id;
@@ -52,7 +52,7 @@ Harvester.prototype.action = function ()
 	}
 	else 
 	{
-		var target = this.getClosest (FIND_MY_SPAWNS);
+		var target = Game.getObjectById (creep.memory.spawn);
 		if (target)
 		{
 			if (creep.pos.isNearTo (target))

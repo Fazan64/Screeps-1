@@ -61,7 +61,7 @@ Miner.prototype.setSourceToMine = function (source)
 	Memory.sources [source.id].miner = creep.id;
 	creep.memory.source = source.id;
 
-	var helperSpawn = source.pos.findClosestByRange (FIND_MY_SPAWNS);
+	var helperSpawn = source.pos.findClosestByRange (source.room.mySpawns);
 	var steps = helperSpawn.pos.findPathTo (source).length * 2;
 	var creepsNeeded = Math.round((steps * 8) / 100);
 
