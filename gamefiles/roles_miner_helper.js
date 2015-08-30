@@ -160,7 +160,7 @@ MinerHelper.prototype.action = function ()
 		// Get the direction away from target
 		// It's a lot less precise without pathfinding but 
 		// doing a complete path search is just not worth it
-		//var directionAway = creep.pos.getDirectionTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y);
+		var directionAway = creep.pos.getDirectionTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y);
 
 		// Let's look for a courier in that direction. We'll check on making sure 
 		// they're the same role,
@@ -168,15 +168,15 @@ MinerHelper.prototype.action = function ()
 		// if they're in range and 
 		// [EXPERIMENTAL] if going to them doesn't mean going away from target
 
-		var courier = this.getClosest (FIND_MY_CREEPS, {
+		var courier = this.getClosest (creep.room.myCreeps, {
 			filter: function (possibleTarget)
 			{
 				return 
 				(
 					possibleTarget.memory.role == creep.memory.role
 					&& possibleTarget.carry.energy < possibleTarget.carryCapacity
-					&& creep.pos.inRangeTo (possibleTarget, 1)
-					//&& creep.pos.getDirectionTo (possibleTarget) != directionAway
+					//&& creep.pos.inRangeTo (possibleTarget, 1)
+					&& creep.pos.getDirectionTo (possibleTarget) != directionAway
 				);
 			}
 		});
