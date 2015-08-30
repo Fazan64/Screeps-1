@@ -5,7 +5,7 @@ Object.defineProperties (Stopwatch.prototype, {
 	{
 		get : function ()
 		{
-			if (!this._usedObStart)
+			if (!this._usedOnStart)
 			{
 				return 0;
 			}
