@@ -67,6 +67,15 @@ Object.defineProperties (Room.prototype,
 			this._constructionSites = this._constructionSites || this.find (FIND_CONSTRUCTION_SITES);
 			return this._constructionSites;
 		}
+	},
+	
+	sourcesActive :
+	{
+		get : function ()
+		{
+			this._sourcesActive = this._sourcesActive || this.find (FIND_SOURCES_ACTIVE);
+			return this._sourcesActive;
+		}
 	}	
 });
 

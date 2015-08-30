@@ -18,7 +18,7 @@ Harvester.prototype.onStart = function ()
 	
 	creep.memory.id = creep.id;
 	
-	var source = this.getClosest (FIND_SOURCES_ACTIVE);
+	var source = this.getClosest (creep.room.sourcesActive);
 	var spawn = source.pos.findClosestByRange (source.room.mySpawns);
 	
 	creep.memory.source = source.id;
@@ -44,7 +44,7 @@ Harvester.prototype.action = function ()
 
 	if (creep.carry.energy < creep.carryCapacity)
 	{
-		var source = this.getClosest (FIND_SOURCES_ACTIVE);
+		var source = this.getClosest (creep.room.sourcesActive);
 		if (source)
 		{
 			this.moveAndPerform (source, creep.harvest);
