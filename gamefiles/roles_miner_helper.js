@@ -150,9 +150,7 @@ MinerHelper.prototype.action = function ()
 	if (creep.memory.courier) 
 	{
 		var courier = Game.getObjectById (creep.memory.courier);
-		
-		creep.moveTo (courier);
-		creep.transferEnergy (courier);
+		this.moveAndPerform (courier, creep.transferEnergy);
 		creep.memory.courier = null;
 		return;
 	}
@@ -212,8 +210,10 @@ MinerHelper.prototype.action = function ()
 				creepToHelp.say ("Give energy");
 				creepToHelp.memory.courier = creep.id;
 				
-				creep.moveTo (creepToHelp);
-				creepToHelp.transferEnergy (creep);
+				if (!creep.pos.isNearTo (creepToHelp))
+				{
+					creep.moveTo (creepToHelp);
+				}
 			}
 			else if (miner.memory.isNearSource)
 			{
