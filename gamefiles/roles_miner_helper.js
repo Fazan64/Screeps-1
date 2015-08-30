@@ -19,13 +19,11 @@ MinerHelper.prototype.assignMiner = function ()
 	var creep = this.creep;
 
 	debugger;
-	var miner = this.getClosest (creep.room.myCreeps, {
-		filter: function (miner) 
-		{
-			debugger;
-			return miner.memory.role == 'miner' && miner.memory.helpers.length < miner.memory.helpersNeeded;
-		}
-	});
+	var miner = this.getClosest (creep.room.myCreeps.filter (function (miner) 
+	{
+		debugger;
+		return miner.memory.role == 'miner' && miner.memory.helpers.length < miner.memory.helpersNeeded;
+	}));
 
 	if (!miner)
 	{
