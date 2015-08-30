@@ -76,6 +76,15 @@ Object.defineProperties (Room.prototype,
 			this._sourcesActive = this._sourcesActive || this.find (FIND_SOURCES_ACTIVE);
 			return this._sourcesActive;
 		}
+	},
+	
+	droppedEnergy :
+	{
+		get : function ()
+		{
+			this._droppedEnergy = this._droppedEnergy || this.find (FIND_DROPPED_ENERGY);
+			return this._droppedEnergy;
+		}
 	}	
 });
 
