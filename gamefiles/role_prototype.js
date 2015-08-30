@@ -148,7 +148,6 @@ ProtoRole.prototype.getClosest = function (type, opts)
 	// an array in caching index
 	if (opts !== undefined || type instanceof Array)
 	{
-		debugger;
 		return this.creep.pos.findClosestByRange (type, opts);
 	}
 	
