@@ -14,14 +14,74 @@ MinerHelper.prototype = Object.create (ProtoRole.prototype);
 
 MinerHelper.prototype.baseParts = [CARRY, MOVE];
 
+Object.defineProperties (MinerHelper.prototype,
+{
+	spawn : 
+	{
+		// @TODO I should probably refactor this...
+		get : function ()
+		{
+			if (!this._spawn)
+			{
+				if (!this.creep.memory.spawn)
+				{
+					this._spawn = this.getClosest (this.creep.room.mySpawns);
+					if (this._spawn)
+					{
+						this.creep.memory.spawn = this._spawn.id;
+					}
+					return this._spawn;
+				}
+				
+				this._spawn = Game.getObjectById (this.creep.memory.spawn);
+				if (!this._spawn)
+				{
+					this._spawn = this.getClosest (this.creep.room.mySpawns);
+					if (this._spawn)
+					{
+						this.creep.memory.spawn = this._spawn.id;
+					}
+				}
+			}
+			return this._spawn;
+		}	
+	},
+	miner :
+	{
+		get : function ()
+		{
+			if (!this._miner)
+			{
+				if (this.creep.memory.miner)
+				{
+					this._miner = Game.getObjectById (this.creep.memory.miner);
+					if (!this._miner)
+					{
+						this.assignMiner ();
+					}
+				}
+				else 
+				{
+					this.assignMiner ();
+				}
+			}
+			return this._miner;
+		},
+		set : function (value)
+		{
+			this._miner = value;
+			this.creep.memory.miner = this._miner.id;
+			this._miner.memory.helpers.push (this.creep.id);
+		}
+	}	
+});
+
 MinerHelper.prototype.assignMiner = function () 
 {
 	var creep = this.creep;
-
-	debugger;
+	
 	var miner = this.getClosest (creep.room.myCreeps.filter (function (miner) 
 	{
-		debugger;
 		return miner.memory.role == 'miner' && miner.memory.helpers.length < miner.memory.helpersNeeded;
 	}));
 
@@ -29,9 +89,8 @@ MinerHelper.prototype.assignMiner = function ()
 	{
 		return;
 	}
-
-	creep.memory.miner = miner.id;
-	miner.memory.helpers.push (creep.id);
+	
+	this.miner = miner;
 	
 	// Tell the room that we now supply it with energy
 	var spawn = Game.getObjectById (creep.memory.spawn);
@@ -88,26 +147,18 @@ MinerHelper.prototype.action = function ()
 	// to find a path to its closest colleague instead of performing
 	// a multiple-room pathfinding process.
 	
-	if (creep.memory.courierTarget) 
+	if (creep.memory.courier) 
 	{
-		creep.moveTo (Game.getObjectById (creep.memory.courierTarget));
-		creep.memory.courierTarget = null;
+		var courier = Game.getObjectById (creep.memory.courier);
+		
+		creep.moveTo (courier);
+		creep.transferEnergy (courier);
+		creep.memory.courier = null;
 		return;
 	}
 
-	// If this helper isn't assigned to a miner, find one and assign him to it. If it is assigned to a miner,
-	// then find that miner by his id
-	if (creep.memory.miner == undefined)
-	{
-		this.assignMiner ();
-	}
-	var miner = Game.getObjectById (creep.memory.miner);
-	// If stored id was an id of a dead creep
-	if (miner === null)
-	{
-		this.assignMiner ();
-	}
-
+	var miner = this.miner;
+	
 	if (miner === null) 
 	{
 		creep.say ("I see no miners to help, and thus I die");
@@ -118,6 +169,7 @@ MinerHelper.prototype.action = function ()
 	// If we can still pick up energy, let's do that
 	if (creep.carry.energy < creep.carryCapacity) 
 	{
+		
 		if (creep.pos.isNearTo (miner)) 
 		{
 			var energyOrbs = miner.pos.lookFor ('energy');
@@ -126,71 +178,62 @@ MinerHelper.prototype.action = function ()
 				creep.pickup (energyOrbs [0]);
 			}
 		}
+		// We're not near miner going to him
 		else
 		{
-			if (miner.memory.isNearSource)
+			// But first lets try looking for helpers already 
+			// returning from the miner to deliver energy, and 
+			// take it from them.
+			
+			// We'll check on making sure 
+			// they're not us,
+			// they're the same role,
+			// they work for the same miner,
+			// they are not already chosen by someone else
+			// they have some energy, and
+			// they're further from target than we are.
+			
+			var creepToHelp = creep.pos.findClosestByRange (creep.room.myCreeps.filter (function (possibleTarget)
+			{
+				return possibleTarget !== creep
+					&& possibleTarget.memory.role === creep.memory.role
+					&& possibleTarget.memory.miner === creep.memory.miner
+					&& !possibleTarget.memory.courier
+					&& possibleTarget.carry.energy > 0
+					&& this.spawn.pos.getRangeTo (possibleTarget) > this.spawn.pos.getRangeTo (creep)
+			}));	
+			
+			if (creepToHelp)
+			{
+				debugger;
+				creep.say ("Will be a courier");
+				creepToHelp.say ("Will pass to helper");
+				target = creepToHelp;
+				target.memory.courier = creep.id;
+				
+				creep.moveTo (creepToHelp);
+				creepToHelp.transferEnergy (creep);
+			}
+			else if (miner.memory.isNearSource)
 			{
 				creep.moveTo (miner);
 			}
+			else
+			{
+				this.rest (true);
+			}
 		}
+		
 	}
 	// Okay, everything below is for dropping energy off
 	else
 	{
 		var target = null;
 
-		var spawn = Game.getObjectById (creep.memory.spawn);
-		if (!spawn)
-		{
-			spawn = this.getClosest (creep.room.mySpawns);
-			if (spawn)
-			{
-				creep.memory.spawn = spawn.id;
-			}
-		}
-
 		// If we found it, set it as our target
-		if (spawn)
+		if (this.spawn)
 		{
-			target = spawn;
-		}
-		
-		// Get the direction away from target
-		// It's a lot less precise without pathfinding but 
-		// doing a complete path search is just not worth it
-		var directionAway = creep.pos.getDirectionTo (creep.pos.x + creep.pos.x - target.pos.x, creep.pos.y + creep.pos.y - target.pos.y);
-
-		// Let's look for a courier in that direction. We'll check on making sure 
-		// they're not us,
-		// they're the same role,
-		// they work for the same miner,
-		// they are not already chosen as couriers by someone else
-		// they can hold any more energy, 
-//		// they're in range of 10, 
-		// they're closer to target than we are, and
-		// going to them doesn't mean going away from target.
-
-		// Because usual way to to that seems to be broken
-		var courier = creep.pos.findClosestByRange (creep.room.myCreeps.filter (function (possibleTarget)
-		{
-			return possibleTarget !== creep
-				&& possibleTarget.memory.role === creep.memory.role
-				&& possibleTarget.memory.miner === creep.memory.miner
-				&& !possibleTarget.memory.courierTarget
-				&& possibleTarget.carry.energy < possibleTarget.carryCapacity
-				//&& creep.pos.inRangeTo (possibleTarget, 10)
-				&& target.pos.getRangeTo (possibleTarget) < target.pos.getRangeTo (creep)
-				&& creep.pos.getDirectionTo (possibleTarget) !== directionAway;
-		}));
-
-		//If we found a courier, make that courier our new target
-		if (courier !== null && !creep.pos.isNearTo (target)) 
-		{
-			debugger;
-			creep.say ("Found a courier");
-			courier.say ("Will be a courier");
-			target = courier;
-			target.memory.courierTarget = creep.id;
+			target = this.spawn;
 		}
 
 		if (target)
