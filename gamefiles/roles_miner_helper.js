@@ -177,7 +177,7 @@ MinerHelper.prototype.action = function ()
 				&& !possibleTarget.memory.courierTarget
 				&& possibleTarget.carry.energy < possibleTarget.carryCapacity
 				//&& creep.pos.inRangeTo (possibleTarget, 10)
-				&& creep.pos.getRangeTo (possibleTarget) < creep.pos.getRangeTo (target)
+				&& target.pos.getRangeTo (possibleTarget) < target.pos.getRangeTo (creep)
 				&& creep.pos.getDirectionTo (possibleTarget) !== directionAway;
 		}));
 
