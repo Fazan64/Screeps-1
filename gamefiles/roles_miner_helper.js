@@ -193,6 +193,8 @@ MinerHelper.prototype.action = function ()
 			// they have some energy, and
 			// they're further from target than we are.
 			
+			var spawn = this.spawn;
+			
 			var creepToHelp = creep.pos.findClosestByRange (creep.room.myCreeps.filter (function (possibleTarget)
 			{
 				return possibleTarget !== creep
@@ -200,7 +202,7 @@ MinerHelper.prototype.action = function ()
 					&& possibleTarget.memory.miner === creep.memory.miner
 					&& !possibleTarget.memory.courier
 					&& possibleTarget.carry.energy > 0
-					&& this.spawn.pos.getRangeTo (possibleTarget) > this.spawn.pos.getRangeTo (creep)
+					&& spawn.pos.getRangeTo (possibleTarget) > spawn.pos.getRangeTo (creep)
 			}));	
 			
 			if (creepToHelp)
@@ -228,13 +230,7 @@ MinerHelper.prototype.action = function ()
 	// Okay, everything below is for dropping energy off
 	else
 	{
-		var target = null;
-
-		// If we found it, set it as our target
-		if (this.spawn)
-		{
-			target = this.spawn;
-		}
+		var target = this.spawn;
 
 		if (target)
 		{
