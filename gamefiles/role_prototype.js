@@ -478,6 +478,7 @@ var proto =
 			return this.creep.pos.findClosestByRange (type, opts);
 			debugger;
 		}
+		debugger;
 		
 		// Else (a search spec, FIND_MY_CREEPS for example), use caching
 		if (this._cache [type])
