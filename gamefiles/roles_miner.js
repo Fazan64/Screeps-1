@@ -103,7 +103,7 @@ Miner.prototype.onDeath = function (memory)
 		var source = Game.getObjectById (memory.source);
 		if (source)
 		{
-			source.memory.miner = null;
+			Memory.sources [source.id].miner = null;
 		}
 	}
 }
