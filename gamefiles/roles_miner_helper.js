@@ -133,8 +133,6 @@ MinerHelper.prototype.action = function ()
 				creep.moveTo (miner);
 			}
 		}
-
-		return;
 	}
 	// Okay, everything below is for dropping energy off
 	else
@@ -171,6 +169,7 @@ MinerHelper.prototype.action = function ()
 		// they're closer to target than we are, and
 		// going to them doesn't mean going away from target.
 
+		debugger;
 		// Because usual way to to that seems to be broken
 		var courier = creep.pos.findClosestByRange (creep.room.myCreeps.filter (function (possibleTarget)
 		{
