@@ -16,24 +16,24 @@ module.exports = function (creeps)
 		if (roleManager.roleExists (role))
 		{
 			roleObject = roleManager.getRoleObject (role);
-		}
 
-		roleObject.setCreep (creep);
-		if (SAFEMODE)
-		{
-			try 
-			{ 
+			roleObject.setCreep (creep);
+			if (SAFEMODE)
+			{
+				try 
+				{ 
+					roleObject.run ();
+				} 
+				catch(e) 
+				{ 
+					console.log ("Error while executing role behaviour: " + role + " " + creep.name);
+					console.log (e)	
+				};
+			}
+			else
+			{
 				roleObject.run ();
-			} 
-			catch(e) 
-			{ 
-				console.log ("Error while executing role behaviour: " + role + " " + creep.name);
-				console.log (e)	
-			};
-		}
-		else
-		{
-			roleObject.run ();
+			}
 		}
 		
 		creep.memory.lastAliveTime = Game.time;
