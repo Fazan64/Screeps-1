@@ -173,7 +173,8 @@ MinerHelper.prototype.action = function ()
 			{
 				return 
 				(
-					possibleTarget.memory.role == creep.memory.role
+					possibleTarget != creep
+					&& possibleTarget.memory.role == creep.memory.role
 					&& possibleTarget.carry.energy < possibleTarget.carryCapacity
 					//&& creep.pos.inRangeTo (possibleTarget, 1)
 					&& creep.pos.getDirectionTo (possibleTarget) != directionAway
