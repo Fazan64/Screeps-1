@@ -18,6 +18,7 @@ MinerHelper.prototype.assignMiner = function ()
 {
 	var creep = this.creep;
 
+	debugger;
 	var miner = this.getClosest (creep.room.myCreeps, {
 		filter: function (miner) 
 		{
