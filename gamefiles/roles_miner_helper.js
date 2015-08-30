@@ -172,14 +172,11 @@ MinerHelper.prototype.action = function ()
 			filter: function (possibleTarget)
 			{
 				debugger;
-				return 
-				(
-					possibleTarget !== creep
+				return possibleTarget !== creep
 					&& possibleTarget.memory.role === creep.memory.role
 					&& possibleTarget.carry.energy < possibleTarget.carryCapacity
 					//&& creep.pos.inRangeTo (possibleTarget, 1)
-					&& creep.pos.getDirectionTo (possibleTarget) !== directionAway
-				);
+					&& creep.pos.getDirectionTo (possibleTarget) !== directionAway;
 			} 
 		});
 		debugger;
