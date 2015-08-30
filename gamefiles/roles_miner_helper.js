@@ -18,32 +18,32 @@ Object.defineProperties (MinerHelper.prototype,
 {
 	spawn : 
 	{
-		// @TODO I should probably refactor this...
 		get : function ()
 		{
 			if (!this._spawn)
 			{
-				if (!this.creep.memory.spawn)
+				if (this.creep.memory.spawn)
 				{
-					this._spawn = this.getClosest (this.creep.room.mySpawns);
-					if (this._spawn)
+					this._spawn = Game.getObjectById (this.creep.memory.spawn);
+					if (!this._spawn)
 					{
-						this.creep.memory.spawn = this._spawn.id;
-					}
-					return this._spawn;
+						this.assignSpawn ();
+					}	
 				}
-				
-				this._spawn = Game.getObjectById (this.creep.memory.spawn);
-				if (!this._spawn)
+				else 
 				{
-					this._spawn = this.getClosest (this.creep.room.mySpawns);
-					if (this._spawn)
-					{
-						this.creep.memory.spawn = this._spawn.id;
-					}
+					this.assignSpawn ();
 				}
 			}
 			return this._spawn;
+		},
+		set : function (value)
+		{
+			this._spawn = value;
+			if (this._spawn)
+			{
+				this.creep.memory.spawn = this._spawn.id;	
+			}
 		}	
 	},
 	miner :
@@ -70,11 +70,26 @@ Object.defineProperties (MinerHelper.prototype,
 		set : function (value)
 		{
 			this._miner = value;
-			this.creep.memory.miner = this._miner.id;
-			this._miner.memory.helpers.push (this.creep.id);
+			if (this._miner)
+			{
+				this.creep.memory.miner = this._miner.id;
+				this._miner.memory.helpers.push (this.creep.id);
+			}
 		}
 	}	
 });
+
+MinerHelper.prototype.assignSpawn = function ()
+{
+	var spawn = this.getClosest (this.creep.room.mySpawns);
+	
+	if (!spawn)
+	{
+		return;
+	}
+	
+	this.spawn = spawn;
+}
 
 MinerHelper.prototype.assignMiner = function () 
 {
@@ -235,7 +250,7 @@ MinerHelper.prototype.action = function ()
 			//If we're near to the target, either give it our energy or drop it
 			if (creep.pos.isNearTo (target)) 
 			{
-				var notFull = target.energy !== undefined ? target.energy < target.energyCapacity : target.carry.energy < target.carryCapacity;
+				var notFull = target.energy < target.energyCapacity;
 				if (notFull)
 				{
 					creep.transferEnergy (target);
