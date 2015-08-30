@@ -199,7 +199,7 @@ MinerHelper.prototype.action = function ()
 					&& possibleTarget.memory.role === creep.memory.role
 					&& possibleTarget.memory.miner === creep.memory.miner
 					&& !possibleTarget.memory.courier
-					&& possibleTarget.carry.energy > 0
+					&& possibleTarget.carry.energy == possibleTarget.carryCapacity
 					&& spawn.pos.getRangeTo (creep) < spawn.pos.getRangeTo (possibleTarget);
 			}));	
 			
