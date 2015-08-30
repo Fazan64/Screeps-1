@@ -180,11 +180,11 @@ MinerHelper.prototype.action = function ()
 				&& creep.pos.getRangeTo (possibleTarget) < creep.pos.getRangeTo (target)
 				&& creep.pos.getDirectionTo (possibleTarget) !== directionAway;
 		}));
-		debugger;
 
 		//If we found a courier, make that courier our new target
 		if (courier !== null && !creep.pos.isNearTo (target)) 
 		{
+			debugger;
 			creep.say ("Found a courier");
 			courier.say ("Will be a courier");
 			target = courier;
