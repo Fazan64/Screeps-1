@@ -168,7 +168,7 @@ MinerHelper.prototype.action = function ()
 		// if they're in range and 
 		// [EXPERIMENTAL] if going to them doesn't mean going away from target
 
-		var courier = this.getClosest (creep.room.myCreeps, {
+		var courier = creep.room.findClosestByRange (creep.room.myCreeps, {
 			filter: function (possibleTarget)
 			{
 				debugger;
@@ -180,7 +180,7 @@ MinerHelper.prototype.action = function ()
 					//&& creep.pos.inRangeTo (possibleTarget, 1)
 					&& creep.pos.getDirectionTo (possibleTarget) !== directionAway
 				);
-			}
+			} 
 		});
 		debugger;
 
