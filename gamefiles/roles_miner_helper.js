@@ -118,8 +118,9 @@ MinerHelper.prototype.assignMiner = function ()
 MinerHelper.prototype.onStart = function ()
 {
 	var creep = this.creep;
-	creep.memory.spawn = this.getClosest (creep.room.mySpawns).id;
 	creep.memory.id = creep.id;
+	// Because I want it to be done ASAP
+	this.assignSpawn ();
 	this.assignMiner ();
 }
 
