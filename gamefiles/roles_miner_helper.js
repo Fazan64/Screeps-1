@@ -21,6 +21,7 @@ MinerHelper.prototype.assignMiner = function ()
 	var miner = this.getClosest (creep.room.myCreeps, {
 		filter: function (miner) 
 		{
+			debugger;
 			return miner.memory.role == 'miner' && miner.memory.helpers.length < miner.memory.helpersNeeded;
 		}
 	});
@@ -171,14 +172,12 @@ MinerHelper.prototype.action = function ()
 		// Because usual way to to that seems to be broken
 		var courier = creep.pos.findClosestByRange (creep.room.myCreeps.filter (function (possibleTarget)
 		{
-			debugger;
 			return possibleTarget !== creep
 				&& possibleTarget.memory.role === creep.memory.role
 				&& possibleTarget.carry.energy < possibleTarget.carryCapacity
 				//&& creep.pos.inRangeTo (possibleTarget, 1)
 				&& creep.pos.getDirectionTo (possibleTarget) !== directionAway;
 		}));
-		debugger;
 
 		//If we found a courier, make that courier our new target
 		if (courier !== null && !creep.pos.isNearTo (target)) 
