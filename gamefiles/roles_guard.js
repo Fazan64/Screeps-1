@@ -14,12 +14,10 @@ Guard.prototype.action = function()
 {
 	var creep = this.creep;
 
-	var target = this.getClosest (FIND_HOSTILE_CREEPS, {
-		filter : function (enemy) 
-		{
-			return enemy.owner.username !== "Source Keeper"
-		}
-	});
+	var target = this.getClosest (creep.room.hostileCreeps.filter (function (enemy) 
+	{
+		return enemy.owner.username !== "Source Keeper"
+	}));
 	
 	if (target)
 	{
