@@ -169,7 +169,7 @@ MinerHelper.prototype.action = function ()
 		// they're closer to target than we are, and
 		// going to them doesn't mean going away from target.
 
-		debugger;
+		
 		// Because usual way to to that seems to be broken
 		var courier = creep.pos.findClosestByRange (creep.room.myCreeps.filter (function (possibleTarget)
 		{
@@ -181,6 +181,7 @@ MinerHelper.prototype.action = function ()
 				&& creep.pos.getRangeTo (possibleTarget) < creep.pos.getRangeTo (target)
 				&& creep.pos.getDirectionTo (possibleTarget) !== directionAway;
 		}));
+		debugger;
 
 		//If we found a courier, make that courier our new target
 		if (courier !== null && !creep.pos.isNearTo (target)) 
