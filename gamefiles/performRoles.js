@@ -41,7 +41,7 @@ module.exports = function (creeps)
 			{
 				roleObject.run ();
 			}
-			console.log ("Role behaviour for creep " + creep.name + ": " + stopwatch.usedCpu);
+			console.log (stopwatch.usedCpu + "cpu was used by role behaviour for creep " + creep.name);
 		}
 		
 		creep.memory.lastAliveTime = Game.time;
