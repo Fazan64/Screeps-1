@@ -24,7 +24,6 @@ ProtoRole.prototype.setCreep = function (creep)
 
 ProtoRole.prototype.run = function ()
 {
-	console.log ("Performing role behaviour for creep " + this.creep.name + "..."); 
 		
 	if (this.creep.memory.onStarted == undefined)
 	{
