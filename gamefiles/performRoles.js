@@ -1,4 +1,5 @@
 var SAFEMODE = false;
+var DEBUG_CPU = true;
 
 var roleManager = require ('roleManager');
 var Stopwatch = require ('stopwatch');
@@ -23,7 +24,11 @@ module.exports = function (creeps)
 			roleObject.setCreep (creep);
 			//console.log ("Performing role behaviour for creep " + creep.name + "...");
 			
-			stopwatch.restart ();
+			if (DEBUG_CPU)
+			{
+				stopwatch.restart ();
+			}
+			
 			if (SAFEMODE)
 			{
 				try 
@@ -40,7 +45,11 @@ module.exports = function (creeps)
 			{
 				roleObject.run ();
 			}
-			console.log (stopwatch.usedCpu + " cpu was used by role behaviour for creep " + creep.name);
+			
+			if (DEBUG_CPU)
+			{
+				console.log (stopwatch.usedCpu + " cpu was used by role behaviour for creep " + creep.name);
+			}
 		}
 		
 		creep.memory.lastAliveTime = Game.time;
