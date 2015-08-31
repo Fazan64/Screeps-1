@@ -91,7 +91,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._underAttack = this._underAttack || this.hostileCreeps.length > 0;
+			this._underAttack = this._underAttack || this.hostileCreeps.filter (function (creep) { return creep.owner.username !== "Source Keeper" }).length > 0;
 			return this._underAttack;
 		}
 	}
