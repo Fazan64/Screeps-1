@@ -44,6 +44,10 @@ Scavenger.prototype.action = function ()
 		{
 			this.moveAndPerform (closestSpawn, creep.transferEnergy);
 		}
+		else
+		{
+			this.rest ();
+		}
 	}
 	else
 	{
