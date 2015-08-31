@@ -20,7 +20,6 @@ module.exports = function (creeps)
 		if (roleManager.roleExists (role))
 		{
 			roleObject = roleManager.getRoleObject (role);
-
 			roleObject.setCreep (creep);
 			//console.log ("Performing role behaviour for creep " + creep.name + "...");
 			

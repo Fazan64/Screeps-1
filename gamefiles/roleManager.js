@@ -11,14 +11,8 @@ module.exports =
 				var RoleConstructor =  require ("roles_" + role);
 				var roleObject = new RoleConstructor ();
 				Memory.rolesCache [role] = roleObject;
-				debugger;
 			}
 			catch(e) {console.log ("roleManager: error: " + e)}
-		}
-		else
-		{
-			console.log ("Using cached role object!");
-			debugger;
 		}
 		return Memory.rolesCache [role] !== undefined;
 	},
@@ -31,7 +25,6 @@ module.exports =
 		}
 
 		var roleObject = Memory.rolesCache [role];
-		debugger;
 		return Object.create (roleObject);
 	},
 
