@@ -367,11 +367,14 @@ RoomManager.prototype.updateNeedsScavengers = function ()
 
 RoomManager.prototype.updateNeedsSurplus = function ()
 {
-	this.needs.creeps.push (
-		{
-			role : "archer"
-		}
-	);
+	if (this.energySupply == this.room.energyCapacityAvailable)
+	{
+		this.needs.creeps.push (
+			{
+				role : "archer"
+			}
+		);
+	}
 }
 
 RoomManager.prototype.setNeeds = function ()
