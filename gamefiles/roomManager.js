@@ -33,6 +33,22 @@ Object.defineProperties (Room.prototype,
 		}
 	},
 	
+	defenders :
+	{
+		get : function ()
+		{
+			this._defenders = this._defenders || this.myCreeps.filter (function (creep)
+			{
+				// If has offensive bodyparts && has an appropriate role
+				return (creep.memory.role == "archer"
+					||  creep.memory.role == "guard")
+					&& (creep.getActiveBodyparts (RANGED_ATTACK) > 0
+					||  creep.getActiveBodyparts (ATTACK) > 0)		
+			})
+			return this._defenders;
+		}
+	},
+	
 	myDamagedCreeps :
 	{
 		get : function ()
@@ -111,22 +127,6 @@ function RoomManager (room)
 
 Object.defineProperties (RoomManager.prototype,
 {
-	defenders :
-	{
-		get : function ()
-		{
-			this._defenders = this._defenders || this.room.myCreeps.filter (function (creep)
-			{
-				// If has offensive bodyparts && has an appropriate role
-				return (creep.memory.role == "archer"
-					||  creep.memory.role == "guard")
-					&& (creep.getActiveBodyparts (RANGED_ATTACK) > 0
-					||  creep.getActiveBodyparts (ATTACK) > 0)		
-			})
-			return this._defenders;
-		}
-	},
-	
 	energySupply :
 	{
 		get : function ()
@@ -250,7 +250,7 @@ RoomManager.prototype.updateNeedsSuppliers = function ()
 RoomManager.prototype.updateNeedsDefenders = function ()
 {
 	// Add required amount of defenders to the needs array
-	var neededDefenders = this.room.hostileCreeps.length - this.defenders.length + 1;
+	var neededDefenders = this.room.hostileCreeps.length - this.room.defenders.length + 1;
 	// Won't execute if neededDefenders <= 0
 	for (var i = 0; i < neededDefenders; i++)
 	{
@@ -274,7 +274,7 @@ RoomManager.prototype.updateNeedsHealers = function ()
 	})
 	
 	// The idea is to have a single healer per [DEFENDERS_PER_HEALER] defenders
-	var neededHealers = Math.floor (this.defenders.length / DEFENDERS_PER_HEALER) - healers.length;
+	var neededHealers = Math.floor (this.room.defenders.length / DEFENDERS_PER_HEALER) - healers.length;
 	
 	if (neededHealers <= 0)
 	{
