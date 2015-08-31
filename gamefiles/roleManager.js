@@ -10,7 +10,7 @@ module.exports =
 			{
 				rolesCache [role] = require ("roles_" + role);
 			}
-			catch(e) {}
+			catch(e) {console.log ("roleManager: error: " + e)}
 		}
 		return rolesCache [role] !== undefined;
 	},
