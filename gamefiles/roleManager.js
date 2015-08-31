@@ -30,6 +30,7 @@ module.exports =
 		}
 
 		var roleObject = Memory.rolesCache [role];
+		debugger;
 		return Object.create (roleObject);
 	},
 
