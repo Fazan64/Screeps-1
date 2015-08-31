@@ -209,6 +209,11 @@ RoomManager.prototype.updateNeeds = function ()
 	
 	this.updateNeedsSuppliers ();
 	
+	if (this.needs.creeps.length == 0)
+	{
+		this.updateNeedsSurplus ();
+	}
+	
 	this.setNeeds ();
 	
 }
@@ -357,6 +362,15 @@ RoomManager.prototype.updateNeedsScavengers = function ()
 			}
 		);
 	}
+}
+
+RoomManager.prototype.updateNeedsSurplus = function ()
+{
+	this.needs.creeps.push (
+		{
+			role : "archer"
+		}
+	);
 }
 
 RoomManager.prototype.setNeeds = function ()
