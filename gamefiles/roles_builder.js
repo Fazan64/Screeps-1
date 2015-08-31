@@ -14,17 +14,28 @@ Builder.prototype.baseParts = [WORK, CARRY];
 Builder.prototype.action = function()
 {
 	var creep = this.creep;
+	
+	if (creep.room.underAttack)
+	{
+		if (creep.carry.energy > 0)
+		{
+			var spawn = this.findClosestSpawn ();
+			if (spawn)
+			{
+				this.moveAndPerform (spawn, creep.transferEnergy);
+			}
+		}
+		else
+		{
+			this.keepAwayFromEnemies ();
+		}
+		return;
+	}
 
 	//If out of energy, go to spawn and recharge
 	if (creep.carry.energy == 0) 
 	{
-		var closestSpawn = this.getClosest (creep.room.mySpawns, {
-			filter: function (spawn)
-			{
-				return spawn.energy > 0;
-			}
-		});
-
+		var closestSpawn = this.findClosestSpawn ();
 		if (closestSpawn) 
 		{
 			this.moveTo (closestSpawn);
@@ -102,6 +113,16 @@ Builder.prototype.action = function()
 			this.rest (true);
 		}
 	}
+}
+
+Builder.prototype.findClosestSpawn = function ()
+{
+	return this.getClosest (this.creep.room.mySpawns, {
+		filter: function (spawn)
+		{
+			return spawn.energy > 0;
+		}
+	});
 }
 
 module.exports = Builder;
