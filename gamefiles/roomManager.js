@@ -209,6 +209,7 @@ RoomManager.prototype.updateNeeds = function ()
 	
 	this.updateNeedsSuppliers ();
 	
+	// If doesn't need anything
 	if (this.needs.creeps.length == 0)
 	{
 		this.updateNeedsSurplus ();
