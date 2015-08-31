@@ -8,7 +8,7 @@ function Archer () { ProtoRole.apply (this, arguments) }
 
 Archer.prototype = Object.create (ProtoRole.prototype);
 
-Archer.prototype.baseParts = [RANGED_ATTACK, TOUGH];
+Archer.prototype.baseParts = [TOUGH, RANGED_ATTACK];
 
 /**
 * @TODO: We need to get archers to prioritise their targets better
