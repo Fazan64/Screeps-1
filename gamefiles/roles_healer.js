@@ -19,7 +19,7 @@ Healer.prototype.action = function ()
 	// Find my creeps that are hurt. If they're hurt, heal them.
 	// If there aren't any hurt, we're going to try and get the healers
 	// to tick near the guards, so that they're close by when the battle starts
-	var target = this.getClosest (creep.room.myDamagedCreeps);
+	var target = this.getClosest (creep.room.myDamagedCreeps) || this.getClosest (creep.room.defenders);
 
 	if (target)
 	{
