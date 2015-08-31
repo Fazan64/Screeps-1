@@ -46,7 +46,7 @@ Scavenger.prototype.action = function ()
 		}
 		else
 		{
-			this.rest ();
+			this.rest (true);
 		}
 	}
 	else
