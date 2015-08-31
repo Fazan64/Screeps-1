@@ -55,6 +55,19 @@ Upgrader.prototype.action = function ()
 	var creep = this.creep;
 	
 	var controller = Game.getObjectById (creep.memory.controller);
+	var spawn = Game.getObjectById (creep.memory.spawn);
+	
+	if (creep.room.underAttack)
+	{
+		if (creep.carry.energy > 0)
+		{
+			this.moveAndPerform (spawn, creep.transferEnergy);
+		}
+		else
+		{
+			this.keepAwayFromEnemies ();
+		}
+	}
 		
 	if (creep.carry.energy > 0)
 	{
@@ -62,7 +75,6 @@ Upgrader.prototype.action = function ()
 	}
 	else
 	{
-		var spawn = Game.getObjectById (creep.memory.spawn);
 		this.moveTo (spawn);
 		spawn.transferEnergy (creep);
 	}

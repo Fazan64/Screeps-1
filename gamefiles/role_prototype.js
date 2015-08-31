@@ -174,7 +174,7 @@ ProtoRole.prototype.rest = function (civilian)
 	
 	if (civilian)
 	{
-		restTarget = creep.pos.findClosestByRange (Game.spawns);
+		restTarget = this.getClosest (creep.room.mySpawns);
 	}
 	else
 	{
