@@ -5,9 +5,8 @@ var MAX_PARTS = 30;
  * @class
  * @constructor
  */
-function ProtoRole (creep)
+function ProtoRole ()
 {
-	this.creep = creep;
 	this._cache = {};
 }
 
