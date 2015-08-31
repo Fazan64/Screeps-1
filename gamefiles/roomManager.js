@@ -53,7 +53,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._scavengers = this._scavengers | this.myCreeps.filter (function (creep)
+			this._scavengers = this._scavengers || this.myCreeps.filter (function (creep)
 			{
 				return creep.memory.role == "scavenger" 	
 			});
