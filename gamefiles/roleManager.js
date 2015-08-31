@@ -1,18 +1,18 @@
-var rolesCache = {};
+Memory.rolesCache = {};
 
 module.exports = 
 {
 	roleExists: function (role)
 	{
-		if (!rolesCache [role])
+		if (!Memory.rolesCache [role])
 		{
 			try
 			{
-				rolesCache [role] = require ("roles_" + role);
+				Memory.rolesCache [role] = require ("roles_" + role);
 			}
 			catch(e) {console.log ("roleManager: error: " + e)}
 		}
-		return rolesCache [role] !== undefined;
+		return Memory.rolesCache [role] !== undefined;
 	},
 
 	getRoleObject: function (role)
@@ -22,7 +22,7 @@ module.exports =
 			return false;
 		}
 
-		var Role = rolesCache [role];
+		var Role = Memory.rolesCache [role];
 		return new Role ();
 	},
 
