@@ -19,7 +19,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._myCreeps = this._myCreeps || this.creeps.filter (function (creep) { return creep.my });
+			this._myCreeps = this._myCreeps || this.find (FIND_MY_CREEPS);
 			return this._myCreeps;
 		}
 	},
@@ -28,7 +28,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._hostileCreeps = this._hostileCreeps || this.creeps.filter (function (creep) { return !creep.my });
+			this._hostileCreeps = this._hostileCreeps || this.find (FIND_HOSTILE_CREEPS);
 			return this._hostileCreeps;
 		}
 	},
@@ -85,7 +85,18 @@ Object.defineProperties (Room.prototype,
 			this._droppedEnergy = this._droppedEnergy || this.find (FIND_DROPPED_ENERGY);
 			return this._droppedEnergy;
 		}
-	}	
+	},
+	
+	underAttack :
+	{
+		get : function ()
+		{
+			this._underAttack = this._underAttack || this.hostileCreeps.length > 0;
+			return this._underAttack;
+		}
+	}
+	
+		
 });
 
 function RoomManager (room)
