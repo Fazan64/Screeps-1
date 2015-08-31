@@ -189,6 +189,8 @@ RoomManager.prototype.updateNeeds = function ()
 		this.updateNeedsBuilders ();
 		
 		this.updateNeedsUpgraders ();
+		
+		this.updateNeedsScavengers ();
 	}
 	
 	this.updateNeedsHelpers ();
@@ -328,7 +330,20 @@ RoomManager.prototype.updateNeedsBuilders = function ()
 				role : "builder",
 				memory : {}
 			}
-		)
+		);
+	}
+}
+
+RoomManager.prototype.updateNeedsScavengers = function ()
+{
+	if (this.room.droppedEnergy.length)
+	{
+		this.needs.creeps.push (
+			{
+				role : "scavenger",
+				memory : {}
+			}
+		);
 	}
 }
 
