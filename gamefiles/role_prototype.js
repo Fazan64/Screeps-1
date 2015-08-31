@@ -114,7 +114,7 @@ ProtoRole.prototype.onDeath = function () {}
 
 ProtoRole.prototype.moveTo = function (target)
 {
-	this.creep.moveTo (target, { reusePath : 10 });
+	this.creep.moveTo (target, { reusePath : 5 });
 }
 
 ProtoRole.prototype.moveAndPerform = function (target, action)
