@@ -1,5 +1,5 @@
 var SAFEMODE = false;
-var DEBUG_CPU = true;
+var DEBUG_CPU = false;
 
 var roleManager = require ('roleManager');
 var Stopwatch = require ('stopwatch');
