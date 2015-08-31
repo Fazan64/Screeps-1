@@ -8,7 +8,7 @@ module.exports =
 		{
 			try
 			{
-				Memory.rolesCache [role] = require ("roles_" + role);
+				Memory.rolesCache [role] = new require ("roles_" + role) ();
 			}
 			catch(e) {console.log ("roleManager: error: " + e)}
 		}
@@ -22,8 +22,8 @@ module.exports =
 			return false;
 		}
 
-		var Role = Memory.rolesCache [role];
-		return new Role ();
+		var roleObject = Memory.rolesCache [role];
+		return Object.create (roleObject);
 	},
 
 	getRoleBodyParts: function (role, maxEnergy)
