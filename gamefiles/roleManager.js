@@ -9,7 +9,8 @@ module.exports =
 			try
 			{
 				var RoleConstructor =  require ("roles_" + role);
-				Memory.rolesCache [role] = new RoleConstructor ();
+				var roleObject = new RoleConstructor ();
+				Memory.rolesCache [role] = roleObject;
 				debugger;
 			}
 			catch(e) {console.log ("roleManager: error: " + e)}
