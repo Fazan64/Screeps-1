@@ -23,6 +23,7 @@ Healer.prototype.action = function ()
 
 	if (target)
 	{
+		creep.rangedHeal (target);
 		this.moveAndPerform (target, creep.heal);
 	}
 	else 
