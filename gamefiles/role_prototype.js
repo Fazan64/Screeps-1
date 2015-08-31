@@ -166,8 +166,6 @@ ProtoRole.prototype.getClosest = function (type, opts)
 ProtoRole.prototype.rest = function (civilian)
 {
 	var creep = this.creep;
-		
-	console.log ("    Resting...");
 
 	var distance = 4;
 	var restTarget = null;
