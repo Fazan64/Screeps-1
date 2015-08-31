@@ -170,11 +170,28 @@ ProtoRole.prototype.rest = function (civilian)
 	console.log ("    Resting...");
 
 	var distance = 4;
-	var restTarget = creep.pos;
+	var restTarget = null;
 	
 	if (civilian)
 	{
-		restTarget = this.getClosest (creep.room.mySpawns);
+		var flags = Game.flags;
+		for (var i in flags)
+		{
+			var flag = flags[i];
+			// If the flag is red & its position is free
+			if (flag.color == COLOR_WHITE &&
+				(creep.pos.inRangeTo (flag, distance) || creep.pos.getRangeTo (flag) > 0)
+			) 
+			{
+				restTarget = flag;
+				break;
+			}
+		}
+		
+		if (!restTarget)
+		{
+			restTarget = this.getClosest (creep.room.mySpawns);
+		}
 	}
 	else
 	{
@@ -191,6 +208,11 @@ ProtoRole.prototype.rest = function (civilian)
 				break;
 			}
 		}
+	}
+	
+	if (!restTarget)
+	{
+		restTarget = creep.pos;
 	}
 
 	this.moveTo (restTarget);
