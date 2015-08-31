@@ -1,4 +1,4 @@
-Memory.rolesCache = {};
+Memory.rolesCache = Memory.rolesCache || {};
 
 module.exports = 
 {
