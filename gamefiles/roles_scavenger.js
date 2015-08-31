@@ -35,7 +35,7 @@ Scavenger.prototype.action = function ()
 	// Contains only those which weren't dropped by miners
 	var droppedEnergy = this.getClosest (creep.room.droppedEnergy.filter (EnergyOrbsFilter));
 
-	if (droppedEnergy == null || creep.carry.energy == creep.carryCapacity)
+	if (creep.carry.energy == creep.carryCapacity)
 	{
 		var closestSpawn = this.getClosest (creep.room.mySpawns.filter (function (spawn)
 		{
@@ -53,7 +53,14 @@ Scavenger.prototype.action = function ()
 	}
 	else
 	{
-		this.moveAndPerform (droppedEnergy, creep.pickup);
+		if (droppedEnergy == null)
+		{
+			this.rest (true);
+		}
+		else
+		{
+			this.moveAndPerform (droppedEnergy, creep.pickup);
+		}
 	}
 }
 
