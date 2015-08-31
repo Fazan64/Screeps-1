@@ -348,7 +348,7 @@ RoomManager.prototype.updateNeedsBuilders = function ()
 
 RoomManager.prototype.updateNeedsScavengers = function ()
 {
-	if (this.room.droppedEnergy.length && !this.room.scavengers.length)
+	if (this.room.droppedEnergy.length && this.room.scavengers.length == 0)
 	{
 		this.needs.creeps.push (
 			{
