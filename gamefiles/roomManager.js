@@ -49,6 +49,18 @@ Object.defineProperties (Room.prototype,
 		}
 	},
 	
+	scavengers : 
+	{
+		get : function ()
+		{
+			this._scavengers = this._scavengers | this.myCreeps.filter (function (creep)
+			{
+				return creep.memory.role == "scavenger" 	
+			});
+			return this._scavengers;
+		}	
+	},
+	
 	myDamagedCreeps :
 	{
 		get : function ()
@@ -336,7 +348,7 @@ RoomManager.prototype.updateNeedsBuilders = function ()
 
 RoomManager.prototype.updateNeedsScavengers = function ()
 {
-	if (this.room.droppedEnergy.length)
+	if (this.room.droppedEnergy.length && !this.room.scavengers.length)
 	{
 		this.needs.creeps.push (
 			{
