@@ -68,15 +68,17 @@ Upgrader.prototype.action = function ()
 			this.keepAwayFromEnemies ();
 		}
 	}
-		
-	if (creep.carry.energy > 0)
-	{
-		this.moveAndPerform (controller, creep.upgradeController);
-	}
 	else
 	{
-		this.moveTo (spawn);
-		spawn.transferEnergy (creep);
+		if (creep.carry.energy > 0)
+		{
+			this.moveAndPerform (controller, creep.upgradeController);
+		}
+		else
+		{
+			this.moveTo (spawn);
+			spawn.transferEnergy (creep);
+		}
 	}
 }
 
