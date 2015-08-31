@@ -180,7 +180,7 @@ RoomManager.prototype.updateNeeds = function ()
 	};
 	
 	// Minimum reached, now we need non-suppliers
-	if (this.energySupply >= MIN_SUPPLY)
+	if (this.energySupply >= MIN_SUPPLY || this.room.underAttack)
 	{
 		this.updateNeedsDefenders ();
 		
