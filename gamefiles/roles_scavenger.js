@@ -16,7 +16,9 @@ function EnergyOrbsFilter (energyOrb)
 }
 
 /**
- * Basically pickups dropped energy all around the place
+ * They basically pickup dropped energy all around the place. 
+ * Also, they occasionaly try to scavenge the energy from the 
+ * deceased enemies during the battle and act as decoys :) 
  * @class
  * @constructor
  */
