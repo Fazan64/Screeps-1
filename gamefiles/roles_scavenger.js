@@ -1,5 +1,20 @@
 var ProtoRole = require ("role_prototype");
 
+function EnergyOrbsFilter (energyOrb) 
+{
+	var creeps = energyOrb.pos.lookFor ('creep');
+	for (var i in creeps)
+	{
+		// Make scavengers pickup only the energy which wasn't 
+		// dropped by miners since that is miner_helpers job
+		if (creeps [i].memory && creeps [i].memory.role == "miner")
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 /**
  * Basically pickups dropped energy all around the place
  * @class
@@ -16,20 +31,7 @@ Scavenger.prototype.action = function ()
 	var creep = this.creep;
 
 	// Contains only those which weren't dropped by miners
-	var droppedEnergy = this.getClosest (creep.room.droppedEnergy.filter (function (energyOrb) 
-	{
-		var creeps = energyOrb.pos.lookFor ('creep');
-		for (var i in creeps)
-		{
-			// Make scavengers pickup only the energy which wasn't 
-			// dropped by miners since that is miner_helpers job
-			if (creeps [i].memory && creeps [i].memory.role == "miner")
-			{
-				return false;
-			}
-		}
-		return true;
-	}));
+	var droppedEnergy = this.getClosest (creep.room.droppedEnergy.filter (EnergyOrbsFilter));
 
 	if (droppedEnergy == null || creep.carry.energy == creep.carryCapacity)
 	{
