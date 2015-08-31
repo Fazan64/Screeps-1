@@ -31,7 +31,7 @@ Scavenger.prototype.action = function ()
 		return true;
 	}));
 
-	if (droppedEnergy == null || creep.energy == creep.energyCapacity)
+	if (droppedEnergy == null || creep.carry.energy == creep.carryCapacity)
 	{
 		var closestSpawn = this.getClosest (creep.room.mySpawns.filter (function (spawn)
 		{
