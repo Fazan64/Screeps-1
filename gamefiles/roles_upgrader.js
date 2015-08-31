@@ -63,7 +63,7 @@ Upgrader.prototype.action = function ()
 	else
 	{
 		var spawn = Game.getObjectById (creep.memory.spawn);
-		creep.moveTo (spawn);
+		this.moveTo (spawn);
 		spawn.transferEnergy (creep);
 	}
 }

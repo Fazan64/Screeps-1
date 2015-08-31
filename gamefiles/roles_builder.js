@@ -27,7 +27,7 @@ Builder.prototype.action = function()
 
 		if (closestSpawn) 
 		{
-			creep.moveTo (closestSpawn);
+			this.moveTo (closestSpawn);
 			closestSpawn.transferEnergy (creep);
 		}
 	}
@@ -55,7 +55,7 @@ Builder.prototype.action = function()
 
 		if (damagedRamparts.length)
 		{
-			creep.moveTo (damagedRamparts [0]);
+			this.moveTo (damagedRamparts [0]);
 			creep.repair (damagedRamparts [0]);
 
 			return;
@@ -75,7 +75,7 @@ Builder.prototype.action = function()
 		if (toRepair.length)
 		{
 			var structure = toRepair[0];
-			creep.moveTo (structure);
+			this.moveTo (structure);
 			creep.repair (structure);
 
 			return;

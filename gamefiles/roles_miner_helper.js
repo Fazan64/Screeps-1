@@ -227,12 +227,12 @@ MinerHelper.prototype.action = function ()
 				
 				if (!creep.pos.isNearTo (creepToHelp))
 				{
-					creep.moveTo (creepToHelp);
+					this.moveTo (creepToHelp);
 				}
 			}
 			else if (miner.memory.isNearSource)
 			{
-				creep.moveTo (miner);
+				this.moveTo (miner);
 			}
 			else
 			{
@@ -264,7 +264,7 @@ MinerHelper.prototype.action = function ()
 			//Let's do the moving
 			else 
 			{
-				creep.moveTo (target);
+				this.moveTo (target);
 			}
 		}
 	}

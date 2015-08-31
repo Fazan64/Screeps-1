@@ -26,7 +26,7 @@ Transporter.prototype.action = function()
 			}
 		});
 
-		creep.moveTo (closestSpawn);
+		this.moveTo (closestSpawn);
 		closestSpawn.transferEnergy (creep);
 
 		return;
@@ -78,7 +78,7 @@ Transporter.prototype.action = function()
 	}
 	else 
 	{
-		creep.moveTo(target);
+		this.moveTo(target);
 	}
 }
 

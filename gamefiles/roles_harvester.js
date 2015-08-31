@@ -68,7 +68,7 @@ Harvester.prototype.action = function ()
 			}
 			else
 			{
-				creep.moveTo (target);
+				this.moveTo (target);
 			}
 		}
 	}

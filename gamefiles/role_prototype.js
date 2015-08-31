@@ -105,13 +105,17 @@ ProtoRole.prototype.onSpawn = function () {}
 
 ProtoRole.prototype.beforeAge = function () {}
 
-
 /** 
 * Note: when this is called, the creep itself
 * doesn't exist anymore, so this.creep == null,
 * but the memory of the deceased is still there.
 */
 ProtoRole.prototype.onDeath = function () {}
+
+ProtoRole.prototype.moveTo = function (target)
+{
+	this.creep.moveTo (target, { reusePath : 10 });
+}
 
 ProtoRole.prototype.moveAndPerform = function (target, action)
 {
@@ -123,7 +127,7 @@ ProtoRole.prototype.moveAndPerform = function (target, action)
 	var creep = this.creep;
 	if (!creep.pos.isNearTo (target))
 	{
-		creep.moveTo (target);
+		this.moveTo (target);
 	}
 	else 
 	{
@@ -189,7 +193,7 @@ ProtoRole.prototype.rest = function (civilian)
 		}
 	}
 
-	creep.moveTo (restTarget);
+	this.moveTo (restTarget);
 }
 
 ProtoRole.prototype.getRangedTarget = function ()
@@ -308,7 +312,7 @@ ProtoRole.prototype.kite = function (target)
 	}
 	else
 	{
-		creep.moveTo (target);
+		this.moveTo (target);
 		return true;
 	}
 
