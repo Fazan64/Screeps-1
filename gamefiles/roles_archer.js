@@ -23,7 +23,7 @@ Archer.prototype.action = function()
 	// and add it to the focusFire array
 	for (var i in Memory.focusFire)
 	{
-		var enemy = Game.getObjectById (Memory.focusFire [i]);
+		var enemy = Memory.focusFire [i];
 		
 		if (!enemy)
 		{
@@ -31,9 +31,9 @@ Archer.prototype.action = function()
 			continue;
 		}
 		
-		if (this.creep.pos.inRangeTo (enemy, 3))
+		if (this.creep.pos.inRangeTo (enemy.pos, 3))
 		{
-			target = enemy;
+			target = Game.getObjectById (enemy);
 			break;
 		}
 	}
@@ -43,7 +43,11 @@ Archer.prototype.action = function()
 		target = this.getRangedTarget ();
 		if (target && Memory.focusFire.indexOf (target.id) === -1)
 		{		
-			Memory.focusFire.push (target.id);
+			Memory.focusFire.push (
+			{
+				id : target.id,
+				pos : target.pos
+			});
 		}
 	}
 	
