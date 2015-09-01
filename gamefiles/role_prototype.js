@@ -261,9 +261,9 @@ ProtoRole.prototype.getRangedTarget = function ()
 	
 	if (hostiles && hostiles.length)
 	{
-		hostiles.sort (this.compareByDistances, this);
+		hostiles.sort (compareByDistances, this);
 		
-		var closeEnemies = hostiles.filter (this.isInRangedAttackRange, this);
+		var closeEnemies = hostiles.filter (isInRangedAttackRange, this);
 		
 		if (closeEnemies && closeEnemies.length)
 		{
