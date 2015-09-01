@@ -258,7 +258,7 @@ ProtoRole.prototype.getRangedTarget = function ()
 	{
 		hostiles.sort (function (a, b)
 		{
-			return this.creep.pos.getRangeTo (a) - this.creep.pos.getRangeTo (b);	
+			return creep.pos.getRangeTo (a) - creep.pos.getRangeTo (b);	
 		});
 		
 		var closeEnemies = hostiles.filter (isInRangedAttackRange, this);
