@@ -41,7 +41,7 @@ Archer.prototype.action = function()
 	if (!target)
 	{
 		target = this.getRangedTarget ();
-		if (target)
+		if (target && Memory.focusFire.indexOf (target.id) === -1)
 		{		
 			Memory.focusFire.push (target.id);
 		}
