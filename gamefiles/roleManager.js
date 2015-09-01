@@ -4,16 +4,20 @@ module.exports =
 {
 	roleExists: function (role)
 	{
-		if (!rolesCache [role])
+		if (rolesCache [role] === undefined)
 		{
 			try
 			{
 				var RoleConstructor = require ("roles_" + role);
 				rolesCache [role] = new RoleConstructor ();
 			}
-			catch(e) {}
+			catch(e) 
+			{
+				rolesCache [role] = null;
+			}
 		}
-		return rolesCache [role] !== undefined;
+		// casting to bool (true if rolesCache isn't undefined or null)
+		return !!rolesCache [role];
 	},
 
 	getRoleObject: function (role)
