@@ -1,6 +1,28 @@
 var calculateCost = require ('calculateCost');
 var MAX_PARTS = 30;
 
+function notSourceKeeper (enemy)
+{
+	return enemy.owner.username !== "Source Keeper";
+}
+
+function isArcher (enemy) 
+{
+	return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
+}
+
+function isMobileMelee (enemy) 
+{
+	return enemy.getActiveBodyparts (ATTACK) > 0
+		&& enemy.getActiveBodyparts (MOVE) > 0;
+}
+
+function isMobileHealer (enemy) 
+{
+	return enemy.getActiveBodyparts (HEAL) > 0
+		&& enemy.getActiveBodyparts (MOVE) > 0;
+}
+
 /**
  * @class
  * @constructor
@@ -221,26 +243,14 @@ ProtoRole.prototype.rest = function (civilian)
 	this.moveTo (restTarget);
 }
 
-function notSourceKeeper (enemy)
+ProtoRole.prototype.compareByDistances = function (a, b)
 {
-	return enemy.owner.username !== "Source Keeper";
+	return this.creep.pos.getRangeTo (a) - this.creep.pos.getRangeTo (b);	
 }
 
-function isArcher (enemy) 
-{
-	return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
-}
-
-function isMobileMelee (enemy) 
-{
-	return enemy.getActiveBodyparts (ATTACK) > 0
-		&& enemy.getActiveBodyparts (MOVE) > 0;
-}
-
-function isMobileHealer (enemy) 
-{
-	return enemy.getActiveBodyparts (HEAL) > 0
-		&& enemy.getActiveBodyparts (MOVE) > 0;
+ProtoRole.prototype.isInRangedAttackRange = function (enemy) 
+{ 
+	return enemy.pos.inRangeTo (this.creep, 3);
 }
 
 ProtoRole.prototype.getRangedTarget = function ()
@@ -251,14 +261,9 @@ ProtoRole.prototype.getRangedTarget = function ()
 	
 	if (hostiles && hostiles.length)
 	{
-		hostiles.sort (function (a, b)
-		{
-			return creep.pos.getRangeTo (a) - creep.pos.getRangeTo (b);	
-		});
+		hostiles.sort (this.compareByDistances);
 		
-		var closeEnemies = hostiles.filter (function (enemy) { 
-			return enemy.pos.inRangeTo (creep, 3);
-		});
+		var closeEnemies = hostiles.filter (this.isInRangedAttackRange);
 		
 		if (closeEnemies && closeEnemies.length)
 		{
