@@ -31,7 +31,7 @@ function Scavenger () { ProtoRole.apply (this, arguments) }
 
 Scavenger.prototype = Object.create (ProtoRole.prototype);
 
-Scavenger.prototype.baseParts = [CARRY, MOVE];
+Scavenger.prototype.baseParts = [CARRY];
 
 Scavenger.prototype.action = function ()
 {
