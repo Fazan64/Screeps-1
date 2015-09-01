@@ -230,11 +230,11 @@ RoomManager.prototype.updateNeeds = function ()
 		
 		this.updateNeedsHealers ();
 		
+		this.updateNeedsScavengers ();
+		
 		this.updateNeedsBuilders ();
 		
 		this.updateNeedsUpgraders ();
-		
-		this.updateNeedsScavengers ();
 	}
 	
 	this.updateNeedsHelpers ();
