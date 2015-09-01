@@ -73,12 +73,12 @@ Transporter.prototype.action = function()
 	{
 		if (target.energy < target.energyCapacity) 
 		{
-			creep.transferEnergy(target);
+			creep.transferEnergy (target);
 		}
 	}
 	else 
 	{
-		this.moveTo(target);
+		this.moveTo (target);
 	}
 }
 
