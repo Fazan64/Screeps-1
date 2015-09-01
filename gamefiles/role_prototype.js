@@ -243,12 +243,12 @@ ProtoRole.prototype.rest = function (civilian)
 	this.moveTo (restTarget);
 }
 
-ProtoRole.prototype.compareByDistances = function (a, b)
+function compareByDistances (a, b)
 {
 	return this.creep.pos.getRangeTo (a) - this.creep.pos.getRangeTo (b);	
 }
 
-ProtoRole.prototype.isInRangedAttackRange = function (enemy) 
+function isInRangedAttackRange (enemy) 
 { 
 	return enemy.pos.inRangeTo (this.creep, 3);
 }
