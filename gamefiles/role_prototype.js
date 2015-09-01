@@ -221,53 +221,63 @@ ProtoRole.prototype.rest = function (civilian)
 	this.moveTo (restTarget);
 }
 
+function notSourceKeeper (enemy)
+{
+	return enemy.owner.username !== "Source Keeper";
+}
+
+function isArcher (enemy) 
+{
+	return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
+}
+
+function isMobileMelee (enemy) 
+{
+	return enemy.getActiveBodyparts (ATTACK) > 0
+		&& enemy.getActiveBodyparts (MOVE) > 0;
+}
+
+function isMobileHealer (enemy) 
+{
+	return enemy.getActiveBodyparts (HEAL) > 0
+		&& enemy.getActiveBodyparts (MOVE) > 0;
+}
+
 ProtoRole.prototype.getRangedTarget = function ()
 {
 	var creep = this.creep;
 		
-	var hostiles = creep.room.hostileCreeps.filter (function (enemy)
-	{
-		return enemy.owner.username !== "Source Keeper";
-	});
+	var hostiles = creep.room.hostileCreeps.filter (notSourceKeeper);
 	
 	if (hostiles && hostiles.length)
 	{
 		hostiles.sort (function (a, b)
 		{
 			return creep.pos.getRangeTo (a) - creep.pos.getRangeTo (b);	
-		})
+		});
 		
 		var closeEnemies = hostiles.filter (function (enemy) { 
 			return enemy.pos.inRangeTo (creep, 3);
 		});
 		
-		
 		if (closeEnemies && closeEnemies.length)
 		{
 			
-			var closeArchers = closeEnemies.filter (function (enemy) {
-				return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
-			});
+			var closeArchers = closeEnemies.filter (isArcher);
 	
 			if (closeArchers.length)
 			{
 				return closeArchers [0];
 			}
 			
-			var closeMobileMelee = closeEnemies.filter (function (enemy) {
-				return enemy.getActiveBodyparts (ATTACK) > 0
-					&& enemy.getActiveBodyparts (MOVE) > 0;
-			});
+			var closeMobileMelee = closeEnemies.filter (isMobileMelee);
 	
 			if (closeMobileMelee.length)
 			{
 				return closeMobileMelee [0];
 			}
 			
-			var closeMobileHealers = closeEnemies.filter (function (enemy) {
-				return enemy.getActiveBodyparts (HEAL) > 0
-					&& enemy.getActiveBodyparts (MOVE) > 0;
-			});
+			var closeMobileHealers = closeEnemies.filter (isMobileHealer);
 	
 			if (closeMobileHealers.length)
 			{
