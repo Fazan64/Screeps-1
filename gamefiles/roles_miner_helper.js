@@ -219,8 +219,6 @@ MinerHelper.prototype.action = function ()
 			// they have some energy, and
 			// they're further from target than we are.
 			
-			var spawn = this.spawn;
-			
 			var creepToHelp = creep.pos.findClosestByRange (creep.room.myCreeps.filter (isCreepToHelp, this));	
 			
 			if (creepToHelp)
