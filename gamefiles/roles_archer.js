@@ -15,12 +15,8 @@ Archer.prototype.baseParts = [TOUGH, RANGED_ATTACK];
 */
 Archer.prototype.action = function()
 {
-	var target = null;
 	
-	if (!target)
-	{
-		target = this.getRangedTarget ();
-	}
+	target = this.getRangedTarget ();
 	
 	if (target)
 	{
