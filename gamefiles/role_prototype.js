@@ -10,6 +10,12 @@ function ProtoRole ()
 	this._cache = {};
 }
 
+ProtoRole.prototype.reset = function ()
+{
+	this.creep = null;
+	this._cache = {};
+}
+
 /**
 * Set the creep for this role
 *
@@ -18,7 +24,6 @@ function ProtoRole ()
 ProtoRole.prototype.setCreep = function (creep)
 {
 	this.creep = creep;
-	return this;
 }
 
 ProtoRole.prototype.run = function ()

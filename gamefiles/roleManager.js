@@ -8,7 +8,8 @@ module.exports =
 		{
 			try
 			{
-				rolesCache [role] = require ("roles_" + role);
+				var RoleConstructor = require ("roles_" + role);
+				rolesCache [role] = new RoleConstructor ();
 			}
 			catch(e) {}
 		}
@@ -22,8 +23,7 @@ module.exports =
 			return false;
 		}
 
-		var Role = rolesCache [role];
-		return new Role ();
+		return rolesCache [role];
 	},
 
 	getRoleBodyParts: function (role, maxEnergy)
