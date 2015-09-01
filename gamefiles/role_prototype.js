@@ -243,11 +243,6 @@ ProtoRole.prototype.rest = function (civilian)
 	this.moveTo (restTarget);
 }
 
-function compareByDistances (a, b)
-{
-	return this.creep.pos.getRangeTo (a) - this.creep.pos.getRangeTo (b);	
-}
-
 function isInRangedAttackRange (enemy) 
 { 
 	return enemy.pos.inRangeTo (this.creep, 3);
@@ -261,7 +256,10 @@ ProtoRole.prototype.getRangedTarget = function ()
 	
 	if (hostiles && hostiles.length)
 	{
-		hostiles.sort (compareByDistances, this);
+		hostiles.sort (function (a, b)
+		{
+			return this.creep.pos.getRangeTo (a) - this.creep.pos.getRangeTo (b);	
+		});
 		
 		var closeEnemies = hostiles.filter (isInRangedAttackRange, this);
 		
