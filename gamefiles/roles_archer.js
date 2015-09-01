@@ -31,7 +31,7 @@ Archer.prototype.action = function()
 			continue;
 		}
 		
-		if (this.creep.pos.isInRangeTo (enemy, 3))
+		if (this.creep.pos.inRangeTo (enemy, 3))
 		{
 			target = enemy;
 			break;
