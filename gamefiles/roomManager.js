@@ -4,6 +4,48 @@ var CIVILIANS_PER_HEALER = 5;
 var CONSTRUCTION_SITES_PER_BUILDER = 5;
 var UPGRADERS_REQUIRED = 2;
 
+function isDefender (creep)
+{
+	// If has offensive bodyparts && has an appropriate role
+	return (creep.memory.role == "archer"
+		||  creep.memory.role == "guard")
+		&& (creep.getActiveBodyparts (RANGED_ATTACK) > 0
+		||  creep.getActiveBodyparts (ATTACK) > 0);		
+}
+
+function isScavenger (creep)
+{
+	return creep.memory.role == "scavenger"; 	
+}
+
+function isDamaged (creep) 
+{ 
+	return creep.hits < creep.hitsMax;
+}
+
+function notSourceKeeper (creep)
+{ 
+	return creep.owner.username !== "Source Keeper"; 
+}
+
+function isMiner (creep) 
+{
+	return creep.memory.role == "miner";
+}
+
+function isHealer (creep)
+{
+	return creep.memory.role == "healer"
+		&& creep.getActiveBodyparts (HEAL) > 0;	
+}
+
+function isBuilder (creep)
+{
+	return creep.memory.role == "builder"
+		&& creep.getActiveBodyparts (WORK) > 0
+		&& creep.getActiveBodyparts (MOVE) > 0;	
+}
+
 Object.defineProperties (Room.prototype,
 {
 	creeps :
@@ -37,14 +79,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._defenders = this._defenders || this.myCreeps.filter (function (creep)
-			{
-				// If has offensive bodyparts && has an appropriate role
-				return (creep.memory.role == "archer"
-					||  creep.memory.role == "guard")
-					&& (creep.getActiveBodyparts (RANGED_ATTACK) > 0
-					||  creep.getActiveBodyparts (ATTACK) > 0)		
-			})
+			this._defenders = this._defenders || this.myCreeps.filter (isDefender)
 			return this._defenders;
 		}
 	},
@@ -53,10 +88,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._scavengers = this._scavengers || this.myCreeps.filter (function (creep)
-			{
-				return creep.memory.role == "scavenger" 	
-			});
+			this._scavengers = this._scavengers || this.myCreeps.filter (isScavenger);
 			return this._scavengers;
 		}	
 	},
@@ -65,7 +97,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._myDamagedCreeps = this._myDamagedCreeps || this.myCreeps.filter (function (creep) { return creep.hits < creep.hitsMax })
+			this._myDamagedCreeps = this._myDamagedCreeps || this.myCreeps.filter (isDamaged)
 			return this._myDamagedCreeps;
 		}	
 	},
@@ -119,7 +151,7 @@ Object.defineProperties (Room.prototype,
 	{
 		get : function ()
 		{
-			this._underAttack = this._underAttack || this.hostileCreeps.filter (function (creep) { return creep.owner.username !== "Source Keeper" }).length > 0;
+			this._underAttack = this._underAttack || this.hostileCreeps.filter (notSourceKeeper).length > 0;
 			return this._underAttack;
 		}
 	}
@@ -224,10 +256,7 @@ RoomManager.prototype.updateNeedsHelpers = function ()
 	var room = this.room;
 	
 	// Assign helpers for miners
-	var miners = room.myCreeps.filter (function (creep) 
-	{
-		return creep.memory.role == "miner";
-	});
+	var miners = room.myCreeps.filter (isMiner);
 	
 	for (var i in miners)
 	{
@@ -262,7 +291,7 @@ RoomManager.prototype.updateNeedsSuppliers = function ()
 				role: neededRole,
 				memory: {}
 			}
-		)
+		);
 		this.needs.energy = neededSupply - this.energySupply;
 	}
 }
@@ -279,7 +308,7 @@ RoomManager.prototype.updateNeedsDefenders = function ()
 				role : "archer",
 				memory : {}
 			}
-		)
+		);
 	}
 }
 
@@ -287,11 +316,7 @@ RoomManager.prototype.updateNeedsHealers = function ()
 {
 	var room = this.room;
 	
-	var healers = room.myCreeps.filter (function (creep)
-	{
-		return creep.memory.role == "healer"
-			&& creep.getActiveBodyparts (HEAL) > 0	
-	})
+	var healers = room.myCreeps.filter (isHealer);
 	
 	// The idea is to have a single healer per [DEFENDERS_PER_HEALER] defenders
 	var neededHealers = Math.floor (this.room.defenders.length / DEFENDERS_PER_HEALER) - healers.length;
@@ -309,7 +334,7 @@ RoomManager.prototype.updateNeedsHealers = function ()
 				role : "healer",
 				memory : {}
 			}
-		)
+		);
 	}
 }
 
@@ -332,12 +357,7 @@ RoomManager.prototype.updateNeedsBuilders = function ()
 {
 	var room = this.room;
 	
-	var builders = room.myCreeps.filter (function (creep)
-	{
-		return creep.memory.role == "builder"
-			&& creep.getActiveBodyparts (WORK) > 0
-			&& creep.getActiveBodyparts (MOVE) > 0	
-	});
+	var builders = room.myCreeps.filter (isBuilder);
 	
 	var constrSites = room.constructionSites.length;
 	var neededBuilders = Math.ceil (constrSites / CONSTRUCTION_SITES_PER_BUILDER) - builders.length;

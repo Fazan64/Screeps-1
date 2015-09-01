@@ -1,3 +1,8 @@
+function isSpawn (structure) 
+{ 
+	return structure.type == STRUCTURE_SPAWN;
+}
+
 var ProtoRole = require ("role_prototype");
 
 /**
@@ -22,7 +27,7 @@ Upgrader.prototype.onStart = function ()
 	}
 	
 	// Since this is called when the creep is still being spawned so there is definitely a spawn at this creeps position
-	var spawn = creep.room.lookForAt ('structure', creep.pos).filter (function (structure) { return structure.type == STRUCTURE_SPAWN }) [0];
+	var spawn = creep.room.lookForAt ('structure', creep.pos).filter (isSpawn) [0];
 	// If something goes terribly wrong
 	if (!spawn)
 	{

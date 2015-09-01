@@ -6,6 +6,11 @@ function notSourceKeeper (enemy)
 	return enemy.owner.username !== "Source Keeper";
 }
 
+function isInRangedAttackRange (enemy) 
+{ 
+	return enemy.pos.inRangeTo (this.creep, 3);
+}
+
 function isArcher (enemy) 
 {
 	return enemy.getActiveBodyparts (RANGED_ATTACK) > 0;
@@ -241,11 +246,6 @@ ProtoRole.prototype.rest = function (civilian)
 	}
 
 	this.moveTo (restTarget);
-}
-
-function isInRangedAttackRange (enemy) 
-{ 
-	return enemy.pos.inRangeTo (this.creep, 3);
 }
 
 ProtoRole.prototype.getRangedTarget = function ()

@@ -1,5 +1,10 @@
 var ProtoRole = require ("role_prototype");
 
+function isNotFullSpawn (spawn)
+{
+	return spawn.energy < spawn.energyCapacity;
+}
+
 function EnergyOrbsFilter (energyOrb) 
 {
 	var creeps = energyOrb.pos.lookFor ('creep');
@@ -37,10 +42,7 @@ Scavenger.prototype.action = function ()
 
 	if (creep.carry.energy == creep.carryCapacity)
 	{
-		var closestSpawn = this.getClosest (creep.room.mySpawns.filter (function (spawn)
-		{
-			return spawn.energy < spawn.energyCapacity;
-		}));
+		var closestSpawn = this.getClosest (creep.room.mySpawns.filter (isNotFullSpawn));
 		
 		if (closestSpawn)
 		{

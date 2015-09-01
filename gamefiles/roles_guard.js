@@ -1,5 +1,10 @@
 var ProtoRole = require ("role_prototype");
 
+function notSourceKeeper (enemy) 
+{
+	return enemy.owner.username !== "Source Keeper"
+}
+
 /**
  * @class
  * @constructor
@@ -14,10 +19,7 @@ Guard.prototype.action = function()
 {
 	var creep = this.creep;
 
-	var target = this.getClosest (creep.room.hostileCreeps.filter (function (enemy) 
-	{
-		return enemy.owner.username !== "Source Keeper"
-	}));
+	var target = this.getClosest (creep.room.hostileCreeps.filter (notSourceKeeper));
 	
 	if (target)
 	{

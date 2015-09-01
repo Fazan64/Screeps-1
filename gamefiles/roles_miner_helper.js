@@ -1,3 +1,18 @@
+function isCreepToHelp (possibleTarget)
+{
+	return possibleTarget !== this.creep
+		&& possibleTarget.memory.role === this.creep.memory.role
+		&& possibleTarget.memory.miner === this.creep.memory.miner
+		&& !possibleTarget.memory.courier
+		&& possibleTarget.carry.energy == possibleTarget.carryCapacity
+		&& this.spawn.pos.getRangeTo (this.creep) < this.spawn.pos.getRangeTo (possibleTarget);
+}
+
+function isMinerNeedingHelpers (miner) 
+{
+	return miner.memory.role == 'miner' && miner.memory.helpers.length < miner.memory.helpersNeeded;
+}
+
 var ProtoRole = require ("role_prototype");
 
 /**
@@ -95,10 +110,7 @@ MinerHelper.prototype.assignMiner = function ()
 {
 	var creep = this.creep;
 	
-	var miner = this.getClosest (creep.room.myCreeps.filter (function (miner) 
-	{
-		return miner.memory.role == 'miner' && miner.memory.helpers.length < miner.memory.helpersNeeded;
-	}));
+	var miner = this.getClosest (creep.room.myCreeps.filter (isMinerNeedingHelpers));
 
 	if (!miner)
 	{
@@ -209,15 +221,7 @@ MinerHelper.prototype.action = function ()
 			
 			var spawn = this.spawn;
 			
-			var creepToHelp = creep.pos.findClosestByRange (creep.room.myCreeps.filter (function (possibleTarget)
-			{
-				return possibleTarget !== creep
-					&& possibleTarget.memory.role === creep.memory.role
-					&& possibleTarget.memory.miner === creep.memory.miner
-					&& !possibleTarget.memory.courier
-					&& possibleTarget.carry.energy == possibleTarget.carryCapacity
-					&& spawn.pos.getRangeTo (creep) < spawn.pos.getRangeTo (possibleTarget);
-			}));	
+			var creepToHelp = creep.pos.findClosestByRange (creep.room.myCreeps.filter (isCreepToHelp, this));	
 			
 			if (creepToHelp)
 			{
