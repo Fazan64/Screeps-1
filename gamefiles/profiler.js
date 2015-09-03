@@ -76,6 +76,7 @@ if (ENABLE_PROFILING)
     wrap (RoomPosition.prototype, 'findPathTo');
     wrap (RoomPosition.prototype, 'isEqualTo');
     wrap (RoomPosition.prototype, 'findClosest');
+    
     wrap (Creep.prototype, 'moveByPath');
     wrap (Creep.prototype, 'moveTo');
     wrap (Creep.prototype, 'pickup');
@@ -83,9 +84,13 @@ if (ENABLE_PROFILING)
     wrap (Creep.prototype, 'repair');
     wrap (Creep.prototype, 'harvest');
     wrap (Creep.prototype, 'upgradeController');
+    
     wrap (Room.prototype, 'lookForAt');
     wrap (Room.prototype, 'find');
+    
     wrap (Spawn.prototype, 'createCreep');
+    
+    wrap (globals, require);
 }
 
 module.exports = 

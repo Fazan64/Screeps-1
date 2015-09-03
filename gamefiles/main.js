@@ -2,8 +2,6 @@ var PROFILER_REPORT_INTERVAL = 1;
 
 var profiler = require ('profiler');
 
-profiler.wrap (require);
-
 var performRoles = require ('performRoles');
 var spawner = require ('spawner');
 var RoomManager = require ('roomManager');
