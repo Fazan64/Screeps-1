@@ -98,7 +98,7 @@ function report ()
     
     console.log ('--- summary: ' + summary.toFixed (2));
     console.log ('---   total: ' + total.toFixed (2));
-    console.log ('--- perTick: ' + (total / (Game.time - Memory._lastProfilerReportTime)).toFixed (2));
+    console.log ('--- average: ' + (total / (Game.time - Memory._lastProfilerReportTime)).toFixed (2));
 
     Memory._lastProfilerReportTime = Game.time;
     Memory.profiling = {};
