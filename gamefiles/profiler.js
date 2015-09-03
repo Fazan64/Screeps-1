@@ -111,6 +111,5 @@ function report ()
 module.exports = 
 {
 	wrap : wrap,
-    report : report,
-    run : run
+    report : report
 }
