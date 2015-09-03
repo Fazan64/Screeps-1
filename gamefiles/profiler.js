@@ -5,8 +5,7 @@
  * Output: 
  * "summary" is a sum of "average per use" values of all tracked functions since the last report,
  * "tracked" is the total cpu used by the tracked functions only since the last report,
- * "total" is the total cpu used since the last report,
- * "average" is the average cpu used per tick 
+ * "average" is the average (based on "tracked") cpu used per tick 
  */
 var ENABLE_PROFILING = true;
 
