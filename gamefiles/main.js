@@ -5,9 +5,12 @@ var profiler = require ('profiler');
 var performRoles = require ('performRoles');
 var spawner = require ('spawner');
 var RoomManager = require ('roomManager');
+var ProtoRole = require ('role_prototype');
 
 profiler.wrap (spawner.prototype);
 profiler.wrap (RoomManager.prototype);
+
+profiler.wrap (ProtoRole.prototype);
 
 for (var i in Game.rooms)
 {

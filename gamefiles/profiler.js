@@ -19,11 +19,11 @@ if (ENABLE_PROFILING)
     wrap (RoomPosition.prototype, 'isEqualTo');
     wrap (RoomPosition.prototype, 'findClosest');
     
-    wrap (Creep.prototype);
+    wrap (Creep.prototype, 'moveTo');
     
-    wrap (Room.prototype);
+   // wrap (Room.prototype);
     
-    wrap (Spawn.prototype);
+   // wrap (Spawn.prototype);
     
     wrap (globals, 'require');
 }
