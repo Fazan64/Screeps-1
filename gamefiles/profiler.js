@@ -90,7 +90,7 @@ if (ENABLE_PROFILING)
     
     wrap (Spawn.prototype, 'createCreep');
     
-    wrap (globals, require);
+    wrap (globals, 'require');
 }
 
 module.exports = 
