@@ -3,14 +3,14 @@ var MAX_PARTS = 30;
 
 var directions = 
 {
-	TOP : {x : 0, y : -1},
-	TOP_RIGHT : {x : 1, y : -1},
-	RIGHT : {x : 1, y : 0},
-	BOTTOM_RIGHT : {x : 1, y : 1},
-	BOTTOM : {x : 0, y : 1},
-	BOTTOM_LEFT : {x : -1, y : 1},
-	LEFT : {x: -1, y: 0},
-	TOP_LEFT : {x : -1, y : -1},
+	1 : {x : 0, y : -1},
+	2 : {x : 1, y : -1},
+	3 : {x : 1, y : 0},
+	4 : {x : 1, y : 1},
+	5 : {x : 0, y : 1},
+	6 : {x : -1, y : 1},
+	7 : {x: -1, y: 0},
+	8 : {x : -1, y : -1},
 }
 
 function notSourceKeeper (enemy)
