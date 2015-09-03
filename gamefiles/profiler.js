@@ -29,33 +29,17 @@ function wrap (object, funcName)
     {
         var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
         
+        var innerFunction = object [funcName];
         object [funcName] = function () 
         {
             var usedBefore = Game.getUsedCpu ();
-            var returnValue = object [funcName].apply (this, arguments);
+            var returnValue = innerFunction.apply (this, arguments);
             profilingData.usage += Game.getUsedCpu () - usedBefore;
             profilingData.count++;
             return returnValue;
         }
     }
 }
-
-/*
-function getWrapper (func, funcName)
-{
-    var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
-    return function ()
-    {
-        var usedBefore = Game.getUsedCpu ();
-        
-        var returnValue = func.apply (this, arguments);
-        
-        profilingData.usage += Game.getUsedCpu () - usedBefore;
-        profilingData.count++;
-        return returnValue;
-    }
-}
-*/
 
 function report ()
 {
