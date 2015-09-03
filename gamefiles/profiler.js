@@ -88,20 +88,20 @@ function report ()
 
 if (ENABLE_PROFILING) 
 {
-    wrap (RoomPosition, 'isNearTo');
-    wrap (RoomPosition, 'findPathTo');
-    wrap (RoomPosition, 'isEqualTo');
-    wrap (RoomPosition, 'findClosest');
-    wrap (Creep, 'moveByPath');
-    wrap (Creep, 'moveTo');
-    wrap (Creep, 'pickup');
-    wrap (Creep, 'build');
-    wrap (Creep, 'repair');
-    wrap (Creep, 'harvest');
-    wrap (Creep, 'upgradeController');
-    wrap (Room, 'lookForAt');
-    wrap (Room, 'find');
-    wrap (Spawn, 'createCreep');
+    wrap (RoomPosition.prototype, 'isNearTo');
+    wrap (RoomPosition.prototype, 'findPathTo');
+    wrap (RoomPosition.prototype, 'isEqualTo');
+    wrap (RoomPosition.prototype, 'findClosest');
+    wrap (Creep.prototype, 'moveByPath');
+    wrap (Creep.prototype, 'moveTo');
+    wrap (Creep.prototype, 'pickup');
+    wrap (Creep.prototype, 'build');
+    wrap (Creep.prototype, 'repair');
+    wrap (Creep.prototype, 'harvest');
+    wrap (Creep.prototype, 'upgradeController');
+    wrap (Room.prototype, 'lookForAt');
+    wrap (Room.prototype, 'find');
+    wrap (Spawn.prototype, 'createCreep');
 }
 
 module.exports = 
