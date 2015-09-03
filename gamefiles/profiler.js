@@ -18,16 +18,10 @@ if (ENABLE_PROFILING)
     wrap (RoomPosition.prototype, 'isEqualTo');
     wrap (RoomPosition.prototype, 'findClosest');
     
-    wrap (Creep.prototype, 'moveByPath');
-    wrap (Creep.prototype, 'moveTo');
-    wrap (Creep.prototype, 'pickup');
-    wrap (Creep.prototype, 'build');
-    wrap (Creep.prototype, 'repair');
-    wrap (Creep.prototype, 'harvest');
-    wrap (Creep.prototype, 'upgradeController');
+    wrap (Creep.prototype);
     
-    wrap (Room.prototype, 'lookForAt');
-    wrap (Room.prototype, 'find');
+    wrap (Room.prototype);
+    wrap (Room.prototype);
     
     wrap (Spawn.prototype, 'createCreep');
     
