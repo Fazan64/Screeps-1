@@ -10,6 +10,7 @@
 var ENABLE_PROFILING = true;
 
 Memory.profiling = Memory.profiling || {};
+Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
 
 if (ENABLE_PROFILING) 
 {
@@ -65,9 +66,7 @@ function wrap (object, funcName)
 }
 
 function report ()
-{
-    Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
-       
+{     
     var summary = 0;
     // total used by tracked functions
     var tracked = 0;
