@@ -1,4 +1,4 @@
-var PROFILER_REPORT_INTERVAL = 200;
+var PROFILER_REPORT_INTERVAL = 20;
 
 var profiler = require ('profiler');
 
