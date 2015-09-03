@@ -23,8 +23,7 @@ performRoles (Game.creeps);
 if (Game.time % PROFILER_REPORT_INTERVAL == 0)
 {
 	profiler.report ();
-	console.log ("---   total: " + Game.getUsedCpu ());
 }
 
-//console.log ("Total used cpu: " + Game.getUsedCpu () + " / " + Game.cpuLimit);
+console.log ("Total used cpu: " + Game.getUsedCpu () + " / " + Game.cpuLimit);
 console.log ();
