@@ -32,16 +32,16 @@ function wrap (object, funcName)
 {
     // An object is given, so wrap all of its 
     // public (not starting with '_') functions
-    if (!funcName)
+    if (!funcName) 
     {
         var keys = Object.keys (object);
-        for (var i in keys)
+        for (var i in keys) 
         {
-            var propName = keys [i];
-            // Doesn't start with '_' and is a function
-            if (propName.indexOf ('_') !== 0 && object [propName] instanceof Function)
+            var propName = keys[i];
+            // Object prototype doesn't have this property (to exclude toString etc.),doesn't start with '_' and is a function
+            if (!Object.prototype.hasOwnProperty (propName) && propName.indexOf ('_') !== 0 && object [propName] instanceof Function) 
             {
-               wrap (object, propName); 
+                wrap (object, propName);
             }
         }
         return;
@@ -49,6 +49,7 @@ function wrap (object, funcName)
     
     if (object [funcName])
     {
+        var name = object.name + funcName;
         var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
         
         var innerFunction = object [funcName];
