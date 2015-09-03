@@ -99,30 +99,14 @@ function report ()
                     + ' (' + (profilingData.average * 100 / summary).toFixed (2) + '%)');
     }
     
-    var whole = Memory._totalUsedSinceLastReport;
     var timeSinceLastReport = Game.time - Memory._lastProfilerReportTime;
      
     console.log ('--- summary: ' + summary.toFixed (2));
-    console.log ('--- tracked: ' + tracked.toFixed (2) + ' (' + (tracked * 100 / whole).toFixed (2) + '%)');
-    console.log ('---   total: ' + whole.toFixed (2));
-    console.log ('--- average: ' + (whole / timeSinceLastReport).toFixed (2));
+    console.log ('--- tracked: ' + tracked.toFixed (2));
+    console.log ('--- average: ' + (tracked / timeSinceLastReport).toFixed (2));
 
     Memory._lastProfilerReportTime = Game.time;
-    Memory._totalUsedSinceLastReport = 0; 
     Memory.profiling = {};
-}
-
-var ran = false;
-function run ()
-{
-    if (!ran)
-    {    
-        
-        Memory._totalUsedSinceLastReport = Memory._totalUsedSinceLastReport || 0; 
-        Memory._totalUsedSinceLastReport += Game.getUsedCpu ();
-        
-        ran = true;
-    }  
 }
 
 module.exports = 
