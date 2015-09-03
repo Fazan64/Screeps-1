@@ -45,7 +45,7 @@ function isPathBlocked (pos, direction)
 	var dir = directions [direction];
 	var targetPos = new RoomPosition (pos.x + dir.x, pos.y + dir.y, pos.roomName);
 	
-	return targetPos.lookFor ('terrain') [0] !== 'wall';
+	return targetPos.lookFor ('terrain') [0] === 'wall';
 }
 
 /**
