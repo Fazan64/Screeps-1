@@ -8,6 +8,29 @@ var ENABLE_PROFILING = true;
 
 Memory.profiling = Memory.profiling || {};
 
+if (ENABLE_PROFILING) 
+{
+    wrap (RoomPosition.prototype, 'isNearTo');
+    wrap (RoomPosition.prototype, 'findPathTo');
+    wrap (RoomPosition.prototype, 'isEqualTo');
+    wrap (RoomPosition.prototype, 'findClosest');
+    
+    wrap (Creep.prototype, 'moveByPath');
+    wrap (Creep.prototype, 'moveTo');
+    wrap (Creep.prototype, 'pickup');
+    wrap (Creep.prototype, 'build');
+    wrap (Creep.prototype, 'repair');
+    wrap (Creep.prototype, 'harvest');
+    wrap (Creep.prototype, 'upgradeController');
+    
+    wrap (Room.prototype, 'lookForAt');
+    wrap (Room.prototype, 'find');
+    
+    wrap (Spawn.prototype, 'createCreep');
+    
+    wrap (globals, 'require');
+}
+
 function wrap (object, funcName)
 {
     // An object is given, so wrap all of its 
@@ -41,9 +64,14 @@ function wrap (object, funcName)
     }
 }
 
+/** 
+ * summary is a sum of "average per use" values of all wrapped functions,
+ * total is the total cpu used
+ */
 function report ()
 {
     var summary = 0;
+    var total = 0;
     for (var functionName in Memory.profiling)
     {
         var profilingData = Memory.profiling [functionName];
@@ -55,7 +83,9 @@ function report ()
         }
         
         profilingData.average = profilingData.usage / profilingData.count;
+        
         summary += profilingData.average;
+        total += profilingData.usage;
     }
 
     for (var functionName in Memory.profiling) 
@@ -65,32 +95,10 @@ function report ()
         console.log (functionName + ': ' + profilingData.usage.toFixed (2) + '/' + profilingData.count + ' == ' + profilingData.average.toFixed (2)
                     + ' (' + (profilingData.average * 100 / summary).toFixed (2) + '%)');
     }
-    console.log ('--- ' + summary.toFixed (2));
+    console.log ('--- summary: ' + summary.toFixed (2));
+    console.log ('---   total: ' + total.toFixed (2));
 
     Memory.profiling = {};
-}
-
-if (ENABLE_PROFILING) 
-{
-    wrap (RoomPosition.prototype, 'isNearTo');
-    wrap (RoomPosition.prototype, 'findPathTo');
-    wrap (RoomPosition.prototype, 'isEqualTo');
-    wrap (RoomPosition.prototype, 'findClosest');
-    
-    wrap (Creep.prototype, 'moveByPath');
-    wrap (Creep.prototype, 'moveTo');
-    wrap (Creep.prototype, 'pickup');
-    wrap (Creep.prototype, 'build');
-    wrap (Creep.prototype, 'repair');
-    wrap (Creep.prototype, 'harvest');
-    wrap (Creep.prototype, 'upgradeController');
-    
-    wrap (Room.prototype, 'lookForAt');
-    wrap (Room.prototype, 'find');
-    
-    wrap (Spawn.prototype, 'createCreep');
-    
-    wrap (globals, 'require');
 }
 
 module.exports = 
