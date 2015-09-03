@@ -63,7 +63,7 @@ function wrap (object, funcName)
     }
 }
 
-var lastReportTime = 0;
+Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
 /** 
  * summary is a sum of "average per use" values of all wrapped functions,
  * total is the total cpu used
@@ -98,9 +98,9 @@ function report ()
     
     console.log ('--- summary: ' + summary.toFixed (2));
     console.log ('---   total: ' + total.toFixed (2));
-    console.log ('--- perTick: ' + (total / (Game.time - lastReportTime)).toFixed (2));
+    console.log ('--- perTick: ' + (total / (Game.time - Memory._lastProfilerReportTime)).toFixed (2));
 
-    lastReportTime = Game.time;
+    Memory._lastProfilerReportTime = Game.time;
     Memory.profiling = {};
 }
 
