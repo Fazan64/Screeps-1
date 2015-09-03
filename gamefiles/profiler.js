@@ -25,7 +25,7 @@ function wrap (func)
         return;
     }
     
-    var funcName = func.name || "Anonymous function #" + Memory.profiling.keys ().length;
+    var funcName = func.name || "Anonymous function #" + Object.keys (Memory.profiling).length;
 	var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 };
 
 	func = function() 
