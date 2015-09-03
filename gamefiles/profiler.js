@@ -35,8 +35,9 @@ function wrap (object, funcName)
     if (!funcName)
     {
         var keys = Object.keys (object);
-        for (var propName in keys)
+        for (var i in keys)
         {
+            var propName = keys [i];
             // Doesn't start with '_' and is a function
             if (propName.indexOf ('_') !== 0 && object [propName] instanceof Function)
             {
