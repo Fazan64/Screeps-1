@@ -68,7 +68,6 @@ function wrap (object, funcName)
     }
 }
 
-
 function report ()
 {
     Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
@@ -113,10 +112,17 @@ function report ()
     Memory.profiling = {};
 }
 
+var ran = false;
 function run ()
 {
-    Memory._totalUsedSinceLastReport = Memory._totalUsedSinceLastReport || 0; 
-    Memory._totalUsedSinceLastReport = Game.getUsedCpu ();  
+    if (!ran)
+    {    
+        
+        Memory._totalUsedSinceLastReport = Memory._totalUsedSinceLastReport || 0; 
+        Memory._totalUsedSinceLastReport += Game.getUsedCpu ();
+        
+        ran = true;
+    }  
 }
 
 module.exports = 
