@@ -1,3 +1,5 @@
+var manager = require ('roleManager');
+var calculateCost = require ('calculateCost');
 /** 
  * Returns an object {name, index} having a generated name and an index
  * for a Creep with memory.role 'role' which is to be spawned by Spawn 'spawn'
@@ -39,7 +41,6 @@ function getTotalEnergy (spawn)
     return totalEnergy;
 }
 
-var manager = require('roleManager');
 function spawnCreep (role, memory, spawn)
 {
 
@@ -58,7 +59,7 @@ function spawnCreep (role, memory, spawn)
 
     var totalEnergy = getTotalEnergy (spawn)
     var body = manager.getRoleBodyParts (role, totalEnergy);
-    if (!body.length)
+    if (!body.length || calculateCost (body) > totalEnergy)
     {
         console.log ("Not enough energy (currently " + totalEnergy + ") to spawn a creep of role " + role + ". Aborting...");
         return;
