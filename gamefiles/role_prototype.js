@@ -1,6 +1,18 @@
 var calculateCost = require ('calculateCost');
 var MAX_PARTS = 30;
 
+var directions = 
+{
+	TOP : {x : 0, y : -1},
+	TOP_RIGHT : {x : 1, y : -1},
+	RIGHT : {x : 1, y : 0},
+	BOTTOM_RIGHT : {x : 1, y : 1},
+	BOTTOM : {x : 0, y : 1},
+	BOTTOM_LEFT : {x : -1, y : 1},
+	LEFT : {x: -1, y: 0},
+	TOP_LEFT : {x : -1, y : -1},
+}
+
 function notSourceKeeper (enemy)
 {
 	return enemy.owner.username !== "Source Keeper";
@@ -26,6 +38,14 @@ function isMobileHealer (enemy)
 {
 	return enemy.getActiveBodyparts (HEAL) > 0
 		&& enemy.getActiveBodyparts (MOVE) > 0;
+}
+
+function isPathBlocked (pos, direction)
+{
+	var dir = directions [direction];
+	var targetPos = new RoomPosition (pos.x + dir.x, pos.y + dir.y, pos.roomName);
+	
+	return targetPos.lookFor ('terrain') [0] !== 'wall';
 }
 
 /**
@@ -152,9 +172,104 @@ ProtoRole.prototype.beforeAge = function () {}
 */
 ProtoRole.prototype.onDeath = function () {}
 
+ProtoRole.prototype.routeCreep = function (dest)
+{
+	var creep = this.creep;
+	
+	if (creep.fatigue > 0 || !dest) 
+	{
+		return -1;
+	}
+
+	var locStr = creep.room.name + "." + creep.pos.x + "." + creep.pos.y
+
+	var path = false;
+	
+	Memory.routeCache = Memory.routeCache || {}
+
+	Memory.routeCache [locStr] = Memory.routeCache [locStr] || { dests : {}, established : Game.time }
+
+	
+	if (!Memory.routeCache [locStr].dests [dest.id]) 
+	{
+		Memory.routeCache [locStr].dests [dest.id] = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+		
+		path = creep.room.findPath (creep.pos, dest.pos, { maxOps: 500, heuristicWeight: 2 })
+		
+		if (path && path.length) 
+		{
+
+			Memory.routeCache [locStr].dests [dest.id] [path [0].direction] += 1;
+
+			for (var i = 0; i < path.length - 1; i++) 
+			{
+				var step = path[i];
+				var stepStr = creep.room.name + "." + step.x + "." + step.y
+				
+				Memory.routeCache [stepStr] = Memory.routeCache [stepStr] || { dests : {}, established : Game.time, usefreq : 0.0 };
+				
+				Memory.routeCache [stepStr].dests [dest.id] = Memory.routeCache [stepStr].dests [dest.id] || { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+				
+				//console.log(path[i+1].direction);
+				
+				Memory.routeCache [stepStr].dests [dest.id] [path [i + 1].direction] += 1;
+			}
+		}
+		else 
+		{
+
+			var dir = Math.floor (Math.random () * 8);
+
+			var error = creep.move (dir);
+			return error;
+
+		}
+	}
+
+	for (var k in Memory.routeCache [locStr].dests) 
+	{
+		if (Game.getObjectById(k) == null) 
+		{
+			//clean out invalid routes
+			delete Memory.routeCache [locStr].dests [k];
+			//console.log("Pruned",k)
+		}
+	}
+
+
+	var total = 0.0
+	//pick from the weighted list of steps
+	for (var d in Memory.routeCache [locStr].dests [dest.id]) 
+	{
+		total += Memory.routeCache [locStr].dests [dest.id] [d];
+	}
+	
+	total *= Math.random();
+	
+	var dir = 0;
+	for (var d in Memory.routeCache [locStr].dests [dest.id]) 
+	{
+		total -= Memory.routeCache [locStr].dests [dest.id] [d];
+		if (total < 0) 
+		{
+			dir = d;
+			break;
+		}
+	}
+	
+	if (creep.pos.getRangeTo(dest) > 1 && isPathBlocked (creep.pos, dir)) 
+	{
+		dir = Math.floor (Math.random() * 8);
+	}
+	
+	var error = creep.move (dir);
+	return error;
+}
+
 ProtoRole.prototype.moveTo = function (target)
 {
-	this.creep.moveTo (target, { reusePath : 5 });
+	this.creep.routeCreep (this.creep.pos, target);
+	//this.creep.moveTo (target, { reusePath : 5 });
 }
 
 ProtoRole.prototype.moveAndPerform = function (target, action)
