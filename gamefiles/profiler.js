@@ -95,6 +95,7 @@ function report ()
         console.log (functionName + ': ' + profilingData.usage.toFixed (2) + '/' + profilingData.count + ' == ' + profilingData.average.toFixed (2)
                     + ' (' + (profilingData.average * 100 / summary).toFixed (2) + '%)');
     }
+    
     console.log ('--- summary: ' + summary.toFixed (2));
     console.log ('---   total: ' + total.toFixed (2));
     console.log ('--- perTick: ' + (total / (Game.time - lastReportTime)).toFixed (2));
