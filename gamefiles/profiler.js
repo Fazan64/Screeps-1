@@ -1,7 +1,12 @@
 /**
  * Based on Actium's profiler:
  * http://support.screeps.com/hc/communities/public/questions/201375902-Profiling
- * 
+ *
+ * Output: 
+ * "summary" is a sum of "average per use" values of all tracked functions since the last report,
+ * "tracked" is the total cpu used by the tracked functions only since the last report,
+ * "total" is the total cpu used since the last report,
+ * "average" is the average cpu used per tick 
  */
 var ENABLE_PROFILING = true;
 
@@ -63,15 +68,14 @@ function wrap (object, funcName)
     }
 }
 
-Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
-/** 
- * summary is a sum of "average per use" values of all wrapped functions,
- * total is the total cpu used
- */
+
 function report ()
-{   
+{
+    Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
+       
     var summary = 0;
-    var total = 0;
+    // total used by tracked functions
+    var tracked = 0;
     for (var functionName in Memory.profiling)
     {
         var profilingData = Memory.profiling [functionName];
@@ -85,7 +89,7 @@ function report ()
         profilingData.average = profilingData.usage / profilingData.count;
         
         summary += profilingData.average;
-        total += profilingData.usage;
+        tracked += profilingData.usage;
     }
 
     for (var functionName in Memory.profiling) 
@@ -96,16 +100,28 @@ function report ()
                     + ' (' + (profilingData.average * 100 / summary).toFixed (2) + '%)');
     }
     
+    var whole = Memory._totalUsedSinceLastReport;
+    var timeSinceLastReport = Game.time - Memory._lastProfilerReportTime;
+     
     console.log ('--- summary: ' + summary.toFixed (2));
-    console.log ('---   total: ' + total.toFixed (2));
-    console.log ('--- average: ' + (total / (Game.time - Memory._lastProfilerReportTime)).toFixed (2));
+    console.log ('--- tracked: ' + tracked.toFixed (2) + ' (' + (tracked * 100 / whole).toFixed (2) + '%)');
+    console.log ('---   total: ' + whole.toFixed (2));
+    console.log ('--- average: ' + (whole / timeSinceLastReport).toFixed (2));
 
     Memory._lastProfilerReportTime = Game.time;
+    Memory._totalUsedSinceLastReport = 0; 
     Memory.profiling = {};
+}
+
+function run ()
+{
+    Memory._totalUsedSinceLastReport = Memory._totalUsedSinceLastReport || 0; 
+    Memory._totalUsedSinceLastReport = Game.getUsedCpu ();  
 }
 
 module.exports = 
 {
 	wrap : wrap,
-    report : report
+    report : report,
+    run : run
 }
