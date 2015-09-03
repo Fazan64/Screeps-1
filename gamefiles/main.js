@@ -20,6 +20,7 @@ for (var i in Game.spawns)
 
 performRoles (Game.creeps);
 
+profiler.run ();
 if (Game.time % PROFILER_REPORT_INTERVAL == 0)
 {
 	profiler.report ();
