@@ -28,7 +28,7 @@ function wrap (func)
     var funcName = func.name || "Anonymous function #" + Object.keys (Memory.profiling).length;
 	var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 };
 
-	func = function() 
+	func = function () 
 	{
 		var usedBefore = Game.getUsedCpu();
 		var returnValue = func.apply (this, arguments);
@@ -57,7 +57,7 @@ function report ()
 
     for (var functionName in Memory.profiling) 
     {
-        var profilingData = Memory.profiling [functionName];
+        profilingData = Memory.profiling [functionName];
         
         console.log (functionName + ': ' + profilingData.usage.toFixed (2) + '/' + profilingData.count + ' == ' + profilingData.average.toFixed (2)
                     + ' (' + (profilingData.average * 100 / summary).toFixed (2) + '%)');
