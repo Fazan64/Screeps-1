@@ -22,9 +22,8 @@ if (ENABLE_PROFILING)
     wrap (Creep.prototype);
     
     wrap (Room.prototype);
-    wrap (Room.prototype);
     
-    wrap (Spawn.prototype, 'createCreep');
+    wrap (Spawn.prototype);
     
     wrap (globals, 'require');
 }
