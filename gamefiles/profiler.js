@@ -1,42 +1,61 @@
 /**
  * Based on Actium's profiler:
  * http://support.screeps.com/hc/communities/public/questions/201375902-Profiling
+ * 
  */
  
 var ENABLE_PROFILING = true;
 
 Memory.profiling = Memory.profiling || {};
 
-function wrap (func)
+function wrap (object, funcName)
 {
     // An object is given, so wrap all of its 
     // public (not starting with '_') functions
-    if (!(func instanceof Function))
+    if (!funcName)
     {
-        var object = func;
         for (var propName in object)
         {
             // Doesn't start with '_' and is a function
             if (propName.indexOf ('_') !== 0 && object [propName] instanceof Function)
             {
-               wrap (object [propName]); 
+               wrap (object, propName); 
             }
         }
         return;
     }
     
-    var funcName = func.name || "Anonymous function #" + Object.keys (Memory.profiling).length;
-	var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 };
-
-	func = function () 
-	{
-		var usedBefore = Game.getUsedCpu();
-		var returnValue = func.apply (this, arguments);
-		profilingData.usage += Game.getUsedCpu() - usedBefore;
-		profilingData.count++;
-		return returnValue;
-	}
+    if (object [funcName])
+    {
+        var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
+        
+        object [funcName] = function () 
+        {
+            var usedBefore = Game.getUsedCpu ();
+            var returnValue = object [funcName].apply (this, arguments);
+            profilingData.usage += Game.getUsedCpu () - usedBefore;
+            profilingData.count++;
+            return returnValue;
+        }
+    }
 }
+
+/*
+function getWrapper (func, funcName)
+{
+    var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
+    return function ()
+    {
+        var usedBefore = Game.getUsedCpu ();
+        
+        var returnValue = func.apply (this, arguments);
+        
+        profilingData.usage += Game.getUsedCpu () - usedBefore;
+        profilingData.count++;
+        return returnValue;
+    }
+}
+*/
 
 function report ()
 {
@@ -69,23 +88,20 @@ function report ()
 
 if (ENABLE_PROFILING) 
 {
-    wrap (RoomPosition.prototype.isNearTo);
-    wrap (RoomPosition.prototype.findPathTo);
-    wrap (RoomPosition.prototype.isEqualTo);
-    wrap (RoomPosition.prototype.findClosest);
-    
-    wrap (Creep.prototype.moveByPath);
-    wrap (Creep.prototype.moveTo);
-    wrap (Creep.prototype.pickup);
-    wrap (Creep.prototype.build);
-    wrap (Creep.prototype.repair);
-    wrap (Creep.prototype.harvest);
-    wrap (Creep.prototype.upgradeController);
-    
-    wrap (Room.prototype.lookForAt);
-    wrap (Room.prototype.find);
-    
-    wrap (Spawn.prototype.createCreep);
+    wrap (RoomPosition, 'isNearTo');
+    wrap (RoomPosition, 'findPathTo');
+    wrap (RoomPosition, 'isEqualTo');
+    wrap (RoomPosition, 'findClosest');
+    wrap (Creep, 'moveByPath');
+    wrap (Creep, 'moveTo');
+    wrap (Creep, 'pickup');
+    wrap (Creep, 'build');
+    wrap (Creep, 'repair');
+    wrap (Creep, 'harvest');
+    wrap (Creep, 'upgradeController');
+    wrap (Room, 'lookForAt');
+    wrap (Room, 'find');
+    wrap (Spawn, 'createCreep');
 }
 
 module.exports = 
