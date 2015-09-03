@@ -3,7 +3,6 @@
  * http://support.screeps.com/hc/communities/public/questions/201375902-Profiling
  * 
  */
- 
 var ENABLE_PROFILING = true;
 
 Memory.profiling = Memory.profiling || {};
@@ -64,12 +63,13 @@ function wrap (object, funcName)
     }
 }
 
+var lastReportTime = 0;
 /** 
  * summary is a sum of "average per use" values of all wrapped functions,
  * total is the total cpu used
  */
 function report ()
-{
+{   
     var summary = 0;
     var total = 0;
     for (var functionName in Memory.profiling)
@@ -97,7 +97,9 @@ function report ()
     }
     console.log ('--- summary: ' + summary.toFixed (2));
     console.log ('---   total: ' + total.toFixed (2));
+    console.log ('--- perTick: ' + (total / (Game.time - lastReportTime)).toFixed (2));
 
+    lastReportTime = Game.time;
     Memory.profiling = {};
 }
 
