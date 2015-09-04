@@ -197,7 +197,21 @@ ProtoRole.prototype.routeCreep = function (target)
 			delete routeCache [targetId];
 		}
 	}
-	routeCache [targetId] = routeCache [targetId] || { origins : {}, lastPosition : target.pos, established : Game.time };
+	
+	routeCache [targetId] = routeCache [targetId] || 
+	{ 
+		origins : {},
+			
+		lastPosition : 
+		{
+			x : target.pos.x,
+			y : target.pos.y,
+			roomName : target.pos.roomName
+		}, 
+			
+		established : Game.time 
+	};
+	
 	routeCache [targetId].lastPosition = target.pos;
 	
 	if (!routeCache [targetId].origins [posStr]) 
