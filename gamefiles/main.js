@@ -20,7 +20,7 @@ if (ENABLE_PROFILING)
     
     profiler.wrap (Game, 'getObjectById');
 	
-	profiler.wrap (spawner);
+	//profiler.wrap (spawner);
 	
 	//profiler.wrap (roomManager.prototype, 'updateNeeds');
 }

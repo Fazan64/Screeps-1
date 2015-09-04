@@ -24,12 +24,12 @@ Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
 
 /**
  * Wraps the given function to be profiled.
- * Can accept an object containing the function and the function name,
- * an object only (then all of its functions, excluding those starting with "_" will be wrapped,
- * or just a function)
+ * Can accept an object containing the function and the function name, or
+ * an object only (then all of its functions, excluding those starting with "_" will be wrapped)
  */
 function wrap (object, funcName)
 {
+    /*
     // A function is given, so wrap it
     if (!funcName && object instanceof Function)
     {
@@ -50,6 +50,7 @@ function wrap (object, funcName)
         func = getWrapper (func, profilingData);
         return;
     }
+    */
     
     // An object is given, so wrap all of its 
     // public (not starting with '_') functions
