@@ -12,9 +12,6 @@ var ENABLE_PROFILING = true;
 var usedOnStart = 0;
 usedOnStart = getUsedCpu ();
 
-Memory.profiling = Memory.profiling || {};
-Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
-
 /**
  * Same as Game.getUsedCpu, but works in simulation mode
  */
@@ -22,6 +19,9 @@ function getUsedCpu ()
 {
     return Game.rooms.sim ? performance.now () - usedOnStart : Game.getUsedCpu ();
 }
+
+Memory.profiling = Memory.profiling || {};
+Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
 
 /**
  * Wraps the given function to be profiled.
