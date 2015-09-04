@@ -147,7 +147,7 @@ function report ()
     // Sort data.functions so that the biggest cpu consumer appears first
     var keysSorted = Object.keys (data.functions).sort ( function (a,b) 
         { 
-            return data.functions [a].usage - data.functions [b].usage; 
+            return data.functions [b].usage - data.functions [a].usage; 
         });
         
     var functionsNew = {};
