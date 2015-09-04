@@ -7,7 +7,7 @@ var spawner = require ('spawner');
 var roomManager = require ('roomManager');
 var ProtoRole = require ('role_prototype');
 
-var getUsedCpu = Game.rooms.sim ? performance.now : Game.getUsedCpu;
+Game.getUsedCpu = Game.rooms.sim ? performance.now : Game.getUsedCpu;
 
 profiler.wrap (spawner.prototype);
 //profiler.wrap (RoomManager.prototype);
@@ -40,5 +40,5 @@ if (Game.time % PROFILER_REPORT_INTERVAL == 0)
 	console.log ("---------------------------------------------------------");
 }
 
-console.log ("Total used cpu: " + getUsedCpu () + " / " + Game.cpuLimit);
+console.log ("Total used cpu: " + Game.getUsedCpu () + " / " + Game.cpuLimit);
 console.log ();
