@@ -337,9 +337,11 @@ ProtoRole.prototype.rest = function (civilian)
 	var distance = 4;
 	var restTarget = null;
 	
+	var flags = Game.flags;
+	
 	if (civilian)
 	{
-		var flags = Game.flags;
+		
 		for (var i in flags)
 		{
 			var flag = flags[i];
@@ -360,7 +362,6 @@ ProtoRole.prototype.rest = function (civilian)
 	}
 	else
 	{
-		var flags = Game.flags;
 		for (var i in flags)
 		{
 			var flag = flags[i];
@@ -375,12 +376,11 @@ ProtoRole.prototype.rest = function (civilian)
 		}
 	}
 	
-	if (!restTarget)
+	if (restTarget)
 	{
-		restTarget = creep;
+		this.moveTo (restTarget);
 	}
-
-	this.moveTo (restTarget);
+	
 }
 
 ProtoRole.prototype.getRangedTarget = function ()
