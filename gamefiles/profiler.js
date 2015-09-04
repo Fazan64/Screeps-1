@@ -9,24 +9,11 @@
  */
 var ENABLE_PROFILING = true;
 
-var usedAtTickStart = Game.rooms.sim ? performance.now () : Game.getUsedCpu (); 
+var usedOnStart = Game.rooms.sim ? performance.now () : Game.getUsedCpu (); 
+var 
 
 Memory.profiling = Memory.profiling || {};
 Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
-
-if (ENABLE_PROFILING) 
-{
-    wrap (RoomPosition.prototype, 'findPathTo');
-    wrap (RoomPosition.prototype, 'findClosest');
-    
-    wrap (Game, 'getObjectById');
-    
-   // wrap (Room.prototype);
-    
-   // wrap (Spawn.prototype);
-    
-    wrap (globals, 'require');
-}
 
 /**
  * Wraps the given function to be profiled.
@@ -94,7 +81,7 @@ function getWrapper (func, profilingObject)
     {
         return function ()
         {
-            var usedBefore = performance.now () - usedAtTickStart;
+            var usedBefore = performance.now () - usedOnStart;
             var returnValue = func.apply (this, arguments);
             
             profilingObject.usage += performance.now () - usedBefore;
