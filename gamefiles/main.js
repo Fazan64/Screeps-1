@@ -30,6 +30,9 @@ performRoles (Game.creeps);
 
 if (Game.time % PROFILER_REPORT_INTERVAL == 0)
 {
+	Memory.profilerDump = Memory.profilerDump || {};
+	Memory.profilerDump [Game.time] = profiler.getData ();
+	
 	console.log ("---------------------------------------------------------");
 	profiler.logReport ();
 	console.log ("---------------------------------------------------------");
