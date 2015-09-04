@@ -191,7 +191,7 @@ ProtoRole.prototype.routeCreep = function (target)
 	{
 		// If the target moved since the last pathfinding.
 		// Done like this since isEqualTo returns false for some reason.
-		if (routeCache [targetId].lastPosition.inRangeTo (target.pos, 0))
+		if (target.pos.inRangeTo (routeCache [targetId].lastPosition, 0))
 		{
 			delete routeCache [targetId];
 		}
