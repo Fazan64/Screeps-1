@@ -48,6 +48,7 @@ function wrap (object, funcName)
         var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
         
         func = getWrapper (func, profilingData);
+        return;
     }
     
     // An object is given, so wrap all of its 
