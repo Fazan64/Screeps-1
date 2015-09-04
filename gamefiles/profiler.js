@@ -26,12 +26,31 @@ if (ENABLE_PROFILING)
     wrap (globals, 'require');
 }
 
+/**
+ * Wraps the given function to be profiled.
+ * Can accept an object containing the function and the function name,
+ * an object only (then all of its functions, excluding those starting with "_" will be wrapped,
+ * or just a function)
+ */
 function wrap (object, funcName)
 {
     // A function is given, so wrap it
     if (!funcName && object instanceof Function)
     {
         var innerFunction = object;
+        var funcName = innerFunction.name;
+        if (!funcName)
+        {
+            var numEntries = 0;
+            while (Memory.profiling ["Anonymous function #" + numEntries])
+            {
+                numEntries++;
+            }
+            funcName = "Anonymous function #" + numEntries;
+        }
+        
+        var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
+        
         object [funcName] = getWrapper (innerFunction, profilingData);
     }
     
