@@ -97,7 +97,7 @@ function getWrapper (func, profilingObject)
     }
 }
 
-function report ()
+function logReport ()
 {     
     var summary = 0;
     // total used by tracked functions
@@ -136,8 +136,55 @@ function report ()
     Memory.profiling = {};
 }
 
+function getData ()
+{
+    var data = 
+    {
+        functions : {},
+        cpuUsage :
+        {
+            summary : 0,
+            tracked : 0,
+            average : 0
+        }
+    }
+    
+    for (var functionName in Memory.profiling)
+    {
+        var functionData = data.functions [functionName] =
+        {
+            usage : 0,
+            count : 0,
+            average : 0,   
+        }
+        
+        var profilingData = Memory.profiling [functionName];
+        
+        if (profilingData.count === 0) 
+        {
+            profilingData.average = 0;
+            functionData.average = 0;
+            continue;
+        }
+        
+        profilingData.average = profilingData.usage / profilingData.count;
+        
+        data.cpuUsage.summary += profilingData.average;
+        data.cpuUsage.tracked += profilingData.usage;
+        
+        functionData.summary = profilingData.average;
+        functionData.tracked = profilingData.usage;
+    }
+    
+    Memory._lastProfilerReportTime = Game.time;
+    Memory.profiling = {};
+    
+    return data;
+}
+
 module.exports = 
 {
 	wrap : wrap,
-    report : report
+    getData : getData,
+    logReport : logReport
 }

@@ -31,7 +31,7 @@ performRoles (Game.creeps);
 if (Game.time % PROFILER_REPORT_INTERVAL == 0)
 {
 	console.log ("---------------------------------------------------------");
-	profiler.report ();
+	profiler.logReport ();
 	console.log ("---------------------------------------------------------");
 }
 
