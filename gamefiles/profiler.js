@@ -87,12 +87,29 @@ function wrap (object, funcName)
  */
 function getWrapper (func, profilingObject)
 {
+    // simulation mode
+    if (Games.rooms.sim)
+    {
+        return function ()
+        {
+            var usedBefore = performance.now ();
+            var returnValue = func.apply (this, arguments);
+            
+            profilingObject.usage += performance.now () - usedBefore;
+            profilingObject.count++;
+            
+            return returnValue;
+        }
+    }
+    
     return function ()
     {
         var usedBefore = Game.getUsedCpu ();
         var returnValue = func.apply (this, arguments);
+        
         profilingObject.usage += Game.getUsedCpu () - usedBefore;
         profilingObject.count++;
+        
         return returnValue;
     }
 }
@@ -183,7 +200,7 @@ function getData ()
             return data.functions [a].used - data.functions [b].used; 
         });
         
-    var functionsNew = {}
+    var functionsNew = {};
     for (var key in keysSorted)
     {
         functionsNew [key] = data.functions [key];
