@@ -22,7 +22,7 @@ if (ENABLE_PROFILING)
 	
 	profiler.wrap (spawner);
 	
-	profiler.wrap (roomManager.prototype, 'updateNeeds');
+	//profiler.wrap (roomManager.prototype, 'updateNeeds');
 }
 
 for (var i in Game.rooms)
