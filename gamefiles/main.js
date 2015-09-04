@@ -34,7 +34,7 @@ if (Game.time % PROFILER_REPORT_INTERVAL == 0)
 	Memory.profilerDump [Game.time] = profiler.getData ();
 	
 	console.log ("---------------------------------------------------------");
-	profiler.logReport ();
+	//profiler.logReport ();
 	console.log ("---------------------------------------------------------");
 }
 
