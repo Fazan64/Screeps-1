@@ -375,7 +375,7 @@ ProtoRole.prototype.rest = function (civilian)
 	
 	if (!restTarget)
 	{
-		restTarget = creep.pos;
+		restTarget = creep;
 	}
 
 	this.moveTo (restTarget);
