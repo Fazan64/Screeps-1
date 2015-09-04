@@ -194,6 +194,9 @@ function getData ()
         
     }
     
+    var timeSinceLastReport = Game.time - Memory._lastProfilerReportTime;
+    data.cpuUsage.average = data.cpuUsage.tracked / timeSinceLastReport;
+   
     // Sort data.functions so that the biggest cpu consumer appears first
     var keysSorted = Object.keys (data.functions).sort ( function (a,b) 
         { 
@@ -205,6 +208,7 @@ function getData ()
     {
         functionsNew [key] = data.functions [key];
     }
+    
     // Now the entries are sorted by cpu consumption
     data.functions = functionsNew;
     
