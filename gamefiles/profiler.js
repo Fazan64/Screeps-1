@@ -95,6 +95,74 @@ function getWrapper (func, profilingObject)
     }
 }
 
+function getData ()
+{
+    var timeSinceLastReport = Game.time - Memory._lastProfilerReportTime;
+    
+    var data = 
+    {
+        functions : {},
+        cpuUsage :
+        {
+            summary : 0,
+            tracked : 0,
+            average : 0
+        }
+    }
+    
+    for (var functionName in Memory.profiling)
+    {
+        var functionData = data.functions [functionName] =
+        {
+            usage : 0,
+            count : 0,
+            perUse : 0,   
+            perTick : 0
+        }
+        
+        var profilingData = Memory.profiling [functionName];
+        
+        if (profilingData.count === 0) 
+        {
+            profilingData.average = 0;
+            functionData.perUse = 0;
+            continue;
+        }
+        
+        profilingData.average = profilingData.usage / profilingData.count;
+        
+        functionData.usage = profilingData.usage;
+        functionData.count = profilingData.count;
+        functionData.perUse = profilingData.average;
+        functionData.perTick = profilingData.usage / timeSinceLastReport;
+        
+        data.cpuUsage.summary += profilingData.average;
+        data.cpuUsage.tracked += profilingData.usage;
+    }
+    
+    data.cpuUsage.average = data.cpuUsage.tracked / timeSinceLastReport;
+   
+    // Sort data.functions so that the biggest cpu consumer appears first
+    var keysSorted = Object.keys (data.functions).sort ( function (a,b) 
+        { 
+            return data.functions [a].used - data.functions [b].used; 
+        });
+        
+    var functionsNew = {};
+    for (var i in keysSorted)
+    {
+        functionsNew [keysSorted [i]] = data.functions [keysSorted [i]];
+    }
+    
+    // Now the entries are sorted by cpu consumption
+    data.functions = functionsNew;
+    
+    Memory._lastProfilerReportTime = Game.time;
+    Memory.profiling = {};
+    
+    return data;
+}
+
 function logReport ()
 {     
     var summary = 0;
@@ -132,72 +200,6 @@ function logReport ()
 
     Memory._lastProfilerReportTime = Game.time;
     Memory.profiling = {};
-}
-
-function getData ()
-{
-    var data = 
-    {
-        functions : {},
-        cpuUsage :
-        {
-            summary : 0,
-            tracked : 0,
-            average : 0
-        }
-    }
-    
-    for (var functionName in Memory.profiling)
-    {
-        var functionData = data.functions [functionName] =
-        {
-            usage : 0,
-            count : 0,
-            average : 0,   
-        }
-        
-        var profilingData = Memory.profiling [functionName];
-        
-        if (profilingData.count === 0) 
-        {
-            profilingData.average = 0;
-            functionData.average = 0;
-            continue;
-        }
-        
-        profilingData.average = profilingData.usage / profilingData.count;
-        
-        functionData.usage = profilingData.usage;
-        functionData.count = profilingData.count;
-        functionData.average = profilingData.average;
-        
-        data.cpuUsage.summary += profilingData.average;
-        data.cpuUsage.tracked += profilingData.usage;
-        
-    }
-    
-    var timeSinceLastReport = Game.time - Memory._lastProfilerReportTime;
-    data.cpuUsage.average = data.cpuUsage.tracked / timeSinceLastReport;
-   
-    // Sort data.functions so that the biggest cpu consumer appears first
-    var keysSorted = Object.keys (data.functions).sort ( function (a,b) 
-        { 
-            return data.functions [a].used - data.functions [b].used; 
-        });
-        
-    var functionsNew = {};
-    for (var i in keysSorted)
-    {
-        functionsNew [keysSorted [i]] = data.functions [keysSorted [i]];
-    }
-    
-    // Now the entries are sorted by cpu consumption
-    data.functions = functionsNew;
-    
-    Memory._lastProfilerReportTime = Game.time;
-    Memory.profiling = {};
-    
-    return data;
 }
 
 module.exports = 
