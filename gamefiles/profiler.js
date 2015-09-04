@@ -7,7 +7,6 @@
  * "tracked" is the total cpu used by the tracked functions only since the last report,
  * "average" is the average (based on "tracked") cpu used per tick 
  */
-var ENABLE_PROFILING = true;
 
 var usedOnStart = 0;
 usedOnStart = getUsedCpu ();
