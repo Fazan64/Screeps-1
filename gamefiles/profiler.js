@@ -187,7 +187,7 @@ function getData ()
     var functionsNew = {};
     for (var i in keysSorted)
     {
-        functionsNew [key] = data.functions [keysSorted [i]];
+        functionsNew [keysSorted [i]] = data.functions [keysSorted [i]];
     }
     
     // Now the entries are sorted by cpu consumption
