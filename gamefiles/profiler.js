@@ -165,6 +165,7 @@ function getData ()
 
 function logReport (report)
 {     
+    console.log ('=======REPORT=======');
     for (var key in report.functions)
     {
         var functionData = report.functions [key];
@@ -180,6 +181,8 @@ function logReport (report)
     console.log ('summary: ' + report.cpuUsage.summary);
     console.log ('tracked: ' + report.cpuUsage.tracked);
     console.log ('average: ' + report.cpuUsage.average);
+    
+    console.log ('=======REPORT=======');
 }
 
 module.exports = 
