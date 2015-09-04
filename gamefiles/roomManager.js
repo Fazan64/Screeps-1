@@ -159,9 +159,8 @@ Object.defineProperties (Room.prototype,
 		
 });
 
-function RoomManager (room)
+function RoomManager ()
 {
-	this.room = room;
 	this.needs =
 	{
 		creeps : [],
@@ -193,6 +192,29 @@ Object.defineProperties (RoomManager.prototype,
 		}
 	}	
 });
+
+RoomManager.prototype.setRoom = function (room)
+{
+	this.room = room;
+}
+
+RoomManager.prototype.reset = function ()
+{
+	this.room = null;
+	this.needs =
+	{
+		creeps : [],
+		energy : 0
+	};
+	// Sets all properties that start with '_' (except _cache) to null
+	for (var propertyName in this) 
+	{
+		if (this [propertyName] && propertyName.indexOf ('_') == 0)
+		{
+			this [propertyName] = null;
+		}
+	}
+}
 
 RoomManager.prototype.initMemory = function ()
 {
@@ -402,4 +424,4 @@ RoomManager.prototype.setNeeds = function ()
 	this.room.memory.needs = this.needs;
 }
 
-module.exports = RoomManager;
+module.exports = new RoomManager ();
