@@ -7,7 +7,10 @@ var spawner = require ('spawner');
 var roomManager = require ('roomManager');
 var ProtoRole = require ('role_prototype');
 
-Game.getUsedCpu = Game.rooms.sim ? performance.now : Game.getUsedCpu;
+if (Game.rooms.sim)
+{	
+	Game.getUsedCpu = performance.now;
+}
 
 profiler.wrap (spawner.prototype);
 //profiler.wrap (RoomManager.prototype);
