@@ -14,9 +14,7 @@ Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
 
 if (ENABLE_PROFILING) 
 {
-    wrap (RoomPosition.prototype, 'isNearTo');
     wrap (RoomPosition.prototype, 'findPathTo');
-    wrap (RoomPosition.prototype, 'isEqualTo');
     wrap (RoomPosition.prototype, 'findClosest');
     
     wrap (Game, 'getObjectById');

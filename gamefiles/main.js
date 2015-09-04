@@ -10,7 +10,7 @@ var ProtoRole = require ('role_prototype');
 profiler.wrap (spawner.prototype);
 //profiler.wrap (RoomManager.prototype);
 
-profiler.wrap (ProtoRole.prototype);
+profiler.wrap (ProtoRole.prototype, 'updateNeeds');
 
 for (var i in Game.rooms)
 {
