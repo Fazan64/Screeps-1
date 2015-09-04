@@ -9,6 +9,8 @@
  */
 var ENABLE_PROFILING = true;
 
+var usedAtTickStart = Game.rooms.sim ? performance.now () : Game.getUsedCpu (); 
+
 Memory.profiling = Memory.profiling || {};
 Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
 
@@ -92,7 +94,7 @@ function getWrapper (func, profilingObject)
     {
         return function ()
         {
-            var usedBefore = performance.now ();
+            var usedBefore = performance.now () - usedAtTickStart;
             var returnValue = func.apply (this, arguments);
             
             profilingObject.usage += performance.now () - usedBefore;

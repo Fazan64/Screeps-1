@@ -95,7 +95,7 @@ function spawnNeededCreep (spawn)
     }
 }
 
-module.exports = function (spawn)
+module.exports = function spawner (spawn)
 {
 	spawnNeededCreep (spawn);
 }
