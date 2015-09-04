@@ -88,7 +88,7 @@ function wrap (object, funcName)
 function getWrapper (func, profilingObject)
 {
     // simulation mode
-    if (Games.rooms.sim)
+    if (Game.rooms.sim)
     {
         return function ()
         {
