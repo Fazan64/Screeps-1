@@ -44,7 +44,11 @@ performRoles (Game.creeps);
 if (Game.time % PROFILER_REPORT_INTERVAL == 0)
 {
 	Memory.profilerDump = Memory.profilerDump || {};
-	Memory.profilerDump [Game.time] = profiler.getData ();
+	
+	var report = profiler.getData ();
+	
+	profiler.logReport (report);
+	Memory.profilerDump [Game.time] = report;
 }
 
 console.log ("Total used cpu: " + profiler.getUsedCpu () + " / " + Game.cpuLimit);
