@@ -277,6 +277,8 @@ ProtoRole.prototype.moveTo = function (target)
 	else
 	{
 		debugger;
+		console.log ("ProtoRole.moveTo: RoomPosition given. Cannot use advanced caching, using built-in moveTo...");
+		this.creep.moveTo (target, { reusePath : 5 });
 	}
 	
 	//this.creep.moveTo (target, { reusePath : 5 });
