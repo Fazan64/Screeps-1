@@ -9,11 +9,19 @@
  */
 var ENABLE_PROFILING = true;
 
-var usedOnStart = Game.rooms.sim ? performance.now () : Game.getUsedCpu (); 
-var 
+var usedOnStart = 0;
+usedOnStart = getUsedCpu ();
 
 Memory.profiling = Memory.profiling || {};
 Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
+
+/**
+ * Same as Game.getUsedCpu, but works in simulation mode
+ */
+function getUsedCpu ()
+{
+    return Game.room.sim ? performance.now () - usedOnStart : Game.getUsedCpu ();
+}
 
 /**
  * Wraps the given function to be profiled.
@@ -75,28 +83,13 @@ function wrap (object, funcName)
  * and sends profiling data to 'profilingObject'
  */
 function getWrapper (func, profilingObject)
-{
-    // simulation mode
-    if (Game.rooms.sim)
-    {
-        return function ()
-        {
-            var usedBefore = performance.now () - usedOnStart;
-            var returnValue = func.apply (this, arguments);
-            
-            profilingObject.usage += performance.now () - usedBefore;
-            profilingObject.count++;
-            
-            return returnValue;
-        }
-    }
-    
+{ 
     return function ()
     {
-        var usedBefore = Game.getUsedCpu ();
+        var usedBefore = getUsedCpu ();
         var returnValue = func.apply (this, arguments);
         
-        profilingObject.usage += Game.getUsedCpu () - usedBefore;
+        profilingObject.usage += getUsedCpu () - usedBefore;
         profilingObject.count++;
         
         return returnValue;
@@ -211,5 +204,6 @@ module.exports =
 {
 	wrap : wrap,
     getData : getData,
+    getUsedCpu : getUsedCpu,
     logReport : logReport
 }
