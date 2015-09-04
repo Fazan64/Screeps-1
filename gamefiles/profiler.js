@@ -20,7 +20,7 @@ Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
  */
 function getUsedCpu ()
 {
-    return Game.room.sim ? performance.now () - usedOnStart : Game.getUsedCpu ();
+    return Game.rooms.sim ? performance.now () - usedOnStart : Game.getUsedCpu ();
 }
 
 /**
