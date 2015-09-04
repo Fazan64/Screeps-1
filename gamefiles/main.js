@@ -45,7 +45,7 @@ if (Game.time % PROFILER_REPORT_INTERVAL == 0)
 {
 	Memory.profilerDump = Memory.profilerDump || {};
 	
-	var report = profiler.getData ();
+	var report = profiler.report ();
 	
 	profiler.logReport (report);
 	Memory.profilerDump [Game.time] = report;

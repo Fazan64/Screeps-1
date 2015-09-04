@@ -97,7 +97,7 @@ function getWrapper (func, profilingObject)
     }
 }
 
-function getData ()
+function report ()
 {
     var timeSinceLastReport = Game.time - Memory._lastProfilerReportTime;
     
@@ -191,7 +191,7 @@ function logReport (report)
 module.exports = 
 {
 	wrap : wrap,
-    getData : getData,
+    report : report,
     getUsedCpu : getUsedCpu,
     logReport : logReport
 }
