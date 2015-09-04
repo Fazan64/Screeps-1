@@ -8,7 +8,7 @@ var RoomManager = require ('roomManager');
 var ProtoRole = require ('role_prototype');
 
 profiler.wrap (spawner.prototype);
-profiler.wrap (RoomManager.prototype);
+//profiler.wrap (RoomManager.prototype);
 
 profiler.wrap (ProtoRole.prototype);
 
