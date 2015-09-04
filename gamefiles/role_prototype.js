@@ -243,7 +243,6 @@ ProtoRole.prototype.routeCreep = function (target)
 		}
 	}
 
-	/*
 	// Clean out invalid routes
 	for (var k in routeCache) 
 	{
@@ -252,7 +251,6 @@ ProtoRole.prototype.routeCreep = function (target)
 			delete routeCache [k];
 		}
 	}
-	*/
 
 	var total = 0;
 	//pick from the weighted list of steps
