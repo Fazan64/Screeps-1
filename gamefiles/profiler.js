@@ -169,11 +169,12 @@ function getData ()
         
         profilingData.average = profilingData.usage / profilingData.count;
         
+        functionData.usage = profilingData.usage;
+        functionData.average = profilingData.average;
+        
         data.cpuUsage.summary += profilingData.average;
         data.cpuUsage.tracked += profilingData.usage;
         
-        functionData.summary = profilingData.average;
-        functionData.tracked = profilingData.usage;
     }
     
     Memory._lastProfilerReportTime = Game.time;
