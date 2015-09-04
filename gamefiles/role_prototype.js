@@ -444,7 +444,6 @@ ProtoRole.prototype.rangedAttack = function (target)
 	{
 		if (target.pos.inRangeTo (creep.pos, 3) )
 		{
-			console.log ("    Performing ranged attack....");
 			creep.rangedAttack (target);
 			return target;
 		}
@@ -473,7 +472,6 @@ ProtoRole.prototype.kite = function (target)
 {
 	var creep = this.creep;
 
-	console.log ("    Kiting...");
 	if (target.pos.getRangeTo (creep.pos) <= 2) 
 	{
 		this.moveAwayFrom (target);
