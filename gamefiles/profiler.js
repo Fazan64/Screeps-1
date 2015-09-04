@@ -163,43 +163,23 @@ function getData ()
     return data;
 }
 
-function logReport ()
+function logReport (report)
 {     
-    var summary = 0;
-    // total used by tracked functions
-    var tracked = 0;
-    for (var functionName in Memory.profiling)
+    for (var key in report.functions)
     {
-        var profilingData = Memory.profiling [functionName];
+        var functionData = report.functions [key];
         
-        if (profilingData.count === 0) 
-        {
-            profilingData.average = 0;
-            continue;
-        }
-        
-        profilingData.average = profilingData.usage / profilingData.count;
-        
-        summary += profilingData.average;
-        tracked += profilingData.usage;
-    }
-
-    for (var functionName in Memory.profiling) 
-    {
-        profilingData = Memory.profiling [functionName];
-        
-        console.log (functionName + ': ' + profilingData.usage.toFixed (2) + '/' + profilingData.count + ' == ' + profilingData.average.toFixed (2)
-                    + ' (' + (profilingData.average * 100 / summary).toFixed (2) + '%)');
+        console.log (key + ':');
+        console.log ('      usage: ' + functionData.usage);
+        console.log ('      count: ' + functionData.count);
+        console.log ('     perUse: ' + functionData.perUse);
+        console.log ('    perTick: ' + functionData.perTick);
     }
     
-    var timeSinceLastReport = Game.time - Memory._lastProfilerReportTime;
-     
-    console.log ('--- summary: ' + summary.toFixed (2));
-    console.log ('--- tracked: ' + tracked.toFixed (2));
-    console.log ('--- average: ' + (tracked / timeSinceLastReport).toFixed (2));
-
-    Memory._lastProfilerReportTime = Game.time;
-    Memory.profiling = {};
+    console.log ('-------');
+    console.log ('summary: ' + report.cpuUsage.summary);
+    console.log ('tracked: ' + report.cpuUsage.tracked);
+    console.log ('average: ' + report.cpuUsage.average);
 }
 
 module.exports = 
