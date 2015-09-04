@@ -19,7 +19,7 @@ if (ENABLE_PROFILING)
     wrap (RoomPosition.prototype, 'isEqualTo');
     wrap (RoomPosition.prototype, 'findClosest');
     
-    wrap (Creep.prototype, 'moveTo');
+    wrap (Game, 'getObjectById');
     
    // wrap (Room.prototype);
     
