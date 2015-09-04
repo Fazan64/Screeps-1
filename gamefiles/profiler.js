@@ -33,8 +33,8 @@ function wrap (object, funcName)
     // A function is given, so wrap it
     if (!funcName && object instanceof Function)
     {
-        var innerFunction = object;
-        var funcName = innerFunction.name;
+        var func = object;
+        var funcName = func.name;
         if (!funcName)
         {
             var numEntries = 0;
@@ -47,7 +47,7 @@ function wrap (object, funcName)
         
         var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
         
-        object [funcName] = getWrapper (innerFunction, profilingData);
+        func = getWrapper (func, profilingData);
     }
     
     // An object is given, so wrap all of its 
@@ -72,8 +72,7 @@ function wrap (object, funcName)
         var name = object.name + funcName;
         var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
         
-        var innerFunction = object [funcName];
-        object [funcName] = getWrapper (innerFunction, profilingData);
+        object [funcName] = getWrapper (object [funcName], profilingData);
     }
 }
 
@@ -83,10 +82,11 @@ function wrap (object, funcName)
  */
 function getWrapper (func, profilingObject)
 { 
+    var innerFunction = func;
     return function ()
     {
         var usedBefore = getUsedCpu ();
-        var returnValue = func.apply (this, arguments);
+        var returnValue = innerFunction.apply (this, arguments);
         
         profilingObject.usage += getUsedCpu () - usedBefore;
         profilingObject.count++;
@@ -168,6 +168,7 @@ function getData ()
         profilingData.average = profilingData.usage / profilingData.count;
         
         functionData.usage = profilingData.usage;
+        functionData.count = profilingData.count;
         functionData.average = profilingData.average;
         
         data.cpuUsage.summary += profilingData.average;
