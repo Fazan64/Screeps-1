@@ -173,84 +173,84 @@ ProtoRole.prototype.beforeAge = function () {}
 */
 ProtoRole.prototype.onDeath = function () {}
 
-ProtoRole.prototype.routeCreep = function (dest)
+ProtoRole.prototype.routeCreep = function (target)
 {
 	var creep = this.creep;
 	
-	if (creep.fatigue > 0 || !dest) 
+	if (creep.fatigue > 0 || !target) 
 	{
 		return -1;
 	}
 
-	var locStr = creep.room.name + "." + creep.pos.x + "." + creep.pos.y
-
-	var path = false;
+	var targetId = target.id;
+	var posStr = creep.room.name + "." + creep.pos.x + "." + creep.pos.y;
 	
-	Memory.routeCache = Memory.routeCache || {}
-
-	Memory.routeCache [locStr] = Memory.routeCache [locStr] || { dests : {}, established : Game.time }
-
+	var routeCache = Memory.routeCache = Memory.routeCache || {};
 	
-	if (!Memory.routeCache [locStr].dests [dest.id]) 
+	if (routeCache [targetId])
 	{
-		Memory.routeCache [locStr].dests [dest.id] = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
+		// If the target moved since the last 
+		if (routeCache [targetId].lastPosition !== target.pos)
+		{
+			delete routeCache [targetId];
+		}
+	}
+	routeCache [targetId] = routeCache [targetId] || { origins : {}, lastPosition : target.pos, established : Game.time };
+	routeCache [targetId].lastPosition = target.pos;
+	
+	if (!routeCache [targetId].origins [posStr]) 
+	{
+		routeCache [targetId].origins [posStr] = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
 		
-		path = creep.room.findPath (creep.pos, dest.pos, { maxOps: 500, heuristicWeight: 2 })
+		var path = creep.room.findPath (creep.pos, target.pos, { maxOps: 500, heuristicWeight: 2 })
 		
+		// If path found, fill the cache with it
 		if (path && path.length) 
 		{
-
-			Memory.routeCache [locStr].dests [dest.id] [path [0].direction] += 1;
+			routeCache [targetId].origins [posStr] [path [0].direction] += 1;
 
 			for (var i = 0; i < path.length - 1; i++) 
 			{
-				var step = path[i];
-				var stepStr = creep.room.name + "." + step.x + "." + step.y
+				var step = path [i];
+				var stepStr = creep.room.name + "." + step.x + "." + step.y;
 				
-				Memory.routeCache [stepStr] = Memory.routeCache [stepStr] || { dests : {}, established : Game.time, usefreq : 0.0 };
+				routeCache [targetId].origins [stepStr] = routeCache [targetId].origins [stepStr] || { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
 				
-				Memory.routeCache [stepStr].dests [dest.id] = Memory.routeCache [stepStr].dests [dest.id] || { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0 };
-				
-				//console.log(path[i+1].direction);
-				
-				Memory.routeCache [stepStr].dests [dest.id] [path [i + 1].direction] += 1;
+				routeCache [targetId].origins [stepStr] [path [i + 1].direction] += 1;
 			}
 		}
+		// Otherwise pick random direction
 		else 
 		{
-
 			var dir = Math.floor (Math.random () * 8);
-
-			var error = creep.move (dir);
-			return error;
-
+			return creep.move (dir);;
 		}
 	}
 
-	for (var k in Memory.routeCache [locStr].dests) 
+	/*
+	// Clean out invalid routes
+	for (var k in routeCache) 
 	{
-		if (Game.getObjectById(k) == null) 
+		if (Game.getObjectById (k) == null) 
 		{
-			//clean out invalid routes
-			delete Memory.routeCache [locStr].dests [k];
-			//console.log("Pruned",k)
+			delete routeCache [k];
 		}
 	}
+	*/
 
-
-	var total = 0.0
+	var total = 0;
 	//pick from the weighted list of steps
-	for (var d in Memory.routeCache [locStr].dests [dest.id]) 
+	for (var d in routeCache [targetId].origins [posStr]) 
 	{
-		total += Memory.routeCache [locStr].dests [dest.id] [d];
+		total +=  routeCache [targetId].origins [posStr] [d];
 	}
 	
 	total *= Math.random();
 	
 	var dir = 0;
-	for (var d in Memory.routeCache [locStr].dests [dest.id]) 
+	for (var d in routeCache [targetId].origins [posStr]) 
 	{
-		total -= Memory.routeCache [locStr].dests [dest.id] [d];
+		total -=  routeCache [targetId].origins [posStr] [d];
 		if (total < 0) 
 		{
 			dir = d;
@@ -258,13 +258,12 @@ ProtoRole.prototype.routeCreep = function (dest)
 		}
 	}
 	
-	if (creep.pos.getRangeTo(dest) > 1 && isPathBlocked (creep.pos, dir)) 
+	if (creep.pos.getRangeTo(target) > 1 && isPathBlocked (creep.pos, dir)) 
 	{
 		dir = Math.floor (Math.random() * 8);
 	}
 	
-	var error = creep.move (dir);
-	return error;
+	return creep.move (dir);
 }
 
 ProtoRole.prototype.moveTo = function (target)
