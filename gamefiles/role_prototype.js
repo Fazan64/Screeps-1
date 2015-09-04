@@ -270,7 +270,15 @@ ProtoRole.prototype.routeCreep = function (target)
 
 ProtoRole.prototype.moveTo = function (target)
 {
-	this.routeCreep (target);
+	if (target.pos !== undefined)
+	{
+		this.routeCreep (target);
+	}
+	else
+	{
+		debugger;
+	}
+	
 	//this.creep.moveTo (target, { reusePath : 5 });
 }
 
