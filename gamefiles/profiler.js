@@ -28,6 +28,13 @@ if (ENABLE_PROFILING)
 
 function wrap (object, funcName)
 {
+    // A function is given, so wrap it
+    if (!funcName && object instanceof Function)
+    {
+        var innerFunction = object;
+        object [funcName] = getWrapper (innerFunction, profilingData);
+    }
+    
     // An object is given, so wrap all of its 
     // public (not starting with '_') functions
     if (!funcName) 
@@ -51,14 +58,23 @@ function wrap (object, funcName)
         var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
         
         var innerFunction = object [funcName];
-        object [funcName] = function () 
-        {
-            var usedBefore = Game.getUsedCpu ();
-            var returnValue = innerFunction.apply (this, arguments);
-            profilingData.usage += Game.getUsedCpu () - usedBefore;
-            profilingData.count++;
-            return returnValue;
-        }
+        object [funcName] = getWrapper (innerFunction, profilingData);
+    }
+}
+
+/**
+ * Returns a wrapper function which represents 'func',
+ * and sends profiling data to 'profilingObject'
+ */
+function getWrapper (func, profilingObject)
+{
+    return function ()
+    {
+        var usedBefore = Game.getUsedCpu ();
+        var returnValue = func.apply (this, arguments);
+        profilingObject.usage += Game.getUsedCpu () - usedBefore;
+        profilingObject.count++;
+        return returnValue;
     }
 }
 
