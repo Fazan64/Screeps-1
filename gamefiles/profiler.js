@@ -177,6 +177,20 @@ function getData ()
         
     }
     
+    // Sort data.functions so that the biggest cpu consumer appears first
+    var keysSorted = Object.keys (data.functions).sort ( function (a,b) 
+        { 
+            return data.functions [a].used - data.functions [b].used; 
+        });
+        
+    var functionsNew = {}
+    for (var key in keysSorted)
+    {
+        functionsNew [key] = data.functions [key];
+    }
+    // Now the entries are sorted by cpu consumption
+    data.functions = functionsNew;
+    
     Memory._lastProfilerReportTime = Game.time;
     Memory.profiling = {};
     
