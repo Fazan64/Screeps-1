@@ -51,6 +51,6 @@ if (Game.time % PROFILER_REPORT_INTERVAL == 0)
 	Memory.profilerDump [Game.time] = report;
 }
 
-console.log ("Total used cpu: " + profiler.getUsedCpu () + " / " + Game.cpuLimit);
+console.log ("Total used cpu: " + profiler.getUsedCpu ().toFixed (2) + " / " + Game.cpuLimit);
 console.log ();
 
