@@ -3,9 +3,10 @@
  * http://support.screeps.com/hc/communities/public/questions/201375902-_profiling
  *
  * Output: 
- * "summary" is a sum of "average per use" values of all tracked functions since the last report,
  * "tracked" is the total cpu used by the tracked functions only since the last report,
- * "average" is the average (based on "tracked") cpu used per tick 
+ * "trackedPerTick" is the average (based on "tracked") cpu used per tick,
+ * "total" is the total cpu used since the last report,
+ * "totalPerTick" is the average (based on "total") cpu used per tick 
  */
 
 var usedOnStart = 0;
