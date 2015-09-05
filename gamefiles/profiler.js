@@ -1,6 +1,6 @@
 /**
  * Based on Actium's profiler:
- * http://support.screeps.com/hc/communities/public/questions/201375902-Profiling
+ * http://support.screeps.com/hc/communities/public/questions/201375902-_profiling
  *
  * Output: 
  * "summary" is a sum of "average per use" values of all tracked functions since the last report,
@@ -19,8 +19,25 @@ function getUsedCpu ()
     return Game.rooms.sim ? performance.now () - usedOnStart : Game.getUsedCpu ();
 }
 
-Memory.profiling = Memory.profiling || {};
+Memory._profiling = Memory._profiling || 
+{ 
+    functions : {}, 
+    main : 
+    { 
+        usage : 0, 
+        count : 0
+    } 
+};
 Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
+
+/**
+ * Wraps the function as usual, but treats it as the main
+ * function that calls all the others (i.e the one that is executed in main.js)
+ */
+function wrapAsMainLoop (mainLoopFunction)
+{
+    return getWrapper (mainLoopFunction, Memory._profiling.main);
+}
 
 /**
  * Wraps the given function to be profiled.
@@ -39,17 +56,16 @@ function wrap (object, funcName)
         if (!funcName)
         {
             var numEntries = 0;
-            while (Memory.profiling ["Anonymous function #" + numEntries])
+            while (Memory._profiling.functions ["Anonymous function #" + numEntries])
             {
                 numEntries++;
             }
             funcName = "Anonymous function #" + numEntries;
         }
         
-        var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
+        var profilingData = Memory._profiling.functions [funcName] = Memory._profiling.functions [funcName] || { usage: 0, count: 0 }
         
-        func = getWrapper (func, profilingData);
-        return func;
+        return getWrapper (func, profilingData);;
     }
     
     // An object is given, so wrap all of its 
@@ -72,7 +88,7 @@ function wrap (object, funcName)
     if (object [funcName])
     {
         var name = object.name + funcName;
-        var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
+        var profilingData = Memory._profiling.functions [funcName] = Memory._profiling.functions [funcName] || { usage: 0, count: 0 }
         
         object [funcName] = getWrapper (object [funcName], profilingData);
     }
@@ -106,13 +122,14 @@ function report ()
         functions : {},
         cpuUsage :
         {
-            summary : 0,
             tracked : 0,
-            average : 0
+            total : 0,
+            trackedPerTick : 0,
+            totalPerTick : 0
         }
     }
     
-    for (var functionName in Memory.profiling)
+    for (var functionName in Memory._profiling.functions)
     {
         var functionData = data.functions [functionName] =
         {
@@ -122,7 +139,7 @@ function report ()
             perTick : 0
         }
         
-        var profilingData = Memory.profiling [functionName];
+        var profilingData = Memory._profiling.functions [functionName];
         
         if (profilingData.count === 0) 
         {
@@ -138,29 +155,28 @@ function report ()
         functionData.perUse = profilingData.average;
         functionData.perTick = profilingData.usage / timeSinceLastReport;
         
-        data.cpuUsage.summary += profilingData.average;
         data.cpuUsage.tracked += profilingData.usage;
     }
     
-    data.cpuUsage.average = data.cpuUsage.tracked / timeSinceLastReport;
+    data.cpuUsage.total = Memory._profiling.main.usage;
+    data.cpuUsage.trackedPerTick = data.cpuUsage.tracked / timeSinceLastReport;
+    data.cpuUsage.totalPerTick = data.cpuUsage.total / timeSinceLastReport;
    
     // Sort data.functions so that the biggest cpu consumer appears first
     var keysSorted = Object.keys (data.functions).sort ( function (a,b) 
-        { 
-            return data.functions [b].usage - data.functions [a].usage; 
-        });
-        
+    { 
+        return data.functions [b].usage - data.functions [a].usage; 
+    });
     var functionsNew = {};
     for (var i in keysSorted)
     {
         functionsNew [keysSorted [i]] = data.functions [keysSorted [i]];
     }
-    
     // Now the entries are sorted by cpu consumption
     data.functions = functionsNew;
     
     Memory._lastProfilerReportTime = Game.time;
-    Memory.profiling = {};
+    Memory._profiling = {};
     
     return data;
 }
@@ -181,9 +197,10 @@ function logReport (report)
     }
     
     console.log ('-------');
-    console.log ('summary: ' + report.cpuUsage.summary);
-    console.log ('tracked: ' + report.cpuUsage.tracked);
-    console.log ('average: ' + report.cpuUsage.average);
+    console.log (       'tracked: ' + report.cpuUsage.tracked);
+    console.log ('trackedPerTick: ' + report.cpuUsage.trackedPerTick);
+    console.log ('         total: ' + report.cpuUsage.total);
+    console.log ('  totalPerTick: ' + report.cpuUsage.totalPerTick);
     
     console.log ('=======REPORT=======');
 }
@@ -191,6 +208,7 @@ function logReport (report)
 module.exports = 
 {
 	wrap : wrap,
+    wrapAsMainLoop : wrapAsMainLoop,
     report : report,
     getUsedCpu : getUsedCpu,
     logReport : logReport

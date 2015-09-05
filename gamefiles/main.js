@@ -56,7 +56,7 @@ function main ()
 if (ENABLE_PROFILING) 
 {
     profiler.wrap (globals, 'require');	
-	main = profiler.wrap (main);
+	main = profiler.wrapAsMainLoop (main);
 }
 
 main ();
