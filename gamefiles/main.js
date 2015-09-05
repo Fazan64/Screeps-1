@@ -6,24 +6,19 @@ var profiler = require ('profiler');
 if (ENABLE_PROFILING) 
 {
     profiler.wrap (globals, 'require');
+	
+	profiler.wrap (RoomPosition.prototype, 'findPathTo');
+    profiler.wrap (RoomPosition.prototype, 'findClosest');
+    
+    profiler.wrap (Game, 'getObjectById');
+	
+	profiler.wrap (roomManager, 'updateNeeds');
 }
 
 var performRoles = require ('performRoles');
 var spawner = require ('spawner');
 var roomManager = require ('roomManager');
 var ProtoRole = require ('role_prototype');
-
-if (ENABLE_PROFILING) 
-{
-	profiler.wrap (RoomPosition.prototype, 'findPathTo');
-    profiler.wrap (RoomPosition.prototype, 'findClosest');
-    
-    profiler.wrap (Game, 'getObjectById');
-	
-	//profiler.wrap (spawner);
-	
-	//profiler.wrap (roomManager.prototype, 'updateNeeds');
-}
 
 for (var i in Game.rooms)
 {
