@@ -75,14 +75,6 @@ ProtoRole.prototype.reset = function ()
 {
 	this.creep = null;
 	this._cache = {};
-	// Sets all properties that start with '_' (except _cache) to null
-	for (var propertyName in this) 
-	{
-		if (this [propertyName] && propertyName !== "_cache" && propertyName.indexOf ('_') == 0)
-		{
-			this [propertyName] = null;
-		}
-	}
 }
 
 /**

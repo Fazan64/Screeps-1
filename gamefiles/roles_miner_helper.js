@@ -35,12 +35,12 @@ Object.defineProperties (MinerHelper.prototype,
 	{
 		get : function ()
 		{
-			if (!this._spawn)
+			if (!this._cache.spawn)
 			{
 				if (this.creep.memory.spawn)
 				{
-					this._spawn = Game.getObjectById (this.creep.memory.spawn);
-					if (!this._spawn)
+					this._cache.spawn = Game.getObjectById (this.creep.memory.spawn);
+					if (!this._cache.spawn)
 					{
 						this.assignSpawn ();
 					}	
@@ -50,14 +50,14 @@ Object.defineProperties (MinerHelper.prototype,
 					this.assignSpawn ();
 				}
 			}
-			return this._spawn;
+			return this._cache.spawn;
 		},
 		set : function (value)
 		{
-			this._spawn = value;
-			if (this._spawn)
+			this._cache.spawn = value;
+			if (this._cache.spawn)
 			{
-				this.creep.memory.spawn = this._spawn.id;	
+				this.creep.memory.spawn = this._cache.spawn.id;	
 			}
 		}	
 	},
@@ -65,12 +65,12 @@ Object.defineProperties (MinerHelper.prototype,
 	{
 		get : function ()
 		{
-			if (!this._miner)
+			if (!this._cache.miner)
 			{
 				if (this.creep.memory.miner)
 				{
-					this._miner = Game.getObjectById (this.creep.memory.miner);
-					if (!this._miner)
+					this._cache.miner = Game.getObjectById (this.creep.memory.miner);
+					if (!this._cache.miner)
 					{
 						this.assignMiner ();
 					}
@@ -80,15 +80,15 @@ Object.defineProperties (MinerHelper.prototype,
 					this.assignMiner ();
 				}
 			}
-			return this._miner;
+			return this._cache.miner;
 		},
 		set : function (value)
 		{
-			this._miner = value;
-			if (this._miner)
+			this._cache.miner = value;
+			if (this._cache.miner)
 			{
-				this.creep.memory.miner = this._miner.id;
-				this._miner.memory.helpers.push (this.creep.id);
+				this.creep.memory.miner = this._cache.miner.id;
+				this._cache.miner.memory.helpers.push (this.creep.id);
 			}
 		}
 	}	
