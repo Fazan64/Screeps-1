@@ -40,6 +40,25 @@ function resetMemory ()
 }
 
 /**
+ * Returns a wrapper function which represents 'func',
+ * and sends profiling data to 'profilingObject'
+ */
+function getWrapper (func, profilingObject)
+{ 
+    var innerFunction = func;
+    return function ()
+    {
+        var usedBefore = getUsedCpu ();
+        var returnValue = innerFunction.apply (this, arguments);
+        
+        profilingObject.usage += getUsedCpu () - usedBefore;
+        profilingObject.count++;
+        
+        return returnValue;
+    }
+}
+
+/**
  * Wraps the function as usual, but treats it as the main
  * function that calls all the others (i.e the one that is executed in main.js)
  */
@@ -99,25 +118,6 @@ function wrap (object, funcName)
         var profilingData = Memory._profiling.functions [funcName] = Memory._profiling.functions [funcName] || { usage: 0, count: 0 }
 
         object [funcName] = getWrapper (object [funcName], profilingData);
-    }
-}
-
-/**
- * Returns a wrapper function which represents 'func',
- * and sends profiling data to 'profilingObject'
- */
-function getWrapper (func, profilingObject)
-{ 
-    var innerFunction = func;
-    return function ()
-    {
-        var usedBefore = getUsedCpu ();
-        var returnValue = innerFunction.apply (this, arguments);
-        
-        profilingObject.usage += getUsedCpu () - usedBefore;
-        profilingObject.count++;
-        
-        return returnValue;
     }
 }
 
