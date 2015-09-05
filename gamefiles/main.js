@@ -20,6 +20,7 @@ function act ()
 		profiler.wrap (roomManager, 'updateNeeds');
 		
 		profiler.wrap (ProtoRole.prototype, 'reset');
+		profiler.wrap (ProtoRole.prototype, 'moveTo');
 	}
 	
 	for (var i in Game.rooms)
