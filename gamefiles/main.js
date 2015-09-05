@@ -39,7 +39,7 @@ function main ()
 	
 	performRoles (Game.creeps);
 	
-	if (Game.time % PROFILER_REPORT_INTERVAL == 0)
+	if (ENABLE_PROFILING && Game.time % PROFILER_REPORT_INTERVAL == 0)
 	{
 		Memory.profilerDump = Memory.profilerDump || {};
 		
