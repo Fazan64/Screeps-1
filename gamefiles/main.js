@@ -3,7 +3,7 @@ var PROFILER_REPORT_INTERVAL = 20;
 
 var profiler = require ('profiler');
 
-function act ()
+function main ()
 {
 	var performRoles = require ('performRoles');
 	var spawner = require ('spawner');
@@ -56,7 +56,7 @@ function act ()
 if (ENABLE_PROFILING) 
 {
     profiler.wrap (globals, 'require');	
-	profiler.wrap ();
+	main = profiler.wrap (main);
 }
 
-act ();
+main ();
