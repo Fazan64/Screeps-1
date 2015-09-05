@@ -143,8 +143,9 @@ function report ()
         {
             usage : 0,
             count : 0,
-            perUse : 0,   
-            perTick : 0
+            perCall : 0,   
+            perTick : 0,
+            callsPerTick : 0
         }
         
         var profilingData = Memory._profiling.functions [functionName];
@@ -152,7 +153,7 @@ function report ()
         if (profilingData.count === 0) 
         {
             profilingData.average = 0;
-            functionData.perUse = 0;
+            functionData.perCall = 0;
             continue;
         }
         
@@ -160,8 +161,9 @@ function report ()
         
         functionData.usage = profilingData.usage;
         functionData.count = profilingData.count;
-        functionData.perUse = profilingData.average;
+        functionData.perCall = profilingData.average;
         functionData.perTick = profilingData.usage / timeSinceLastReport;
+        functionData.callsPerTick = profilingData.count / timeSinceLastReport;
         
         data.cpuUsage.tracked += profilingData.usage;
     }
@@ -199,17 +201,19 @@ function logReport (report)
         var functionData = report.functions [key];
         
         console.log (key + ':');
-        console.log ('      usage: ' + functionData.usage);
-        console.log ('      count: ' + functionData.count);
-        console.log ('     perUse: ' + functionData.perUse);
-        console.log ('    perTick: ' + functionData.perTick);
+        console.log ('       usage: ' + functionData.usage.toFixed (2));
+        console.log ('       count: ' + functionData.count.toFixed (2));
+        console.log ('     perCall: ' + functionData.perCall.toFixed (2));
+        console.log ('     perTick: ' + functionData.perTick.toFixed (2));
+        console.log ('callsPerTick: ' + functionData.callsPerTick.toFixed (2));
+        
     }
     
     console.log ('-------');
-    console.log ('       tracked: ' + report.cpuUsage.tracked);
-    console.log ('trackedPerTick: ' + report.cpuUsage.trackedPerTick);
-    console.log ('         total: ' + report.cpuUsage.total);
-    console.log ('  totalPerTick: ' + report.cpuUsage.totalPerTick);
+    console.log ('       tracked: ' + report.cpuUsage.tracked.toFixed (2));
+    console.log ('trackedPerTick: ' + report.cpuUsage.trackedPerTick.toFixed (2));
+    console.log ('         total: ' + report.cpuUsage.total.toFixed (2));
+    console.log ('  totalPerTick: ' + report.cpuUsage.totalPerTick.toFixed (2));
     
     console.log ('=======REPORT=======');
 }
