@@ -19,16 +19,24 @@ function getUsedCpu ()
     return Game.rooms.sim ? performance.now () - usedOnStart : Game.getUsedCpu ();
 }
 
-Memory._profiling = Memory._profiling || 
-{ 
-    functions : {}, 
-    main : 
-    { 
-        usage : 0, 
-        count : 0
-    } 
-};
+if (!Memory._profiling)
+{
+    resetMemory ();
+}
 Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
+
+function resetMemory ()
+{
+    Memory._profiling =
+    { 
+        functions : {}, 
+        main : 
+        { 
+            usage : 0, 
+            count : 0
+        } 
+    };
+}
 
 /**
  * Wraps the function as usual, but treats it as the main
@@ -175,7 +183,8 @@ function report ()
     data.functions = functionsNew;
     
     Memory._lastProfilerReportTime = Game.time;
-    Memory._profiling = {};
+    
+    resetMemory ();
     
     return data;
 }
