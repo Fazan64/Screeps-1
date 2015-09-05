@@ -3,8 +3,9 @@ var MAX_PARTS = 30;
 var ROUTE_CACHE_CLEANING_INTERVAL = 10;
 
 // Clean out cached roles to nonexistent targets
-if (Game.time % ROUTE_CACHE_CLEANING_INTERVAL === 0 && Memory.routeCache)
+if (Game.time % ROUTE_CACHE_CLEANING_INTERVAL === 0)
 {
+	Memory.routeCache = Memory.routeCache || {}
 	for (var k in Memory.routeCache ) 
 	{
 		if (Game.getObjectById (k) == null) 
