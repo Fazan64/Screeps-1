@@ -21,6 +21,8 @@ if (ENABLE_PROFILING)
     profiler.wrap (Game, 'getObjectById');
 	
 	profiler.wrap (roomManager, 'updateNeeds');
+	
+	profiler.wrap (ProtoRole.prototype, 'reset');
 }
 
 for (var i in Game.rooms)
