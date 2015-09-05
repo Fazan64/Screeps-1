@@ -29,28 +29,6 @@ Memory._lastProfilerReportTime = Memory._lastProfilerReportTime || Game.time;
  */
 function wrap (object, funcName)
 {
-    /*
-    // A function is given, so wrap it
-    if (!funcName && object instanceof Function)
-    {
-        var func = object;
-        var funcName = func.name;
-        if (!funcName)
-        {
-            var numEntries = 0;
-            while (Memory.profiling ["Anonymous function #" + numEntries])
-            {
-                numEntries++;
-            }
-            funcName = "Anonymous function #" + numEntries;
-        }
-        
-        var profilingData = Memory.profiling [funcName] = Memory.profiling [funcName] || { usage: 0, count: 0 }
-        
-        func = getWrapper (func, profilingData);
-        return;
-    }
-    */
     
     // An object is given, so wrap all of its 
     // public (not starting with '_') functions
