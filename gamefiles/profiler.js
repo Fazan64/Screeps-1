@@ -206,7 +206,7 @@ function logReport (report)
     }
     
     console.log ('-------');
-    console.log (       'tracked: ' + report.cpuUsage.tracked);
+    console.log ('       tracked: ' + report.cpuUsage.tracked);
     console.log ('trackedPerTick: ' + report.cpuUsage.trackedPerTick);
     console.log ('         total: ' + report.cpuUsage.total);
     console.log ('  totalPerTick: ' + report.cpuUsage.totalPerTick);
