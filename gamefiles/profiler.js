@@ -96,7 +96,7 @@ function wrap (object, funcName)
     if (object [funcName])
     {
         var profilingData = Memory._profiling.functions [funcName] = Memory._profiling.functions [funcName] || { usage: 0, count: 0 }
-        
+
         object [funcName] = getWrapper (object [funcName], profilingData);
     }
 }
