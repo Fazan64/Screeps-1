@@ -56,6 +56,7 @@ function act ()
 if (ENABLE_PROFILING) 
 {
     profiler.wrap (globals, 'require');	
+	profiler.wrap ();
 }
 
 act ();
