@@ -21,6 +21,7 @@ function main ()
 		
 		profiler.wrap (ProtoRole.prototype, 'reset');
 		profiler.wrap (ProtoRole.prototype, 'moveTo');
+		profiler.wrap (ProtoRole.prototype, 'getRangedTarget');
 		
 		spawner = profiler.wrap (spawner);
 	}
