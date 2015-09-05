@@ -21,6 +21,8 @@ function main ()
 		
 		profiler.wrap (ProtoRole.prototype, 'reset');
 		profiler.wrap (ProtoRole.prototype, 'moveTo');
+		
+		spawner = profiler.wrap (spawner);
 	}
 	
 	for (var i in Game.rooms)
@@ -55,6 +57,7 @@ function main ()
 
 if (ENABLE_PROFILING) 
 {
+	profiler.wrap (profiler, 'wrap');
     profiler.wrap (globals, 'require');	
 	main = profiler.wrapAsMainLoop (main);
 }
