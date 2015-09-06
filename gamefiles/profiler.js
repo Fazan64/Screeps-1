@@ -153,7 +153,6 @@ function report ()
         if (profilingData.count === 0) 
         {
             profilingData.average = 0;
-            functionData.perCall = 0;
             continue;
         }
         
@@ -162,15 +161,22 @@ function report ()
         functionData.usage = profilingData.usage;
         functionData.count = profilingData.count;
         functionData.perCall = profilingData.average;
-        functionData.perTick = profilingData.usage / timeSinceLastReport;
-        functionData.callsPerTick = profilingData.count / timeSinceLastReport;
+        
+        if (timeSinceLastReport > 0)
+        {
+            functionData.perTick = profilingData.usage / timeSinceLastReport;
+            functionData.callsPerTick = profilingData.count / timeSinceLastReport;
+        }
         
         data.cpuUsage.tracked += profilingData.usage;
     }
     
     data.cpuUsage.total = Memory._profiling.main.usage;
-    data.cpuUsage.trackedPerTick = data.cpuUsage.tracked / timeSinceLastReport;
-    data.cpuUsage.totalPerTick = data.cpuUsage.total / timeSinceLastReport;
+    if (timeSinceLastReport > 0)
+    {
+        data.cpuUsage.trackedPerTick = data.cpuUsage.tracked / timeSinceLastReport;
+        data.cpuUsage.totalPerTick = data.cpuUsage.total / timeSinceLastReport;
+    }
    
     // Sort data.functions so that the biggest cpu consumer appears first
     var keysSorted = Object.keys (data.functions).sort ( function (a,b) 
