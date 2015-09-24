@@ -1,31 +1,40 @@
 var ENABLE_PROFILING = true;
 var PROFILER_REPORT_INTERVAL = 20;
 
+console.log ("New 'globals' object created!");
+
 var profiler = require ('profiler');
 
-function main ()
+if (ENABLE_PROFILING) 
 {
-	var performRoles = require ('performRoles');
-	var spawner = require ('spawner');
-	var roomManager = require ('roomManager');
-	var ProtoRole = require ('role_prototype');
+	profiler.wrap (profiler, 'wrap');
+	profiler.wrap (console, 'log');
+    profiler.wrap (globals, 'require');	
+}
+
+var performRoles = require ('performRoles');
+var spawner = require ('spawner');
+var roomManager = require ('roomManager');
+var ProtoRole = require ('role_prototype');
+
+if (ENABLE_PROFILING)
+{
+	profiler.wrap (RoomPosition.prototype, 'findPathTo');
+	profiler.wrap (RoomPosition.prototype, 'findClosest');
 	
-	if (ENABLE_PROFILING)
-	{
-		profiler.wrap (RoomPosition.prototype, 'findPathTo');
-		profiler.wrap (RoomPosition.prototype, 'findClosest');
-		
-		profiler.wrap (Game, 'getObjectById');
-		
-		profiler.wrap (roomManager, 'updateNeeds');
-		
-		profiler.wrap (ProtoRole.prototype, 'reset');
-		profiler.wrap (ProtoRole.prototype, 'moveTo');
-		profiler.wrap (ProtoRole.prototype, 'getRangedTarget');
-		
-		spawner = profiler.wrap (spawner);
-	}
+	profiler.wrap (Game, 'getObjectById');
 	
+	profiler.wrap (roomManager, 'updateNeeds');
+	
+	profiler.wrap (ProtoRole.prototype, 'reset');
+	profiler.wrap (ProtoRole.prototype, 'moveTo');
+	profiler.wrap (ProtoRole.prototype, 'getRangedTarget');
+	
+	spawner = profiler.wrap (spawner);
+}
+
+function loop ()
+{	
 	for (var i in Game.rooms)
 	{
 		roomManager.reset ();
@@ -56,11 +65,4 @@ function main ()
 	console.log ();
 }
 
-if (ENABLE_PROFILING) 
-{
-	profiler.wrap (profiler, 'wrap');
-    profiler.wrap (globals, 'require');	
-	main = profiler.wrapAsMainLoop (main);
-}
-
-main ();
+module.exports.loop = ENABLE_PROFILING ? profiler.wrapAsMainLoop (loop) : loop;
