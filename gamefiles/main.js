@@ -10,6 +10,8 @@ if (ENABLE_PROFILING)
 	profiler.wrap (profiler, 'wrap');
 	profiler.wrap (console, 'log');
 	
+	//comment
+	
 	// This doesn't work for whatever reason :(
 	// 24.09.2015
     //profiler.wrap (globals, 'require');	
