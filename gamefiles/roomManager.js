@@ -295,7 +295,7 @@ RoomManager.prototype.updateNeedsHelpers = function ()
 	for (var i in miners)
 	{
 		var miner = miners [i];
-		var helpersToAdd = miner.memory.helpersNeeded - miner.memory.helpers.length; 
+		var helpersToAdd = (miner.memory.helpersNeeded || 0) - (miner.memory.helpers.length || 0); 
 
 		// Won't execute if helpersToAdd <= 0
 		for (var i = 0; i < helpersToAdd; i++) 
