@@ -266,7 +266,7 @@ RoomManager.prototype.initMemory = function ()
 }
 
 var MIN_SUPPLY = 4;
-var neededSupply = 15;
+var neededSupply = 10;
 RoomManager.prototype.updateNeeds = function ()
 {
 	
