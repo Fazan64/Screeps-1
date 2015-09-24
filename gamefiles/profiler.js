@@ -224,7 +224,7 @@ function logReport (report)
     console.log ('=======REPORT=======');
 }
 
-module.exports = 
+module.exports =
 {
 	wrap : wrap,
     wrapAsMainLoop : wrapAsMainLoop,
