@@ -1,5 +1,5 @@
 var ENABLE_PROFILING = true;
-var PROFILER_REPORT_INTERVAL = 20;
+var PROFILER_REPORT_INTERVAL = 2-0;
 
 console.log ("New 'globals' object created!");
 

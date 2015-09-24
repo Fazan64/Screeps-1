@@ -73,7 +73,6 @@ function isBuilder (creep)
 			},
 			enumerable : false,
 			configurable : true
-			
 		},
 		
 		hostileCreeps :
