@@ -54,7 +54,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._creeps = this._creeps || this.find (FIND_CREEPS);
 			return this._creeps;
-		}
+		},
+		enumerable : false
 	},
 	
 	myCreeps :
@@ -63,7 +64,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._myCreeps = this._myCreeps || this.find (FIND_MY_CREEPS);
 			return this._myCreeps;
-		}
+		},
+		enumerable : false
 	},
 	
 	hostileCreeps :
@@ -72,7 +74,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._hostileCreeps = this._hostileCreeps || this.find (FIND_HOSTILE_CREEPS);
 			return this._hostileCreeps;
-		}
+		},
+		enumerable : false
 	},
 	
 	defenders :
@@ -81,7 +84,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._defenders = this._defenders || this.myCreeps.filter (isDefender)
 			return this._defenders;
-		}
+		},
+		enumerable : false
 	},
 	
 	scavengers : 
@@ -90,7 +94,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._scavengers = this._scavengers || this.myCreeps.filter (isScavenger);
 			return this._scavengers;
-		}	
+		},
+		enumerable : false	
 	},
 	
 	myDamagedCreeps :
@@ -99,7 +104,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._myDamagedCreeps = this._myDamagedCreeps || this.myCreeps.filter (isDamaged)
 			return this._myDamagedCreeps;
-		}	
+		},
+		enumerable : false	
 	},
 	
 	myStructures : 
@@ -108,7 +114,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._myStructures = this._myStructures || this.find (FIND_MY_STRUCTURES);
 			return this._myStructures;
-		}	
+		},
+		enumerable : false	
 	},
 	
 	mySpawns :
@@ -117,7 +124,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._spawns = this._spawns || this.find (FIND_MY_SPAWNS);
 			return this._spawns;
-		}
+		},
+		enumerable : false
 	},
 	
 	constructionSites :
@@ -126,7 +134,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._constructionSites = this._constructionSites || this.find (FIND_CONSTRUCTION_SITES);
 			return this._constructionSites;
-		}
+		},
+		enumerable : false
 	},
 	
 	sourcesActive :
@@ -135,7 +144,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._sourcesActive = this._sourcesActive || this.find (FIND_SOURCES_ACTIVE);
 			return this._sourcesActive;
-		}
+		},
+		enumerable : false
 	},
 	
 	droppedEnergy :
@@ -144,7 +154,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._droppedEnergy = this._droppedEnergy || this.find (FIND_DROPPED_ENERGY);
 			return this._droppedEnergy;
-		}
+		},
+		enumerable : false
 	},
 	
 	underAttack :
@@ -153,7 +164,8 @@ Object.defineProperties (Room.prototype,
 		{
 			this._underAttack = this._underAttack || this.hostileCreeps.filter (notSourceKeeper).length > 0;
 			return this._underAttack;
-		}
+		},
+		enumerable : false
 	}
 	
 		
