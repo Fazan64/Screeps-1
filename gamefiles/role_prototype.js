@@ -296,6 +296,8 @@ ProtoRole.prototype.moveAndPerform = function (target, action)
 {
 	if (!(action instanceof Function))
 	{
+		console.log (typeof (action));
+		console.log (action);
 		throw new Error ("role_prototype.moveAndPerform: 'action' is not a function!");
 	}
 	
