@@ -46,130 +46,149 @@ function isBuilder (creep)
 		&& creep.getActiveBodyparts (MOVE) > 0;	
 }
 
-Object.defineProperties (Room.prototype,
-{
-	creeps :
+// Sometimes after the new global object is created, 
+// the defined properties remain, which causes 
+// "can't redefine property" issues. A bug?
+//if (!Room.prototype.hasOwnProperty ("creeps"))
+//{
+	Object.defineProperties (Room.prototype,
 	{
-		get : function ()
+		creeps :
 		{
-			this._creeps = this._creeps || this.find (FIND_CREEPS);
-			return this._creeps;
+			get : function ()
+			{
+				this._creeps = this._creeps || this.find (FIND_CREEPS);
+				return this._creeps;
+			},
+			enumerable : false,
+			configurable : true
 		},
-		enumerable : false
-	},
-	
-	myCreeps :
-	{
-		get : function ()
-		{
-			this._myCreeps = this._myCreeps || this.find (FIND_MY_CREEPS);
-			return this._myCreeps;
-		},
-		enumerable : false
-	},
-	
-	hostileCreeps :
-	{
-		get : function ()
-		{
-			this._hostileCreeps = this._hostileCreeps || this.find (FIND_HOSTILE_CREEPS);
-			return this._hostileCreeps;
-		},
-		enumerable : false
-	},
-	
-	defenders :
-	{
-		get : function ()
-		{
-			this._defenders = this._defenders || this.myCreeps.filter (isDefender)
-			return this._defenders;
-		},
-		enumerable : false
-	},
-	
-	scavengers : 
-	{
-		get : function ()
-		{
-			this._scavengers = this._scavengers || this.myCreeps.filter (isScavenger);
-			return this._scavengers;
-		},
-		enumerable : false	
-	},
-	
-	myDamagedCreeps :
-	{
-		get : function ()
-		{
-			this._myDamagedCreeps = this._myDamagedCreeps || this.myCreeps.filter (isDamaged)
-			return this._myDamagedCreeps;
-		},
-		enumerable : false	
-	},
-	
-	myStructures : 
-	{
-		get : function ()
-		{
-			this._myStructures = this._myStructures || this.find (FIND_MY_STRUCTURES);
-			return this._myStructures;
-		},
-		enumerable : false	
-	},
-	
-	mySpawns :
-	{
-		get : function ()
-		{
-			this._spawns = this._spawns || this.find (FIND_MY_SPAWNS);
-			return this._spawns;
-		},
-		enumerable : false
-	},
-	
-	constructionSites :
-	{
-		get : function ()
-		{
-			this._constructionSites = this._constructionSites || this.find (FIND_CONSTRUCTION_SITES);
-			return this._constructionSites;
-		},
-		enumerable : false
-	},
-	
-	sourcesActive :
-	{
-		get : function ()
-		{
-			this._sourcesActive = this._sourcesActive || this.find (FIND_SOURCES_ACTIVE);
-			return this._sourcesActive;
-		},
-		enumerable : false
-	},
-	
-	droppedEnergy :
-	{
-		get : function ()
-		{
-			this._droppedEnergy = this._droppedEnergy || this.find (FIND_DROPPED_ENERGY);
-			return this._droppedEnergy;
-		},
-		enumerable : false
-	},
-	
-	underAttack :
-	{
-		get : function ()
-		{
-			this._underAttack = this._underAttack || this.hostileCreeps.filter (notSourceKeeper).length > 0;
-			return this._underAttack;
-		},
-		enumerable : false
-	}
-	
 		
-});
+		myCreeps :
+		{
+			get : function ()
+			{
+				this._myCreeps = this._myCreeps || this.find (FIND_MY_CREEPS);
+				return this._myCreeps;
+			},
+			enumerable : false,
+			configurable : true
+			
+		},
+		
+		hostileCreeps :
+		{
+			get : function ()
+			{
+				this._hostileCreeps = this._hostileCreeps || this.find (FIND_HOSTILE_CREEPS);
+				return this._hostileCreeps;
+			},
+			enumerable : false,
+			configurable : true
+		},
+		
+		defenders :
+		{
+			get : function ()
+			{
+				this._defenders = this._defenders || this.myCreeps.filter (isDefender)
+				return this._defenders;
+			},
+			enumerable : false,
+			configurable : true
+		},
+		
+		scavengers : 
+		{
+			get : function ()
+			{
+				this._scavengers = this._scavengers || this.myCreeps.filter (isScavenger);
+				return this._scavengers;
+			},
+			enumerable : false,
+			configurable : true	
+		},
+		
+		myDamagedCreeps :
+		{
+			get : function ()
+			{
+				this._myDamagedCreeps = this._myDamagedCreeps || this.myCreeps.filter (isDamaged)
+				return this._myDamagedCreeps;
+			},
+			enumerable : false,
+			configurable : true	
+		},
+		
+		myStructures : 
+		{
+			get : function ()
+			{
+				this._myStructures = this._myStructures || this.find (FIND_MY_STRUCTURES);
+				return this._myStructures;
+			},
+			enumerable : false,
+			configurable : true	
+		},
+		
+		mySpawns :
+		{
+			get : function ()
+			{
+				this._spawns = this._spawns || this.find (FIND_MY_SPAWNS);
+				return this._spawns;
+			},
+			enumerable : false,
+			configurable : true
+		},
+		
+		constructionSites :
+		{
+			get : function ()
+			{
+				this._constructionSites = this._constructionSites || this.find (FIND_CONSTRUCTION_SITES);
+				return this._constructionSites;
+			},
+			enumerable : false,
+			configurable : true
+		},
+		
+		sourcesActive :
+		{
+			get : function ()
+			{
+				this._sourcesActive = this._sourcesActive || this.find (FIND_SOURCES_ACTIVE);
+				return this._sourcesActive;
+			},
+			enumerable : false,
+			configurable : true
+		},
+		
+		droppedEnergy :
+		{
+			get : function ()
+			{
+				this._droppedEnergy = this._droppedEnergy || this.find (FIND_DROPPED_ENERGY);
+				return this._droppedEnergy;
+			},
+			enumerable : false,
+			configurable : true
+		},
+		
+		underAttack :
+		{
+			get : function ()
+			{
+				this._underAttack = this._underAttack || this.hostileCreeps.filter (notSourceKeeper).length > 0;
+				return this._underAttack;
+			},
+			enumerable : false,
+			configurable : true
+		}
+		
+			
+	});
+//}
 
 function RoomManager ()
 {
@@ -201,7 +220,8 @@ Object.defineProperties (RoomManager.prototype,
 				}
 			}
 			return this._energySupply;
-		}
+		},
+		configurable : true
 	}	
 });
 
